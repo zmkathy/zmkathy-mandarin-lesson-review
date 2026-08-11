@@ -1,0 +1,211 @@
+// Edit this file to update the lesson website.
+// Format for each item:
+// Chinese | Pinyin | English
+
+# Lesson 1: Hello & Self Introduction
+
+## Key Vocabulary
+你好 | nǐ hǎo | hello
+您好 | nín hǎo | polite hello
+你们好 | nǐmen hǎo | hello everyone
+我 | wǒ | I; me
+叫 | jiào | to be called
+是 | shì | am; is; are
+名字 | míngzi | name
+姓 | xìng | surname
+请问 | qǐngwèn | may I ask
+贵姓 | guìxìng | your surname, polite
+来自 | láizì | come from
+加拿大 | Jiānádà | Canada
+美国 | Měiguó | United States
+中国 | Zhōngguó | China
+
+## Key Sentences
+你好！ | nǐ hǎo! | Hello!
+我叫 Kathy。 | wǒ jiào Kathy. | My name is Kathy.
+你叫什么名字？ | nǐ jiào shénme míngzi? | What is your name?
+请问，您贵姓？ | qǐngwèn, nín guìxìng? | May I ask your surname?
+我姓 Zhang。 | wǒ xìng Zhang. | My surname is Zhang.
+我是中国人。 | wǒ shì Zhōngguó rén. | I am Chinese.
+我来自加拿大。 | wǒ láizì Jiānádà. | I am from Canada.
+很高兴认识你。 | hěn gāoxìng rènshi nǐ. | Nice to meet you.
+我也很高兴认识你。 | wǒ yě hěn gāoxìng rènshi nǐ. | Nice to meet you too.
+你是哪国人？ | nǐ shì nǎ guó rén? | Which country are you from?
+你呢？ | nǐ ne? | How about you?
+
+# Lesson 2: My Family
+
+## Key Vocabulary
+家 | jiā | home; family
+家人 | jiārén | family members
+爸爸 | bàba | dad
+妈妈 | māma | mom
+哥哥 | gēge | older brother
+姐姐 | jiějie | older sister
+弟弟 | dìdi | younger brother
+妹妹 | mèimei | younger sister
+爷爷 | yéye | grandpa
+奶奶 | nǎinai | grandma
+朋友 | péngyou | friend
+谁 | shéi | who
+有 | yǒu | have
+没有 | méiyǒu | do not have
+的 | de | possessive particle
+兄弟姐妹 | xiōngdì jiěmèi | siblings
+猫 | māo | cat
+狗 | gǒu | dog
+
+## Key Sentences
+这是谁？ | zhè shì shéi? | Who is this?
+这是我的妈妈。 | zhè shì wǒ de māma. | This is my mom.
+他是我的哥哥。 | tā shì wǒ de gēge. | He is my older brother.
+她是我的妹妹。 | tā shì wǒ de mèimei. | She is my younger sister.
+这是你的爸爸吗？ | zhè shì nǐ de bàba ma? | Is this your dad?
+我有一个妹妹。 | wǒ yǒu yí ge mèimei. | I have a younger sister.
+我没有弟弟。 | wǒ méiyǒu dìdi. | I do not have a younger brother.
+他很聪明。 | tā hěn cōngming. | He is smart.
+她很友好。 | tā hěn yǒuhǎo. | She is friendly.
+它很可爱。 | tā hěn kě'ài. | It is cute.
+他很忙。 | tā hěn máng. | He is busy.
+
+# Lesson 3: Daily Plans & Weekly Schedule
+
+## Key Vocabulary
+今天 | jīntiān | today
+明天 | míngtiān | tomorrow
+后天 | hòutiān | the day after tomorrow
+上午 | shàngwǔ | morning
+中午 | zhōngwǔ | noon; lunchtime
+下午 | xiàwǔ | afternoon
+晚上 | wǎnshang | evening; night
+周末 | zhōumò | weekend
+去 | qù | go
+跑步 | pǎobù | run
+工作 | gōngzuò | work
+看电影 | kàn diànyǐng | watch a movie
+吃饭 | chīfàn | eat; have a meal
+休息 | xiūxi | rest
+学中文 | xué Zhōngwén | study Chinese
+机场 | jīchǎng | airport
+超市 | chāoshì | supermarket
+公园 | gōngyuán | park
+星期一 | xīngqī yī | Monday
+星期天 | xīngqī tiān | Sunday
+
+## Key Sentences
+今天上午我去跑步。 | jīntiān shàngwǔ wǒ qù pǎobù. | This morning, I go running.
+明天下午我去工作。 | míngtiān xiàwǔ wǒ qù gōngzuò. | Tomorrow afternoon, I go to work.
+今天晚上我去看电影。 | jīntiān wǎnshang wǒ qù kàn diànyǐng. | This evening, I go watch a movie.
+后天晚上我去休息。 | hòutiān wǎnshang wǒ qù xiūxi. | The day after tomorrow evening, I go rest.
+星期六上午我去跑步。 | xīngqīliù shàngwǔ wǒ qù pǎobù. | Saturday morning, I go running.
+你明天做什么？ | nǐ míngtiān zuò shénme? | What are you doing tomorrow?
+明天下午呢？ | míngtiān xiàwǔ ne? | What about tomorrow afternoon?
+我去机场。 | wǒ qù jīchǎng. | I go to the airport.
+
+# Lesson 4: Numbers & How Old Are You?
+
+## Key Vocabulary
+零 | líng | zero
+一 | yī | one
+二 | èr | two
+两 | liǎng | two, before measure words
+三 | sān | three
+四 | sì | four
+五 | wǔ | five
+六 | liù | six
+七 | qī | seven
+八 | bā | eight
+九 | jiǔ | nine
+十 | shí | ten
+一百 | yì bǎi | one hundred
+一千 | yì qiān | one thousand
+一万 | yí wàn | ten thousand
+岁 | suì | years old
+今年 | jīnnián | this year
+多少 | duōshǎo | how many; how much
+几 | jǐ | how many, usually small number
+个 | gè | general measure word
+
+## Key Sentences
+你今年多少岁了？ | nǐ jīnnián duōshǎo suì le? | How old are you this year?
+你多大了？ | nǐ duōdà le? | How old are you this year?
+你今年几岁？ | nǐ jīnnián jǐ suì? | How old are you this year?
+我二十八岁。 | wǒ èrshíbā suì. | I am 28.
+我今年二十八岁了。 | wǒ jīnnián èrshíbā suì le. | I am 28 this year.
+他三十五岁。 | tā sānshíwǔ suì. | He is 35.
+她四十八岁。 | tā sìshíbā suì. | She is 48.
+你家有几个人？ | nǐ jiā yǒu jǐ ge rén? | How many people are in your family?
+我家有四个人。 | wǒ jiā yǒu sì ge rén. | There are four people in my family.
+你妈妈多少岁？ | nǐ māma duōshǎo suì? | How old is your mom?
+我妈妈五十五岁。 | wǒ māma wǔshíwǔ suì. | My mom is 55.
+
+# Lesson 5: Dates & Time
+
+## Key Vocabulary
+日 | rì | date
+年 | nián | year
+月 | yuè | month
+号 | hào | date; day of month
+星期 | xīngqī | weekday
+生日 | shēngrì | birthday
+时间 | shíjiān | time
+点 | diǎn | o'clock
+半 | bàn | half
+一刻 | yí kè | quarter
+分 | fēn | minute
+几点 | jǐ diǎn | what time
+现在 | xiànzài | now
+早上 | zǎoshang | early morning
+两点 | liǎng diǎn | two o'clock
+
+## Key Sentences
+今天是几月几号？ | jīntiān shì jǐ yuè jǐ hào? | What is today's date?
+今天是六月二十八号。 | jīntiān shì liù yuè èrshíbā hào. | Today is June 28.
+今天星期几？ | jīntiān xīngqī jǐ? | What day is today?
+今天星期三。 | jīntiān xīngqī sān. | Today is Wednesday.
+你的生日是几月几号？ | nǐ de shēngrì shì jǐ yuè jǐ hào? | When is your birthday?
+我的生日是六月二十八号。 | wǒ de shēngrì shì liù yuè èrshíbā hào. | My birthday is June 28.
+几点了？ | jǐ diǎn le? | What time is it?
+现在三点半。 | xiànzài sān diǎn bàn. | It is 3:30 now.
+现在晚上十一点十五分了。 | xiànzài wǎnshang shíyī diǎn shíwǔ fēn le. | It is 11:15 PM now.
+早上九点零八分。 | zǎoshang jiǔ diǎn líng bā fēn. | 9:08 AM.
+
+# Lesson 6: Shopping Basics
+
+## Key Vocabulary
+钱 | qián | money
+人民币 | rénmínbì | RMB; Chinese currency
+元 | yuán | formal RMB unit
+块 | kuài | spoken RMB unit
+毛 | máo | tenth of a yuan
+现金 | xiànjīn | cash
+刷卡 | shuākǎ | pay by card
+扫码 | sǎomǎ | scan to pay
+苹果 | píngguǒ | apple
+水 | shuǐ | water
+杯子 | bēizi | cup
+车票 | chēpiào | ticket
+纪念品 | jìniànpǐn | souvenir
+买 | mǎi | buy
+想买 | xiǎng mǎi | want to buy
+这个 | zhège | this one
+那个 | nàge | that one
+多少钱 | duōshǎo qián | how much money
+一共 | yígòng | total; altogether
+
+## Key Sentences
+你想买什么？ | nǐ xiǎng mǎi shénme? | What do you want to buy?
+我想买苹果。 | wǒ xiǎng mǎi píngguǒ. | I want to buy apples.
+我想买水。 | wǒ xiǎng mǎi shuǐ. | I want to buy water.
+这个多少钱？ | zhège duōshǎo qián? | How much is this?
+那个多少钱？ | nàge duōshǎo qián? | How much is that?
+八块。 | bā kuài. | Eight yuan.
+十八块五。 | shíbā kuài wǔ. | 18.5 yuan.
+一共多少钱？ | yígòng duōshǎo qián? | How much in total?
+一共三十块。 | yígòng sānshí kuài. | 30 yuan in total.
+太贵了。 | tài guì le. | Too expensive.
+可以刷卡吗？ | kěyǐ shuākǎ ma? | Can I pay by card?
+可以扫码吗？ | kěyǐ sǎomǎ ma? | Can I scan to pay?
+可以用现金吗？ | kěyǐ yòng xiànjīn ma? | Can I use cash?
+可以。 | kěyǐ. | Yes, you can.
+不可以。 | bù kěyǐ. | No, you can't.
