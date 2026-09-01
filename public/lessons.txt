@@ -173,11 +173,12 @@
 # Lesson 6: Shopping Basics
 
 ## Key Vocabulary
-钱 | qián | money
 人民币 | rénmínbì | RMB; Chinese currency
-元 | yuán | formal RMB unit
-块 | kuài | spoken RMB unit
+钱 | qián | money
+元 | yuán | formal yuan
+块 | kuài | spoken yuan
 毛 | máo | tenth of a yuan
+分 | fēn | cent
 现金 | xiànjīn | cash
 刷卡 | shuākǎ | pay by card
 扫码 | sǎomǎ | scan to pay
@@ -185,27 +186,161 @@
 水 | shuǐ | water
 杯子 | bēizi | cup
 车票 | chēpiào | ticket
-纪念品 | jìniànpǐn | souvenir
+商店 | shāngdiàn | shop; store
 买 | mǎi | buy
-想买 | xiǎng mǎi | want to buy
 这个 | zhège | this one
 那个 | nàge | that one
-多少钱 | duōshǎo qián | how much money
-一共 | yígòng | total; altogether
+多少 | duōshao | how many; how much
+支付 | zhīfù | pay
 
 ## Key Sentences
 你想买什么？ | nǐ xiǎng mǎi shénme? | What do you want to buy?
 我想买苹果。 | wǒ xiǎng mǎi píngguǒ. | I want to buy apples.
-我想买水。 | wǒ xiǎng mǎi shuǐ. | I want to buy water.
-这个多少钱？ | zhège duōshǎo qián? | How much is this?
-那个多少钱？ | nàge duōshǎo qián? | How much is that?
-八块。 | bā kuài. | Eight yuan.
-十八块五。 | shíbā kuài wǔ. | 18.5 yuan.
-一共多少钱？ | yígòng duōshǎo qián? | How much in total?
-一共三十块。 | yígòng sānshí kuài. | 30 yuan in total.
-太贵了。 | tài guì le. | Too expensive.
+这个杯子多少钱？ | zhège bēizi duōshao qián? | How much is this cup?
+这瓶水多少钱？ | zhè píng shuǐ duōshao qián? | How much is this bottle of water?
+八块。 | bā kuài. | Eight kuai.
+十八块五。 | shíbā kuài wǔ. | 18.5 kuai.
+这个苹果多少钱？ | zhège píngguǒ duōshao qián? | How much is this apple?
+一共多少钱？ | yígòng duōshao qián? | How much in total?
 可以刷卡吗？ | kěyǐ shuākǎ ma? | Can I pay by card?
 可以扫码吗？ | kěyǐ sǎomǎ ma? | Can I scan to pay?
 可以用现金吗？ | kěyǐ yòng xiànjīn ma? | Can I use cash?
 可以。 | kěyǐ. | Yes, you can.
 不可以。 | bù kěyǐ. | No, you can't.
+
+# Lesson 7: Talking About States
+
+## Key Vocabulary
+饿 | è | hungry
+渴 | kě | thirsty
+累 | lèi | tired
+困 | kùn | sleepy
+饱 | bǎo | full
+饭 | fàn | meal; rice
+米饭 | mǐfàn | rice
+面 | miàn | noodles
+饺子 | jiǎozi | dumplings
+面包 | miànbāo | bread
+鸡蛋 | jīdàn | egg
+水 | shuǐ | water
+茶 | chá | tea
+咖啡 | kāfēi | coffee
+吃 | chī | eat
+喝 | hē | drink
+休息 | xiūxi | rest
+睡觉 | shuìjiào | sleep
+想 | xiǎng | want to; would like to
+有点儿 | yǒudiǎnr | a little
+
+## Key Sentences
+我饿了。 | wǒ è le. | I’m hungry now.
+我渴了。 | wǒ kě le. | I’m thirsty now.
+我累了。 | wǒ lèi le. | I’m tired now.
+我困了。 | wǒ kùn le. | I’m sleepy now.
+你饿了吗？ | nǐ è le ma? | Are you hungry?
+你渴了吗？ | nǐ kě le ma? | Are you thirsty?
+你累了吗？ | nǐ lèi le ma? | Are you tired?
+你困了吗？ | nǐ kùn le ma? | Are you sleepy?
+有点儿饿。 | yǒudiǎnr è. | A little hungry.
+不太累。 | bú tài lèi. | Not very tired.
+太困了！ | tài kùn le! | So sleepy!
+我想吃面。 | wǒ xiǎng chī miàn. | I want to eat noodles.
+我想喝水。 | wǒ xiǎng hē shuǐ. | I want to drink water.
+我想休息。 | wǒ xiǎng xiūxi. | I want to rest.
+我想睡觉。 | wǒ xiǎng shuìjiào. | I want to sleep.
+你想吃什么？ | nǐ xiǎng chī shénme? | What do you want to eat?
+你想喝什么？ | nǐ xiǎng hē shénme? | What do you want to drink?
+
+# Lesson 8: Ordering Food
+
+## Key Vocabulary
+餐厅 | cāntīng | restaurant
+服务员 | fúwùyuán | server; waiter
+菜单 | càidān | menu
+筷子 | kuàizi | chopsticks
+点餐 | diǎncān | order food
+米饭 | mǐfàn | rice
+面条 | miàntiáo | noodles
+饺子 | jiǎozi | dumplings
+包子 | bāozi | steamed bun
+汤 | tāng | soup
+水 | shuǐ | water
+茶 | chá | tea
+热水 | rè shuǐ | hot water
+冰水 | bīng shuǐ | iced water
+要 | yào | want; would like
+不要 | bú yào | do not want
+请 | qǐng | please
+给 | gěi | give
+辣 | là | spicy
+甜 | tián | sweet
+酸 | suān | sour
+咸 | xián | salty
+
+## Key Sentences
+你要吃什么？ | nǐ yào chī shénme? | What would you like to eat?
+我要一份饺子。 | wǒ yào yí fèn jiǎozi. | I’d like one order of dumplings.
+你要喝什么？ | nǐ yào hē shénme? | What would you like to drink?
+我要一杯茶。 | wǒ yào yì bēi chá. | I’d like one cup of tea.
+请给我菜单。 | qǐng gěi wǒ càidān. | Please give me the menu.
+请给我筷子。 | qǐng gěi wǒ kuàizi. | Please give me chopsticks.
+这个辣吗？ | zhège là ma? | Is this spicy?
+有点儿辣。 | yǒudiǎnr là. | A little spicy.
+我不要辣。 | wǒ bú yào là. | I don’t want spicy food.
+
+# Lesson 9: Transportation
+
+## Key Vocabulary
+机场 | jīchǎng | airport
+酒店 | jiǔdiàn | hotel
+火车站 | huǒchēzhàn | train station
+地铁站 | dìtiězhàn | metro station
+餐厅 | cāntīng | restaurant
+地铁 | dìtiě | metro
+公交车 | gōngjiāochē | bus
+出租车 | chūzūchē | taxi
+高铁 | gāotiě | high-speed train
+想 | xiǎng | want to; would like to
+去 | qù | go
+坐 | zuò | take; ride
+怎么 | zěnme | how
+请问 | qǐngwèn | excuse me; may I ask
+可以 | kěyǐ | can; may
+在 | zài | be at; in
+哪儿 | nǎr | where
+
+## Key Sentences
+你想去哪儿？ | nǐ xiǎng qù nǎr? | Where do you want to go?
+我想去机场。 | wǒ xiǎng qù jīchǎng. | I want to go to the airport.
+我坐地铁去机场。 | wǒ zuò dìtiě qù jīchǎng. | I take the metro to the airport.
+请问，怎么去酒店？ | qǐngwèn, zěnme qù jiǔdiàn? | How do I get to the hotel?
+你可以坐出租车。 | nǐ kěyǐ zuò chūzūchē. | You can take a taxi.
+地铁站在哪儿？ | dìtiězhàn zài nǎr? | Where is the metro station?
+在那儿。 | zài nàr. | Over there.
+
+# Lesson 10: Asking for Directions
+
+## Key Vocabulary
+前面 | qiánmiàn | in front; ahead
+后面 | hòumiàn | behind
+左边 | zuǒbiān | left side
+右边 | yòubiān | right side
+旁边 | pángbiān | beside; next to
+走 | zǒu | walk; go
+一直 | yìzhí | straight; continuously
+左拐 | zuǒ guǎi | turn left
+右拐 | yòu guǎi | turn right
+然后 | ránhòu | then
+向 | xiàng | towards
+远 | yuǎn | far
+近 | jìn | near
+
+## Key Sentences
+请问，地铁站怎么走？ | qǐngwèn, dìtiězhàn zěnme zǒu? | Excuse me, how do I get to the metro station?
+一直走，然后左拐。 | yìzhí zǒu, ránhòu zuǒ guǎi. | Go straight, then turn left.
+一直走，然后右拐。 | yìzhí zǒu, ránhòu yòu guǎi. | Go straight, then turn right.
+地铁站在酒店的前面。 | dìtiězhàn zài jiǔdiàn de qiánmiàn. | The metro station is in front of the hotel.
+咖啡店在酒店的左边。 | kāfēidiàn zài jiǔdiàn de zuǒbiān. | The café is on the left of the hotel.
+地铁站在哪儿？ | dìtiězhàn zài nǎr? | Where is the metro station?
+远吗？ | yuǎn ma? | Is it far?
+不远，很近。 | bù yuǎn, hěn jìn. | Not far, very near.
