@@ -2,19 +2,17 @@
 
 Place approved MP3 recordings in this folder.
 
-The integrated Tone Perfect Female Voice 3 files keep their original filenames:
+The integrated Tone Perfect Female Voice 1 files keep their original filenames:
 
-- `ma1_FV3_MP3.mp3`
-- `ma2_FV3_MP3.mp3`
-- `ma3_FV3_MP3.mp3`
-- `ma4_FV3_MP3.mp3`
+- `ma1_FV1_MP3.mp3`
+- `ma2_FV1_MP3.mp3`
+- `ma3_FV1_MP3.mp3`
+- `ma4_FV1_MP3.mp3`
 
 Use `v` in filenames for `ü`:
 
-- `nv1_FV3_MP3.mp3` for `nü` first tone
-- `lve4_FV3_MP3.mp3` for `lüe` fourth tone
-
-The downloaded Female Voice 3 set does not contain `jiao1_FV3_MP3.mp3`, so the chart uses the unmodified `jiao1_FV2_MP3.mp3` recording for that one sound.
+- `nv1_FV1_MP3.mp3` for `nü` first tone
+- `lve4_FV1_MP3.mp3` for `lüe` fourth tone
 
 The chart intentionally does not use browser-generated speech. If a recording is missing, the page displays a preparation message and stays silent.
 

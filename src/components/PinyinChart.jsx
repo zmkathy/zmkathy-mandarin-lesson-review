@@ -17,8 +17,7 @@ function markTone(syllable, tone) {
 }
 
 function audioSlug(syllable, tone) {
-  const voice = syllable === "jiao" && tone === 1 ? "FV2" : "FV3";
-  return `${syllable.toLowerCase().replaceAll("ü", "v")}${tone}_${voice}_MP3.mp3`;
+  return `${syllable.toLowerCase().replaceAll("ü", "v")}${tone}_FV1_MP3.mp3`;
 }
 
 export default function PinyinChart() {
@@ -113,7 +112,7 @@ export default function PinyinChart() {
       </section>
       <p className="chart-help">Tap a sound, then choose a tone. On a phone, swipe sideways to see all initials.</p>
       <p className="audio-credit">
-        Pronunciation audio from <a href="https://tone.lib.msu.edu/" target="_blank" rel="noreferrer">Tone Perfect</a> by Catherine Ryu, the Mandarin Tone Perception &amp; Production Team, and Michigan State University Libraries. Female Voice 3 recordings are used without audio modification, with Female Voice 2 used for jiāo (tone 1), under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noreferrer">CC BY-NC 4.0</a>.
+        Pronunciation audio from <a href="https://tone.lib.msu.edu/" target="_blank" rel="noreferrer">Tone Perfect</a> by Catherine Ryu, the Mandarin Tone Perception &amp; Production Team, and Michigan State University Libraries. Female Voice 1 recordings are used without audio modification under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noreferrer">CC BY-NC 4.0</a>.
       </p>
 
       {selection ? (
