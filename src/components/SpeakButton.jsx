@@ -1,10 +1,9 @@
-import { Volume2 } from "lucide-react";
-import { speakMandarin } from "../utils/speech.js";
+import { VolumeX } from "lucide-react";
 
-export default function SpeakButton({ text, label = "Play pronunciation" }) {
+export default function SpeakButton({ text }) {
   return (
-    <button className="speak-button" type="button" onClick={() => speakMandarin(text)} aria-label={label}>
-      <Volume2 size={20} strokeWidth={2.3} />
+    <button className="speak-button" type="button" disabled aria-label={`Recording for ${text} is being prepared`} title="Teacher-approved recording is being prepared">
+      <VolumeX size={20} strokeWidth={2.3} />
     </button>
   );
 }

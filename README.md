@@ -1,13 +1,13 @@
 # Mandarin Lesson Review
 
-A simple mobile-first website for adult beginner Mandarin students to review key vocabulary and key sentences.
+A mobile-first website for adult beginner Mandarin students to review ten lessons and practise Pinyin pronunciation.
 
 It uses:
 
 - React
 - Vite
 - JavaScript
-- Browser Web Speech API for Mandarin pronunciation
+- Teacher-approved MP3 pronunciation recordings
 
 There is no login, account, database, quiz, flashcard system, progress tracking, or admin dashboard.
 
@@ -84,19 +84,19 @@ Example:
 
 There is also a backup data file at `src/data/lessons.js`, but you normally do not need to edit it.
 
-## Pronunciation
+## Pinyin Pronunciation
 
-The speaker button uses the browser Web Speech API.
+The Pinyin Chart does not use browser-generated speech. It plays approved MP3 files from:
 
-It is set to Mandarin Chinese:
-
-```javascript
-zh-CN
+```text
+public/audio/pinyin/
 ```
 
-Students can click the speaker button repeatedly and follow along.
+The integrated Female Voice 2 files retain the original Tone Perfect names, such as `ma1_FV2_MP3.mp3`. The filenames use `v` for `ü`, such as `nv3_FV2_MP3.mp3`.
 
-Pronunciation quality depends on the browser and the Mandarin voices installed on the computer or phone. The app will try to choose a Mandarin `zh-CN` voice first. If the voice sounds strange, try opening the site in Chrome or Safari, or install a higher-quality Mandarin Chinese system voice on the device.
+The FV2 recordings are from *Tone Perfect: Multimodal Database for Mandarin Chinese* by Catherine Ryu, the Mandarin Tone Perception & Production Team, and Michigan State University Libraries. They are used without audio modification under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+
+When a recording is not available, the chart stays silent and displays a preparation message.
 
 ## Deploy to GitHub Pages Later
 
@@ -131,17 +131,19 @@ src/
   components/
     LessonCard.jsx
     LessonPage.jsx
+    PinyinChart.jsx
     SentenceCard.jsx
+    SiteHeader.jsx
     SpeakButton.jsx
     VocabularyCard.jsx
   data/
     lessons.js
     parseLessonsText.js
-  utils/
-    speech.js
+    pinyinChart.js
   App.jsx
   main.jsx
   styles.css
 public/
   lessons.txt
+  audio/pinyin/
 ```

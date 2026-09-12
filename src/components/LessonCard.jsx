@@ -1,10 +1,10 @@
 import { ChevronRight } from "lucide-react";
 
-export default function LessonCard({ lesson, onSelect }) {
+export default function LessonCard({ lesson, lessonNumber, onSelect }) {
   return (
     <button className="lesson-card" type="button" onClick={() => onSelect(lesson.id)}>
       <span>
-        <span className="lesson-eyebrow">Lesson</span>
+        <span className="lesson-number">Lesson {lessonNumber}</span>
         <strong>{lesson.title}</strong>
         <span className="lesson-meta">
           {lesson.vocabulary.length} words · {lesson.sentences.length} sentences
