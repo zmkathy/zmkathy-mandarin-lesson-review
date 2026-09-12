@@ -45,7 +45,7 @@ export default function HomePage({ lessons, onNavigate, loadError }) {
               <span className="resource-kicker">Pronunciation</span>
               <strong>Pinyin Chart</strong>
               <span>Explore initials, finals, complete syllables, and four tones.</span>
-              <small>403 sounds · Tone Perfect FV2 audio</small>
+              <small>403 sounds · Tone Perfect native audio</small>
             </span>
             <ArrowRight className="resource-arrow" size={23} />
           </button>

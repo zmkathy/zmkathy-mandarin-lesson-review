@@ -92,9 +92,9 @@ The Pinyin Chart does not use browser-generated speech. It plays approved MP3 fi
 public/audio/pinyin/
 ```
 
-The integrated Female Voice 2 files retain the original Tone Perfect names, such as `ma1_FV2_MP3.mp3`. The filenames use `v` for `ü`, such as `nv3_FV2_MP3.mp3`.
+The integrated Female Voice 3 files retain the original Tone Perfect names, such as `ma1_FV3_MP3.mp3`. The filenames use `v` for `ü`, such as `nv3_FV3_MP3.mp3`. Because the downloaded Female Voice 3 set does not contain `jiao1_FV3_MP3.mp3`, that one sound uses the unmodified Female Voice 2 recording.
 
-The FV2 recordings are from *Tone Perfect: Multimodal Database for Mandarin Chinese* by Catherine Ryu, the Mandarin Tone Perception & Production Team, and Michigan State University Libraries. They are used without audio modification under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+The recordings are from *Tone Perfect: Multimodal Database for Mandarin Chinese* by Catherine Ryu, the Mandarin Tone Perception & Production Team, and Michigan State University Libraries. They are used without audio modification under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
 When a recording is not available, the chart stays silent and displays a preparation message.
 
