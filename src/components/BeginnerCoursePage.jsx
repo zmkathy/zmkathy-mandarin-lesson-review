@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { BookOpen, GalleryHorizontalEnd } from "lucide-react";
+import { BookOpen, GalleryHorizontalEnd, MessagesSquare } from "lucide-react";
 import LessonCard from "./LessonCard.jsx";
+import SentencePractice from "./SentencePractice.jsx";
 import VocabularyPractice from "./VocabularyPractice.jsx";
 
 export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson }) {
@@ -12,7 +13,7 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson 
         <div>
           <p className="section-label">Beginner level</p>
           <h1>Beginner Course</h1>
-          <p>Review lessons and practise vocabulary from Lessons 1–{lessons.length}.</p>
+          <p>Review lessons, vocabulary, and sentences from Lessons 1–{lessons.length}.</p>
         </div>
         <span className="lesson-count">{lessons.length} lessons</span>
       </header>
@@ -26,9 +27,14 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson 
         <button className={mode === "vocabulary" ? "is-active" : ""} type="button" onClick={() => setMode("vocabulary")}>
           <GalleryHorizontalEnd size={18} /> Vocabulary Practice
         </button>
+        <button className={mode === "sentences" ? "is-active" : ""} type="button" onClick={() => setMode("sentences")}>
+          <MessagesSquare size={18} /> Sentence Practice
+        </button>
       </nav>
 
-      {mode === "vocabulary" ? (
+      {mode === "sentences" ? (
+        <SentencePractice lessons={lessons} />
+      ) : mode === "vocabulary" ? (
         <VocabularyPractice lessons={lessons} />
       ) : (
         <section className="course-module" aria-labelledby="lesson-review-title">

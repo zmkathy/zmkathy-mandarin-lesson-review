@@ -1,5 +1,15 @@
-import { useMemo, useState } from "react";
-import { Eye, EyeOff, Search, Shuffle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Check, Eye, EyeOff, RotateCcw, Search, Shuffle } from "lucide-react";
+
+const STORAGE_KEY = "mis-mandarin-vocabulary-progress-v1";
+
+function loadProgress() {
+  try {
+    return JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || {};
+  } catch {
+    return {};
+  }
+}
 
 function collectVocabulary(lessons) {
   const uniqueItems = new Map();
@@ -17,6 +27,7 @@ function collectVocabulary(lessons) {
       uniqueItems.set(key, {
         ...item,
         id: `${lesson.id}-${itemIndex}`,
+        progressKey: key,
         lessonNumbers: [lessonIndex + 1]
       });
     });
@@ -36,25 +47,41 @@ function shuffleItems(items) {
 
 export default function VocabularyPractice({ lessons }) {
   const [lessonFilter, setLessonFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [revealed, setRevealed] = useState(() => new Set());
   const [shuffleVersion, setShuffleVersion] = useState(0);
+  const [progress, setProgress] = useState(loadProgress);
   const vocabulary = useMemo(() => collectVocabulary(lessons), [lessons]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    } catch {
+      // Practice still works when browser storage is unavailable.
+    }
+  }, [progress]);
 
   const visibleVocabulary = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     const filtered = vocabulary.filter((item) => {
       const matchesLesson = lessonFilter === "all"
         || item.lessonNumbers.includes(Number(lessonFilter));
+      const itemStatus = progress[item.progressKey];
+      const matchesStatus = statusFilter === "all"
+        || (statusFilter === "unmarked" && !itemStatus)
+        || itemStatus === statusFilter;
       const matchesQuery = !normalizedQuery
         || `${item.hanzi} ${item.pinyin} ${item.english}`.toLowerCase().includes(normalizedQuery);
-      return matchesLesson && matchesQuery;
+      return matchesLesson && matchesStatus && matchesQuery;
     });
 
     if (shuffleVersion === 0) return filtered;
     return shuffleItems(filtered);
-  }, [lessonFilter, query, shuffleVersion, vocabulary]);
+  }, [lessonFilter, progress, query, shuffleVersion, statusFilter, vocabulary]);
+
+  const markedCount = Object.keys(progress).length;
 
   function toggleCard(id) {
     setRevealed((current) => {
@@ -63,6 +90,16 @@ export default function VocabularyPractice({ lessons }) {
       else next.add(id);
       return next;
     });
+  }
+
+  function markItem(progressKey, status) {
+    setProgress((current) => ({ ...current, [progressKey]: status }));
+  }
+
+  function resetProgress() {
+    if (window.confirm("Reset all saved vocabulary progress on this device?")) {
+      setProgress({});
+    }
   }
 
   return (
@@ -83,6 +120,16 @@ export default function VocabularyPractice({ lessons }) {
             {lessons.map((lesson, index) => (
               <option value={index + 1} key={lesson.id}>Lesson {index + 1}: {lesson.title}</option>
             ))}
+          </select>
+        </label>
+
+        <label className="filter-field">
+          <span>Practice set</span>
+          <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+            <option value="all">All words</option>
+            <option value="review">Review again</option>
+            <option value="unmarked">Not marked</option>
+            <option value="known">Know it</option>
           </select>
         </label>
 
@@ -107,32 +154,47 @@ export default function VocabularyPractice({ lessons }) {
         </label>
       </div>
 
+      <div className="progress-note" aria-live="polite">
+        <span>Progress is saved on this device · {markedCount} marked</span>
+        {markedCount > 0 ? (
+          <button type="button" onClick={resetProgress}><RotateCcw size={15} /> Reset progress</button>
+        ) : null}
+      </div>
+
       {visibleVocabulary.length > 0 ? (
         <div className="practice-grid">
           {visibleVocabulary.map((item) => {
             const isRevealed = showAll || revealed.has(item.id);
+            const itemStatus = progress[item.progressKey];
             return (
-              <button
-                className={`practice-card${isRevealed ? " is-revealed" : ""}`}
-                type="button"
+              <article
+                className={`practice-card${isRevealed ? " is-revealed" : ""}${itemStatus ? ` is-${itemStatus}` : ""}`}
                 key={item.id}
-                onClick={() => toggleCard(item.id)}
-                aria-expanded={isRevealed}
               >
-                <span className="practice-card-top">
-                  <small>{item.lessonNumbers.map((number) => `L${number}`).join(" · ")}</small>
-                  {isRevealed ? <EyeOff size={17} /> : <Eye size={17} />}
-                </span>
-                <strong className="practice-pinyin">{item.pinyin}</strong>
-                {isRevealed ? (
-                  <span className="practice-answer">
-                    <span className="practice-hanzi">{item.hanzi}</span>
-                    <small>{item.english}</small>
+                <button className="practice-card-main" type="button" onClick={() => toggleCard(item.id)} aria-expanded={isRevealed}>
+                  <span className="practice-card-top">
+                    <small>{item.lessonNumbers.map((number) => `L${number}`).join(" · ")}</small>
+                    {isRevealed ? <EyeOff size={17} /> : <Eye size={17} />}
                   </span>
-                ) : (
-                  <span className="practice-hidden">•••</span>
-                )}
-              </button>
+                  <strong className="practice-pinyin">{item.pinyin}</strong>
+                  {isRevealed ? (
+                    <span className="practice-answer">
+                      <span className="practice-hanzi">{item.hanzi}</span>
+                      <small>{item.english}</small>
+                    </span>
+                  ) : (
+                    <span className="practice-hidden">•••</span>
+                  )}
+                </button>
+                <div className="mastery-actions" aria-label={`Progress for ${item.pinyin}`}>
+                  <button className={itemStatus === "known" ? "is-active" : ""} type="button" onClick={() => markItem(item.progressKey, "known")}>
+                    <Check size={15} /> Know it
+                  </button>
+                  <button className={itemStatus === "review" ? "is-active" : ""} type="button" onClick={() => markItem(item.progressKey, "review")}>
+                    <RotateCcw size={15} /> Review again
+                  </button>
+                </div>
+              </article>
             );
           })}
         </div>

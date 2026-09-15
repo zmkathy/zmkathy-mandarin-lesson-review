@@ -1,6 +1,6 @@
 # Mandarin Lesson Review
 
-A mobile-first website for adult beginner Mandarin students to review ten lessons and practise Pinyin pronunciation.
+A mobile-first website for adult beginner Mandarin students to review lessons, practise vocabulary and sentences, and work on Pinyin pronunciation.
 
 It uses:
 
@@ -9,7 +9,15 @@ It uses:
 - JavaScript
 - Teacher-approved MP3 pronunciation recordings
 
-There is no login, account, database, quiz, flashcard system, progress tracking, or admin dashboard.
+The site includes:
+
+- Lesson-by-lesson vocabulary and sentence review
+- Pinyin-first vocabulary cards with `Know it` and `Review again` progress
+- English-first sentence cards that reveal Pinyin before Chinese characters
+- Lesson filters, search, shuffle, and answer controls
+- An interactive Pinyin chart with native-speaker audio
+
+There is no login, account, database, or admin dashboard. Vocabulary progress is stored in the student's current browser using local storage, so it stays on that device and browser only.
 
 ## Run Locally
 
