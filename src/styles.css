@@ -172,9 +172,9 @@ button { letter-spacing: 0; }
 .course-tabs button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; border: 0; border-radius: 5px; padding: 0 13px; background: transparent; color: var(--muted); font-weight: 750; cursor: pointer; }
 .course-tabs button:hover { color: var(--teal-dark); }
 .course-tabs button.is-active { background: var(--teal-soft); color: var(--teal-dark); }
-.vocabulary-practice, .sentence-practice { margin-top: 30px; }
+.vocabulary-practice, .sentence-practice, .everyday-vocabulary { margin-top: 30px; }
 .practice-heading { align-items: end; }
-.result-count { color: var(--muted); font-size: 0.86rem; font-weight: 750; }
+.result-count { color: var(--muted); font-size: 0.86rem; font-weight: 750; white-space: nowrap; }
 .practice-toolbar { display: grid; grid-template-columns: minmax(175px, 1fr) minmax(155px, 0.85fr) minmax(220px, 1.25fr) auto auto; align-items: end; gap: 10px; margin-bottom: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
 .sentence-toolbar { grid-template-columns: minmax(190px, 1fr) minmax(230px, 1.35fr) auto auto; margin-bottom: 16px; }
 .filter-field, .practice-search { display: grid; gap: 6px; min-width: 0; color: var(--muted); font-size: 0.76rem; font-weight: 800; text-transform: uppercase; }
@@ -211,6 +211,29 @@ button { letter-spacing: 0; }
 .mastery-actions button:hover { color: var(--teal-dark); background: var(--teal-soft); }
 .mastery-actions button:first-child.is-active { background: var(--teal-soft); color: var(--teal-dark); }
 .mastery-actions button:last-child.is-active { background: var(--coral-soft); color: #ad4333; }
+.category-filter { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+.category-filter button { min-height: 38px; border: 1px solid var(--line); border-radius: 5px; padding: 0 13px; background: var(--paper); color: var(--muted); font-size: 0.82rem; font-weight: 750; cursor: pointer; }
+.category-filter button:hover { border-color: #a9d8bf; color: var(--teal-dark); }
+.category-filter button.is-active { border-color: #98d4b5; background: var(--teal-soft); color: var(--teal-dark); }
+.everyday-toolbar { display: grid; grid-template-columns: minmax(170px, 0.8fr) minmax(240px, 1.35fr) auto; align-items: end; gap: 10px; margin-bottom: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
+.everyday-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 13px; }
+.everyday-card { display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-bottom: 4px solid var(--gold); border-radius: 7px; background: var(--paper); box-shadow: 0 6px 18px rgba(39, 68, 61, 0.06); transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease; }
+.everyday-card:hover { transform: translateY(-2px); border-color: #a9d8bf; box-shadow: 0 10px 22px rgba(39, 68, 61, 0.1); }
+.everyday-card.is-revealed, .everyday-card.is-known { border-bottom-color: var(--teal); }
+.everyday-card.is-review { border-bottom-color: var(--coral); }
+.everyday-image-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 1px solid var(--line); background: #f2f7f4; }
+.everyday-card-image { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
+.everyday-card-image > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.everyday-card-sprite { width: 75%; margin: 0 auto; }
+.everyday-card-sprite > img { position: absolute; width: 300%; height: 300%; max-width: none; object-fit: fill; }
+.everyday-audio-button { position: absolute; right: 10px; bottom: 10px; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid rgba(255, 255, 255, 0.9); border-radius: 50%; background: rgba(255, 255, 255, 0.94); color: var(--teal-dark); box-shadow: 0 3px 12px rgba(31, 68, 67, 0.18); cursor: pointer; }
+.everyday-audio-button:hover, .everyday-audio-button.is-playing { background: var(--teal); color: white; }
+.everyday-card-main { display: flex; min-height: 132px; flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%; border: 0; padding: 17px 16px; background: transparent; color: inherit; cursor: pointer; }
+.everyday-pinyin { color: var(--teal-dark); font-size: 1.7rem; font-weight: 780; line-height: 1.2; }
+.everyday-answer { display: grid; gap: 4px; }
+.everyday-answer > span { color: var(--ink); font-family: "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 1.6rem; font-weight: 750; line-height: 1.15; }
+.everyday-answer small { color: var(--muted); font-size: 0.82rem; }
+.everyday-reveal { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; color: var(--muted); font-size: 0.78rem; font-weight: 700; }
 .sentence-practice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .sentence-practice-card { display: flex; flex-direction: column; min-height: 270px; border: 1px solid var(--line); border-left: 4px solid var(--coral); border-radius: 7px; padding: 18px; background: var(--paper); box-shadow: 0 6px 18px rgba(39, 68, 61, 0.06); }
 .sentence-practice-card.stage-1, .sentence-practice-card.stage-2 { border-left-color: var(--teal); }
@@ -333,7 +356,7 @@ button:active:not(:disabled) { transform: scale(0.98); }
 }
 
 @media (max-width: 900px) {
-  .practice-toolbar, .sentence-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .practice-toolbar, .sentence-toolbar, .everyday-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .practice-search { grid-column: 1 / -1; }
 }
 
@@ -349,12 +372,13 @@ button:active:not(:disabled) { transform: scale(0.98); }
   .hub-section { margin-top: 28px; }
   .resource-grid { grid-template-columns: 1fr; }
   .resource-card { min-height: 166px; padding: 18px; }
-  .course-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+  .course-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
   .course-tabs button { min-height: 52px; padding: 5px 7px; line-height: 1.15; }
-  .practice-toolbar, .sentence-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .practice-toolbar, .sentence-toolbar, .everyday-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter-field, .practice-search { grid-column: 1 / -1; }
   .toolbar-button, .answer-toggle > span { width: 100%; }
   .practice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .everyday-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .practice-card { min-height: 216px; }
   .practice-card-main { padding: 12px; }
   .practice-card-main > .practice-pinyin { font-size: 1.55rem; }
@@ -382,6 +406,7 @@ button:active:not(:disabled) { transform: scale(0.98); }
   .resource-copy > strong { font-size: 1.35rem; }
   .course-tabs button { font-size: 0.78rem; }
   .practice-grid { grid-template-columns: 1fr; }
+  .everyday-grid { grid-template-columns: 1fr; }
   .progress-note { align-items: flex-start; flex-direction: column; gap: 3px; }
   .tone-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tone-options button { min-height: 62px; }

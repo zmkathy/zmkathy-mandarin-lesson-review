@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { BookOpen, GalleryHorizontalEnd, MessagesSquare } from "lucide-react";
+import { BookOpen, GalleryHorizontalEnd, Images, MessagesSquare } from "lucide-react";
+import EverydayVocabulary from "./EverydayVocabulary.jsx";
 import LessonCard from "./LessonCard.jsx";
 import SentencePractice from "./SentencePractice.jsx";
 import VocabularyPractice from "./VocabularyPractice.jsx";
@@ -30,9 +31,14 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson 
         <button className={mode === "sentences" ? "is-active" : ""} type="button" onClick={() => setMode("sentences")}>
           <MessagesSquare size={18} /> Sentence Practice
         </button>
+        <button className={mode === "everyday" ? "is-active" : ""} type="button" onClick={() => setMode("everyday")}>
+          <Images size={18} /> Everyday Vocabulary
+        </button>
       </nav>
 
-      {mode === "sentences" ? (
+      {mode === "everyday" ? (
+        <EverydayVocabulary />
+      ) : mode === "sentences" ? (
         <SentencePractice lessons={lessons} />
       ) : mode === "vocabulary" ? (
         <VocabularyPractice lessons={lessons} />
