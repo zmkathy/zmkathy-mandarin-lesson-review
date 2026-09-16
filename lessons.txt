@@ -1,0 +1,346 @@
+// Edit this file to update the lesson website.
+// Format for each item:
+// Chinese | Pinyin | English
+
+# Lesson 1: Hello & Self Introduction
+
+## Key Vocabulary
+你好 | nǐ hǎo | hello
+您好 | nín hǎo | polite hello
+你们好 | nǐmen hǎo | hello everyone
+我 | wǒ | I; me
+叫 | jiào | to be called
+是 | shì | am; is; are
+名字 | míngzi | name
+姓 | xìng | surname
+请问 | qǐngwèn | may I ask
+贵姓 | guìxìng | your surname, polite
+来自 | láizì | come from
+加拿大 | Jiānádà | Canada
+美国 | Měiguó | United States
+中国 | Zhōngguó | China
+
+## Key Sentences
+你好！ | nǐ hǎo! | Hello!
+我叫 Kathy。 | wǒ jiào Kathy. | My name is Kathy.
+你叫什么名字？ | nǐ jiào shénme míngzi? | What is your name?
+请问，您贵姓？ | qǐngwèn, nín guìxìng? | May I ask your surname?
+我姓 Zhang。 | wǒ xìng Zhang. | My surname is Zhang.
+我是中国人。 | wǒ shì Zhōngguó rén. | I am Chinese.
+我来自加拿大。 | wǒ láizì Jiānádà. | I am from Canada.
+很高兴认识你。 | hěn gāoxìng rènshi nǐ. | Nice to meet you.
+我也很高兴认识你。 | wǒ yě hěn gāoxìng rènshi nǐ. | Nice to meet you too.
+你是哪国人？ | nǐ shì nǎ guó rén? | Which country are you from?
+你呢？ | nǐ ne? | How about you?
+
+# Lesson 2: My Family
+
+## Key Vocabulary
+家 | jiā | home; family
+家人 | jiārén | family members
+爸爸 | bàba | dad
+妈妈 | māma | mom
+哥哥 | gēge | older brother
+姐姐 | jiějie | older sister
+弟弟 | dìdi | younger brother
+妹妹 | mèimei | younger sister
+爷爷 | yéye | grandpa
+奶奶 | nǎinai | grandma
+朋友 | péngyou | friend
+谁 | shéi | who
+有 | yǒu | have
+没有 | méiyǒu | do not have
+的 | de | possessive particle
+兄弟姐妹 | xiōngdì jiěmèi | siblings
+猫 | māo | cat
+狗 | gǒu | dog
+
+## Key Sentences
+这是谁？ | zhè shì shéi? | Who is this?
+这是我的妈妈。 | zhè shì wǒ de māma. | This is my mom.
+他是我的哥哥。 | tā shì wǒ de gēge. | He is my older brother.
+她是我的妹妹。 | tā shì wǒ de mèimei. | She is my younger sister.
+这是你的爸爸吗？ | zhè shì nǐ de bàba ma? | Is this your dad?
+我有一个妹妹。 | wǒ yǒu yí ge mèimei. | I have a younger sister.
+我没有弟弟。 | wǒ méiyǒu dìdi. | I do not have a younger brother.
+他很聪明。 | tā hěn cōngming. | He is smart.
+她很友好。 | tā hěn yǒuhǎo. | She is friendly.
+它很可爱。 | tā hěn kě'ài. | It is cute.
+他很忙。 | tā hěn máng. | He is busy.
+
+# Lesson 3: Daily Plans & Weekly Schedule
+
+## Key Vocabulary
+今天 | jīntiān | today
+明天 | míngtiān | tomorrow
+后天 | hòutiān | the day after tomorrow
+上午 | shàngwǔ | morning
+中午 | zhōngwǔ | noon; lunchtime
+下午 | xiàwǔ | afternoon
+晚上 | wǎnshang | evening; night
+周末 | zhōumò | weekend
+去 | qù | go
+跑步 | pǎobù | run
+工作 | gōngzuò | work
+看电影 | kàn diànyǐng | watch a movie
+吃饭 | chīfàn | eat; have a meal
+休息 | xiūxi | rest
+学中文 | xué Zhōngwén | study Chinese
+机场 | jīchǎng | airport
+超市 | chāoshì | supermarket
+公园 | gōngyuán | park
+星期一 | xīngqī yī | Monday
+星期天 | xīngqī tiān | Sunday
+
+## Key Sentences
+今天上午我去跑步。 | jīntiān shàngwǔ wǒ qù pǎobù. | This morning, I go running.
+明天下午我去工作。 | míngtiān xiàwǔ wǒ qù gōngzuò. | Tomorrow afternoon, I go to work.
+今天晚上我去看电影。 | jīntiān wǎnshang wǒ qù kàn diànyǐng. | This evening, I go watch a movie.
+后天晚上我去休息。 | hòutiān wǎnshang wǒ qù xiūxi. | The day after tomorrow evening, I go rest.
+星期六上午我去跑步。 | xīngqīliù shàngwǔ wǒ qù pǎobù. | Saturday morning, I go running.
+你明天做什么？ | nǐ míngtiān zuò shénme? | What are you doing tomorrow?
+明天下午呢？ | míngtiān xiàwǔ ne? | What about tomorrow afternoon?
+我去机场。 | wǒ qù jīchǎng. | I go to the airport.
+
+# Lesson 4: Numbers & How Old Are You?
+
+## Key Vocabulary
+零 | líng | zero
+一 | yī | one
+二 | èr | two
+两 | liǎng | two, before measure words
+三 | sān | three
+四 | sì | four
+五 | wǔ | five
+六 | liù | six
+七 | qī | seven
+八 | bā | eight
+九 | jiǔ | nine
+十 | shí | ten
+一百 | yì bǎi | one hundred
+一千 | yì qiān | one thousand
+一万 | yí wàn | ten thousand
+岁 | suì | years old
+今年 | jīnnián | this year
+多少 | duōshǎo | how many; how much
+几 | jǐ | how many, usually small number
+个 | gè | general measure word
+
+## Key Sentences
+你今年多少岁了？ | nǐ jīnnián duōshǎo suì le? | How old are you this year?
+你多大了？ | nǐ duōdà le? | How old are you this year?
+你今年几岁？ | nǐ jīnnián jǐ suì? | How old are you this year?
+我二十八岁。 | wǒ èrshíbā suì. | I am 28.
+我今年二十八岁了。 | wǒ jīnnián èrshíbā suì le. | I am 28 this year.
+他三十五岁。 | tā sānshíwǔ suì. | He is 35.
+她四十八岁。 | tā sìshíbā suì. | She is 48.
+你家有几个人？ | nǐ jiā yǒu jǐ ge rén? | How many people are in your family?
+我家有四个人。 | wǒ jiā yǒu sì ge rén. | There are four people in my family.
+你妈妈多少岁？ | nǐ māma duōshǎo suì? | How old is your mom?
+我妈妈五十五岁。 | wǒ māma wǔshíwǔ suì. | My mom is 55.
+
+# Lesson 5: Dates & Time
+
+## Key Vocabulary
+日 | rì | date
+年 | nián | year
+月 | yuè | month
+号 | hào | date; day of month
+星期 | xīngqī | weekday
+生日 | shēngrì | birthday
+时间 | shíjiān | time
+点 | diǎn | o'clock
+半 | bàn | half
+一刻 | yí kè | quarter
+分 | fēn | minute
+几点 | jǐ diǎn | what time
+现在 | xiànzài | now
+早上 | zǎoshang | early morning
+两点 | liǎng diǎn | two o'clock
+
+## Key Sentences
+今天是几月几号？ | jīntiān shì jǐ yuè jǐ hào? | What is today's date?
+今天是六月二十八号。 | jīntiān shì liù yuè èrshíbā hào. | Today is June 28.
+今天星期几？ | jīntiān xīngqī jǐ? | What day is today?
+今天星期三。 | jīntiān xīngqī sān. | Today is Wednesday.
+你的生日是几月几号？ | nǐ de shēngrì shì jǐ yuè jǐ hào? | When is your birthday?
+我的生日是六月二十八号。 | wǒ de shēngrì shì liù yuè èrshíbā hào. | My birthday is June 28.
+几点了？ | jǐ diǎn le? | What time is it?
+现在三点半。 | xiànzài sān diǎn bàn. | It is 3:30 now.
+现在晚上十一点十五分了。 | xiànzài wǎnshang shíyī diǎn shíwǔ fēn le. | It is 11:15 PM now.
+早上九点零八分。 | zǎoshang jiǔ diǎn líng bā fēn. | 9:08 AM.
+
+# Lesson 6: Shopping Basics
+
+## Key Vocabulary
+人民币 | rénmínbì | RMB; Chinese currency
+钱 | qián | money
+元 | yuán | formal yuan
+块 | kuài | spoken yuan
+毛 | máo | tenth of a yuan
+分 | fēn | cent
+现金 | xiànjīn | cash
+刷卡 | shuākǎ | pay by card
+扫码 | sǎomǎ | scan to pay
+苹果 | píngguǒ | apple
+水 | shuǐ | water
+杯子 | bēizi | cup
+车票 | chēpiào | ticket
+商店 | shāngdiàn | shop; store
+买 | mǎi | buy
+这个 | zhège | this one
+那个 | nàge | that one
+多少 | duōshao | how many; how much
+支付 | zhīfù | pay
+
+## Key Sentences
+你想买什么？ | nǐ xiǎng mǎi shénme? | What do you want to buy?
+我想买苹果。 | wǒ xiǎng mǎi píngguǒ. | I want to buy apples.
+这个杯子多少钱？ | zhège bēizi duōshao qián? | How much is this cup?
+这瓶水多少钱？ | zhè píng shuǐ duōshao qián? | How much is this bottle of water?
+八块。 | bā kuài. | Eight kuai.
+十八块五。 | shíbā kuài wǔ. | 18.5 kuai.
+这个苹果多少钱？ | zhège píngguǒ duōshao qián? | How much is this apple?
+一共多少钱？ | yígòng duōshao qián? | How much in total?
+可以刷卡吗？ | kěyǐ shuākǎ ma? | Can I pay by card?
+可以扫码吗？ | kěyǐ sǎomǎ ma? | Can I scan to pay?
+可以用现金吗？ | kěyǐ yòng xiànjīn ma? | Can I use cash?
+可以。 | kěyǐ. | Yes, you can.
+不可以。 | bù kěyǐ. | No, you can't.
+
+# Lesson 7: Talking About States
+
+## Key Vocabulary
+饿 | è | hungry
+渴 | kě | thirsty
+累 | lèi | tired
+困 | kùn | sleepy
+饱 | bǎo | full
+饭 | fàn | meal; rice
+米饭 | mǐfàn | rice
+面 | miàn | noodles
+饺子 | jiǎozi | dumplings
+面包 | miànbāo | bread
+鸡蛋 | jīdàn | egg
+水 | shuǐ | water
+茶 | chá | tea
+咖啡 | kāfēi | coffee
+吃 | chī | eat
+喝 | hē | drink
+休息 | xiūxi | rest
+睡觉 | shuìjiào | sleep
+想 | xiǎng | want to; would like to
+有点儿 | yǒudiǎnr | a little
+
+## Key Sentences
+我饿了。 | wǒ è le. | I’m hungry now.
+我渴了。 | wǒ kě le. | I’m thirsty now.
+我累了。 | wǒ lèi le. | I’m tired now.
+我困了。 | wǒ kùn le. | I’m sleepy now.
+你饿了吗？ | nǐ è le ma? | Are you hungry?
+你渴了吗？ | nǐ kě le ma? | Are you thirsty?
+你累了吗？ | nǐ lèi le ma? | Are you tired?
+你困了吗？ | nǐ kùn le ma? | Are you sleepy?
+有点儿饿。 | yǒudiǎnr è. | A little hungry.
+不太累。 | bú tài lèi. | Not very tired.
+太困了！ | tài kùn le! | So sleepy!
+我想吃面。 | wǒ xiǎng chī miàn. | I want to eat noodles.
+我想喝水。 | wǒ xiǎng hē shuǐ. | I want to drink water.
+我想休息。 | wǒ xiǎng xiūxi. | I want to rest.
+我想睡觉。 | wǒ xiǎng shuìjiào. | I want to sleep.
+你想吃什么？ | nǐ xiǎng chī shénme? | What do you want to eat?
+你想喝什么？ | nǐ xiǎng hē shénme? | What do you want to drink?
+
+# Lesson 8: Ordering Food
+
+## Key Vocabulary
+餐厅 | cāntīng | restaurant
+服务员 | fúwùyuán | server; waiter
+菜单 | càidān | menu
+筷子 | kuàizi | chopsticks
+点餐 | diǎncān | order food
+米饭 | mǐfàn | rice
+面条 | miàntiáo | noodles
+饺子 | jiǎozi | dumplings
+包子 | bāozi | steamed bun
+汤 | tāng | soup
+水 | shuǐ | water
+茶 | chá | tea
+热水 | rè shuǐ | hot water
+冰水 | bīng shuǐ | iced water
+要 | yào | want; would like
+不要 | bú yào | do not want
+请 | qǐng | please
+给 | gěi | give
+辣 | là | spicy
+甜 | tián | sweet
+酸 | suān | sour
+咸 | xián | salty
+
+## Key Sentences
+你要吃什么？ | nǐ yào chī shénme? | What would you like to eat?
+我要一份饺子。 | wǒ yào yí fèn jiǎozi. | I’d like one order of dumplings.
+你要喝什么？ | nǐ yào hē shénme? | What would you like to drink?
+我要一杯茶。 | wǒ yào yì bēi chá. | I’d like one cup of tea.
+请给我菜单。 | qǐng gěi wǒ càidān. | Please give me the menu.
+请给我筷子。 | qǐng gěi wǒ kuàizi. | Please give me chopsticks.
+这个辣吗？ | zhège là ma? | Is this spicy?
+有点儿辣。 | yǒudiǎnr là. | A little spicy.
+我不要辣。 | wǒ bú yào là. | I don’t want spicy food.
+
+# Lesson 9: Transportation
+
+## Key Vocabulary
+机场 | jīchǎng | airport
+酒店 | jiǔdiàn | hotel
+火车站 | huǒchēzhàn | train station
+地铁站 | dìtiězhàn | metro station
+餐厅 | cāntīng | restaurant
+地铁 | dìtiě | metro
+公交车 | gōngjiāochē | bus
+出租车 | chūzūchē | taxi
+高铁 | gāotiě | high-speed train
+想 | xiǎng | want to; would like to
+去 | qù | go
+坐 | zuò | take; ride
+怎么 | zěnme | how
+请问 | qǐngwèn | excuse me; may I ask
+可以 | kěyǐ | can; may
+在 | zài | be at; in
+哪儿 | nǎr | where
+
+## Key Sentences
+你想去哪儿？ | nǐ xiǎng qù nǎr? | Where do you want to go?
+我想去机场。 | wǒ xiǎng qù jīchǎng. | I want to go to the airport.
+我坐地铁去机场。 | wǒ zuò dìtiě qù jīchǎng. | I take the metro to the airport.
+请问，怎么去酒店？ | qǐngwèn, zěnme qù jiǔdiàn? | How do I get to the hotel?
+你可以坐出租车。 | nǐ kěyǐ zuò chūzūchē. | You can take a taxi.
+地铁站在哪儿？ | dìtiězhàn zài nǎr? | Where is the metro station?
+在那儿。 | zài nàr. | Over there.
+
+# Lesson 10: Asking for Directions
+
+## Key Vocabulary
+前面 | qiánmiàn | in front; ahead
+后面 | hòumiàn | behind
+左边 | zuǒbiān | left side
+右边 | yòubiān | right side
+旁边 | pángbiān | beside; next to
+走 | zǒu | walk; go
+一直 | yìzhí | straight; continuously
+左拐 | zuǒ guǎi | turn left
+右拐 | yòu guǎi | turn right
+然后 | ránhòu | then
+向 | xiàng | towards
+远 | yuǎn | far
+近 | jìn | near
+
+## Key Sentences
+请问，地铁站怎么走？ | qǐngwèn, dìtiězhàn zěnme zǒu? | Excuse me, how do I get to the metro station?
+一直走，然后左拐。 | yìzhí zǒu, ránhòu zuǒ guǎi. | Go straight, then turn left.
+一直走，然后右拐。 | yìzhí zǒu, ránhòu yòu guǎi. | Go straight, then turn right.
+地铁站在酒店的前面。 | dìtiězhàn zài jiǔdiàn de qiánmiàn. | The metro station is in front of the hotel.
+咖啡店在酒店的左边。 | kāfēidiàn zài jiǔdiàn de zuǒbiān. | The café is on the left of the hotel.
+地铁站在哪儿？ | dìtiězhàn zài nǎr? | Where is the metro station?
+远吗？ | yuǎn ma? | Is it far?
+不远，很近。 | bù yuǎn, hěn jìn. | Not far, very near.
