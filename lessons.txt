@@ -12,6 +12,7 @@
 叫 | jiào | to be called
 是 | shì | am; is; are
 名字 | míngzi | name
+姓名 | xìngmíng | full name
 姓 | xìng | surname
 请问 | qǐngwèn | may I ask
 贵姓 | guìxìng | your surname, polite
@@ -22,10 +23,11 @@
 
 ## Key Sentences
 你好！ | nǐ hǎo! | Hello!
-我叫 Kathy。 | wǒ jiào Kathy. | My name is Kathy.
+我叫密。 | wǒ jiào Mì. | My name is Mi.
 你叫什么名字？ | nǐ jiào shénme míngzi? | What is your name?
+你姓什么？ | nǐ xìng shénme? | What is your surname?
 请问，您贵姓？ | qǐngwèn, nín guìxìng? | May I ask your surname?
-我姓 Zhang。 | wǒ xìng Zhang. | My surname is Zhang.
+我姓张。 | wǒ xìng Zhāng. | My surname is Zhang.
 我是中国人。 | wǒ shì Zhōngguó rén. | I am Chinese.
 我来自加拿大。 | wǒ láizì Jiānádà. | I am from Canada.
 很高兴认识你。 | hěn gāoxìng rènshi nǐ. | Nice to meet you.
