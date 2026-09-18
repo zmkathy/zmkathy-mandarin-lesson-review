@@ -4,20 +4,25 @@ import { Check, Eye, EyeOff, RotateCcw, Search, Volume2 } from "lucide-react";
 const STORAGE_KEY = "mis-mandarin-everyday-vocabulary-progress-v1";
 const IMAGE_ROOT = `${import.meta.env.BASE_URL}images/everyday-vocabulary`;
 const AUDIO_ROOT = `${import.meta.env.BASE_URL}audio/everyday-vocabulary`;
+const AUDIO_VERSION = "20260917-4";
 
 const categories = [
   ["all", "All"],
   ["family", "Family"],
   ["food", "Food & Drinks"],
   ["feelings", "Feelings"],
-  ["items", "Daily Items"]
+  ["clothing", "Clothing"],
+  ["transportation", "Transportation"],
+  ["tableware", "Tableware"],
+  ["items", "Daily Items"],
+  ["places", "Places"]
 ];
 
 const vocabulary = [
   { id: "baba", category: "family", pinyin: "bàba", hanzi: "爸爸", english: "dad" },
   { id: "mama", category: "family", pinyin: "māma", hanzi: "妈妈", english: "mom" },
-  { id: "yeye", category: "family", pinyin: "yéye", hanzi: "爷爷", english: "grandpa", hasAudio: false },
-  { id: "nainai", category: "family", pinyin: "nǎinai", hanzi: "奶奶", english: "grandma", hasAudio: false },
+  { id: "yeye", category: "family", pinyin: "yéye", hanzi: "爷爷", english: "grandpa" },
+  { id: "nainai", category: "family", pinyin: "nǎinai", hanzi: "奶奶", english: "grandma" },
   { id: "gege", category: "family", pinyin: "gēge", hanzi: "哥哥", english: "older brother", sprite: [0, 0] },
   { id: "jiejie", category: "family", pinyin: "jiějie", hanzi: "姐姐", english: "older sister", sprite: [1, 0] },
   { id: "didi", category: "family", pinyin: "dìdi", hanzi: "弟弟", english: "younger brother", sprite: [2, 0] },
@@ -32,14 +37,44 @@ const vocabulary = [
   { id: "baozi", category: "food", pinyin: "bāozi", hanzi: "包子", english: "steamed bun" },
   { id: "mianbao", category: "food", pinyin: "miànbāo", hanzi: "面包", english: "bread" },
   { id: "jidan", category: "food", pinyin: "jīdàn", hanzi: "鸡蛋", english: "egg" },
+  { id: "niunai", category: "food", pinyin: "niúnǎi", hanzi: "牛奶", english: "milk" },
+  { id: "xiangjiao", category: "food", pinyin: "xiāngjiāo", hanzi: "香蕉", english: "banana" },
+  { id: "xigua", category: "food", pinyin: "xīguā", hanzi: "西瓜", english: "watermelon" },
+  { id: "chengzi", category: "food", pinyin: "chéngzi", hanzi: "橙子", english: "orange" },
   { id: "e", category: "feelings", pinyin: "è", hanzi: "饿", english: "hungry", sprite: [1, 1] },
   { id: "ke", category: "feelings", pinyin: "kě", hanzi: "渴", english: "thirsty", sprite: [2, 1] },
   { id: "lei", category: "feelings", pinyin: "lèi", hanzi: "累", english: "tired", sprite: [0, 2] },
   { id: "kun", category: "feelings", pinyin: "kùn", hanzi: "困", english: "sleepy", sprite: [1, 2] },
+  { id: "yifu", category: "clothing", pinyin: "yīfu", hanzi: "衣服", english: "clothes", imageFit: "contain" },
+  { id: "kuzi", category: "clothing", pinyin: "kùzi", hanzi: "裤子", english: "pants", imageFit: "contain" },
+  { id: "maozi", category: "clothing", pinyin: "màozi", hanzi: "帽子", english: "hat", imageFit: "contain" },
+  { id: "yanjing", category: "clothing", pinyin: "yǎnjìng", hanzi: "眼镜", english: "glasses", imageFit: "contain" },
+  { id: "ditie", category: "transportation", pinyin: "dìtiě", hanzi: "地铁", english: "subway", imageFit: "contain" },
+  { id: "gongjiaoche", category: "transportation", pinyin: "gōngjiāochē", hanzi: "公交车", english: "bus", imageFit: "contain" },
+  { id: "zixingche", category: "transportation", pinyin: "zìxíngchē", hanzi: "自行车", english: "bicycle", imageFit: "contain" },
+  { id: "feiji", category: "transportation", pinyin: "fēijī", hanzi: "飞机", english: "airplane", imageFit: "contain" },
+  { id: "chuzuche", category: "transportation", pinyin: "chūzūchē", hanzi: "出租车", english: "taxi", imageFit: "contain" },
+  { id: "panzi", category: "tableware", pinyin: "pánzi", hanzi: "盘子", english: "plate", imageFit: "contain" },
+  { id: "wan", category: "tableware", pinyin: "wǎn", hanzi: "碗", english: "bowl", imageFit: "contain" },
+  { id: "shaozi", category: "tableware", pinyin: "sháozi", hanzi: "勺子", english: "spoon", imageFit: "contain" },
+  { id: "chazi", category: "tableware", pinyin: "chāzi", hanzi: "叉子", english: "fork", imageFit: "contain" },
+  { id: "zhuozi", category: "items", pinyin: "zhuōzi", hanzi: "桌子", english: "table", imageFit: "contain" },
+  { id: "dengzi", category: "items", pinyin: "dèngzi", hanzi: "凳子", english: "stool", imageFit: "contain" },
+  { id: "yizi", category: "items", pinyin: "yǐzi", hanzi: "椅子", english: "chair", imageFit: "contain" },
   { id: "beizi", category: "items", pinyin: "bēizi", hanzi: "杯子", english: "cup" },
+  { id: "wazi", category: "items", pinyin: "wàzi", hanzi: "袜子", english: "socks", imageFit: "contain" },
+  { id: "xiezi", category: "items", pinyin: "xiézi", hanzi: "鞋子", english: "shoes", imageFit: "contain" },
   { id: "kuaizi", category: "items", pinyin: "kuàizi", hanzi: "筷子", english: "chopsticks" },
   { id: "caidan", category: "items", pinyin: "càidān", hanzi: "菜单", english: "menu" },
-  { id: "chepiao", category: "items", pinyin: "chēpiào", hanzi: "车票", english: "transport ticket" }
+  { id: "chepiao", category: "items", pinyin: "chēpiào", hanzi: "车票", english: "transport ticket" },
+  { id: "shouji", category: "items", pinyin: "shǒujī", hanzi: "手机", english: "mobile phone", imageFit: "contain" },
+  { id: "qianbao", category: "items", pinyin: "qiánbāo", hanzi: "钱包", english: "wallet" },
+  { id: "yaoshi", category: "items", pinyin: "yàoshi", hanzi: "钥匙", english: "keys" },
+  { id: "shu", category: "items", pinyin: "shū", hanzi: "书", english: "book" },
+  { id: "jia", category: "places", pinyin: "jiā", hanzi: "家", english: "home" },
+  { id: "xuexiao", category: "places", pinyin: "xuéxiào", hanzi: "学校", english: "school" },
+  { id: "chaoshi", category: "places", pinyin: "chāoshì", hanzi: "超市", english: "supermarket" },
+  { id: "canting", category: "places", pinyin: "cāntīng", hanzi: "餐厅", english: "restaurant" }
 ];
 
 function loadProgress() {
@@ -65,7 +100,7 @@ function CardImage({ item }) {
   }
 
   return (
-    <span className="everyday-card-image">
+    <span className={`everyday-card-image${item.imageFit === "contain" ? " is-contain" : ""}`}>
       <img src={`${IMAGE_ROOT}/${item.id}.webp`} alt="" />
     </span>
   );
@@ -126,7 +161,7 @@ export default function EverydayVocabulary() {
 
   function playAudio(item) {
     audioRef.current?.pause();
-    const audio = new Audio(`${AUDIO_ROOT}/${item.id}.mp3`);
+    const audio = new Audio(`${AUDIO_ROOT}/${item.id}.mp3?v=${AUDIO_VERSION}`);
     audioRef.current = audio;
     setPlayingId(item.id);
     audio.addEventListener("ended", () => setPlayingId(null), { once: true });
