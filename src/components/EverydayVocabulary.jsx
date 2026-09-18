@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Eye, EyeOff, RotateCcw, Search, Volume2 } from "lucide-react";
+import { getCardProgress, saveCardProgress } from "../services/studentPortal.js";
 
 const STORAGE_KEY = "mis-mandarin-everyday-vocabulary-progress-v1";
 const IMAGE_ROOT = `${import.meta.env.BASE_URL}images/everyday-vocabulary`;
@@ -77,9 +78,9 @@ const vocabulary = [
   { id: "canting", category: "places", pinyin: "cāntīng", hanzi: "餐厅", english: "restaurant" }
 ];
 
-function loadProgress() {
+function loadProgress(storageKey) {
   try {
-    return JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || {};
+    return JSON.parse(window.localStorage.getItem(storageKey)) || {};
   } catch {
     return {};
   }
@@ -106,23 +107,31 @@ function CardImage({ item }) {
   );
 }
 
-export default function EverydayVocabulary() {
+export default function EverydayVocabulary({ student }) {
+  const storageKey = student?.id ? `${STORAGE_KEY}-${student.id}` : STORAGE_KEY;
   const [category, setCategory] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [revealed, setRevealed] = useState(() => new Set());
-  const [progress, setProgress] = useState(loadProgress);
+  const [progress, setProgress] = useState(() => loadProgress(storageKey));
   const [playingId, setPlayingId] = useState(null);
   const audioRef = useRef(null);
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      window.localStorage.setItem(storageKey, JSON.stringify(progress));
     } catch {
       // Practice still works when browser storage is unavailable.
     }
-  }, [progress]);
+  }, [progress, storageKey]);
+
+  useEffect(() => {
+    if (!student?.token || student.id === "demo") return;
+    getCardProgress(student.token, "everyday_vocabulary").then((savedProgress) => {
+      setProgress((current) => ({ ...current, ...savedProgress }));
+    });
+  }, [student?.id, student?.token]);
 
   useEffect(() => () => audioRef.current?.pause(), []);
 
@@ -151,6 +160,9 @@ export default function EverydayVocabulary() {
 
   function markItem(id, status) {
     setProgress((current) => ({ ...current, [id]: status }));
+    if (student?.token && student.id !== "demo") {
+      saveCardProgress(student.token, "everyday_vocabulary", id, status);
+    }
   }
 
   function resetProgress() {

@@ -5,19 +5,20 @@ function collectSentences(lessons) {
   const uniqueItems = new Map();
 
   lessons.forEach((lesson, lessonIndex) => {
+    const lessonNumber = lesson.lessonNumber ?? lessonIndex + 1;
     lesson.sentences.forEach((item, itemIndex) => {
       const key = `${item.hanzi}-${item.pinyin}`;
       const existing = uniqueItems.get(key);
 
       if (existing) {
-        existing.lessonNumbers.push(lessonIndex + 1);
+        existing.lessonNumbers.push(lessonNumber);
         return;
       }
 
       uniqueItems.set(key, {
         ...item,
         id: `${lesson.id}-sentence-${itemIndex}`,
-        lessonNumbers: [lessonIndex + 1]
+        lessonNumbers: [lessonNumber]
       });
     });
   });
@@ -79,7 +80,7 @@ export default function SentencePractice({ lessons }) {
           <select value={lessonFilter} onChange={(event) => setLessonFilter(event.target.value)}>
             <option value="all">All lessons</option>
             {lessons.map((lesson, index) => (
-              <option value={index + 1} key={lesson.id}>Lesson {index + 1}: {lesson.title}</option>
+              <option value={lesson.lessonNumber ?? index + 1} key={lesson.id}>Lesson {lesson.lessonNumber ?? index + 1}: {lesson.title}</option>
             ))}
           </select>
         </label>

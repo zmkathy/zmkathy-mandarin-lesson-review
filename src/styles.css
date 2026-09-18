@@ -19,9 +19,9 @@
 }
 
 * { box-sizing: border-box; }
-html { min-width: 320px; background: #f6faf8; }
-body { min-width: 320px; min-height: 100vh; margin: 0; background: #f6faf8; }
-button, input { font: inherit; }
+html { min-width: 320px; overflow-x: hidden; background: #f6faf8; }
+body { min-width: 320px; min-height: 100vh; margin: 0; overflow-x: hidden; background: #f6faf8; }
+button, input, select { font: inherit; }
 button { letter-spacing: 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
@@ -79,6 +79,7 @@ button { letter-spacing: 0; }
   font-weight: 700;
 }
 
+.header-actions { display: flex; align-items: center; gap: 12px; }
 .primary-nav { display: flex; align-items: center; gap: 5px; }
 .primary-nav button {
   display: inline-flex;
@@ -96,6 +97,25 @@ button { letter-spacing: 0; }
 }
 .primary-nav button:hover { background: #edf7f5; color: var(--teal-dark); }
 .primary-nav button.is-active { background: var(--teal-soft); color: var(--teal-dark); }
+.student-login-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  border: 1px solid #b9dcd1;
+  border-radius: 6px;
+  padding: 0 12px;
+  background: #f7fcfa;
+  color: var(--teal-dark);
+  font-weight: 750;
+  cursor: pointer;
+}
+.student-login-button:hover { background: var(--teal-soft); }
+.student-menu { display: flex; align-items: center; overflow: hidden; border: 1px solid #b9dcd1; border-radius: 6px; background: #f7fcfa; color: var(--teal-dark); }
+.student-menu > span { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 10px; font-size: 0.86rem; font-weight: 750; }
+.student-menu > button { display: grid; place-items: center; width: 38px; height: 40px; border: 0; border-left: 1px solid #cce4dc; background: transparent; color: var(--muted); cursor: pointer; }
+.student-menu > button:hover { background: var(--teal-soft); color: var(--teal-dark); }
 
 .content-page { width: min(100%, 1120px); margin: 0 auto; padding: 34px 18px 64px; }
 .page-intro {
@@ -131,6 +151,24 @@ button { letter-spacing: 0; }
 .hub-title-accent { color: var(--teal-dark); }
 .hub-heading > p:last-child { max-width: 34rem; margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.55; }
 .hub-section { margin-top: 26px; }
+.student-welcome {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  border: 1px solid #b9dcd1;
+  border-left: 4px solid var(--teal);
+  border-radius: 7px;
+  padding: 17px 18px;
+  background: #f9fdfb;
+}
+.student-welcome-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--teal-soft); color: var(--teal-dark); }
+.student-welcome .section-label { margin-bottom: 3px; }
+.student-welcome h2 { margin: 0 0 4px; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; letter-spacing: 0; }
+.student-welcome p:last-child { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+.student-welcome > button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; border: 0; border-radius: 5px; padding: 0 13px; background: var(--teal); color: white; font-weight: 750; cursor: pointer; }
+.student-welcome > button:hover { background: var(--teal-dark); }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 14px; }
 .section-heading h2 { margin: 0; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.65rem; line-height: 1.1; letter-spacing: 0; }
 .section-heading .section-label { margin-bottom: 5px; }
@@ -166,6 +204,9 @@ button { letter-spacing: 0; }
 .resource-lessons .resource-copy small { color: var(--muted); }
 .resource-pinyin .resource-copy small { color: var(--teal-dark); }
 .resource-arrow { align-self: center; color: var(--muted); }
+.hub-footer { display: flex; justify-content: center; margin-top: 42px; padding-top: 18px; border-top: 1px solid var(--line); }
+.hub-footer button { display: inline-flex; align-items: center; gap: 6px; border: 0; padding: 6px; background: transparent; color: #81908c; font-size: 0.76rem; cursor: pointer; }
+.hub-footer button:hover { color: var(--teal-dark); }
 .course-module { margin-top: 30px; }
 .course-module-heading { margin-bottom: 14px; }
 .course-tabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
@@ -268,6 +309,9 @@ button { letter-spacing: 0; }
   transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
 }
 .lesson-card:hover { transform: translateY(-2px); border-color: #aadbd4; box-shadow: 0 11px 24px rgba(39, 68, 61, 0.1); }
+.lesson-card.is-locked { border-left-color: #cfd9d6; background: #f8faf9; box-shadow: none; cursor: not-allowed; opacity: 0.72; }
+.lesson-card.is-locked:hover { transform: none; border-color: var(--line); border-left-color: #cfd9d6; box-shadow: none; }
+.lesson-card.is-locked > svg { color: #8d9b97; }
 .lesson-card strong { display: block; margin-bottom: 10px; color: #20312c; font-size: 1.08rem; line-height: 1.3; }
 .lesson-meta { display: block; color: var(--muted); font-size: 0.88rem; }
 .lesson-card > svg { flex: 0 0 auto; color: var(--teal); }
@@ -349,6 +393,86 @@ button { letter-spacing: 0; }
 .tone-audio { display: block; width: 100%; height: 36px; margin-top: 13px; }
 .audio-status { min-height: 18px; margin: 12px 0 0; color: var(--muted); font-size: 0.78rem; text-align: center; }
 
+.student-dialog-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 18px; background: rgba(25, 43, 39, 0.5); backdrop-filter: blur(4px); }
+.student-dialog { position: relative; width: min(100%, 430px); border: 1px solid var(--line); border-top: 4px solid var(--teal); border-radius: 8px; padding: 28px; background: var(--paper); box-shadow: 0 24px 70px rgba(20, 45, 39, 0.24); }
+.dialog-close { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
+.dialog-close:hover { background: #eef5f2; color: var(--ink); }
+.student-dialog-icon { display: grid; place-items: center; width: 50px; height: 50px; margin-bottom: 17px; border-radius: 7px; background: var(--teal-soft); color: var(--teal-dark); }
+.student-dialog h2 { margin: 0 0 7px; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 2rem; letter-spacing: 0; }
+.student-dialog-intro { margin: 0 0 21px; color: var(--muted); line-height: 1.5; }
+.student-login-form { display: grid; gap: 14px; }
+.student-login-form label { display: grid; gap: 6px; color: var(--ink); font-size: 0.82rem; font-weight: 750; }
+.student-login-form input { width: 100%; height: 44px; border: 1px solid var(--line); border-radius: 5px; padding: 0 12px; background: #f8faf9; color: var(--muted); }
+.student-login-form > button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; border: 0; border-radius: 5px; background: var(--teal); color: white; font-weight: 750; cursor: pointer; }
+.student-login-form > button:hover:not(:disabled) { background: var(--teal-dark); }
+.student-login-form > button:disabled { background: #b9c8c3; cursor: default; }
+.student-login-error { margin: -2px 0 0; color: #b84432; font-size: 0.8rem; line-height: 1.4; }
+.is-spinning { animation: spin 900ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.student-login-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 16px; color: var(--muted); font-size: 0.76rem; line-height: 1.45; }
+.student-login-note svg { flex: 0 0 auto; margin-top: 1px; color: var(--teal-dark); }
+.student-preview-button { width: 100%; min-height: 42px; margin-top: 17px; border: 1px solid #9ed5bc; border-radius: 5px; background: var(--teal-soft); color: var(--teal-dark); font-weight: 750; cursor: pointer; }
+.student-preview-button:hover { background: #d4f0e1; }
+
+.teacher-page { width: min(100%, 1240px); max-width: 100%; min-width: 0; overflow-x: hidden; }
+.teacher-loading { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 50vh; color: var(--muted); }
+.teacher-login { width: min(100%, 430px); margin: 42px auto 0; border: 1px solid var(--line); border-top: 4px solid var(--teal); border-radius: 8px; padding: 28px; background: var(--paper); box-shadow: 0 16px 42px rgba(31, 68, 67, 0.1); }
+.teacher-login-icon { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 17px; border-radius: 7px; background: var(--teal-soft); color: var(--teal-dark); }
+.teacher-login h1, .teacher-header h1 { margin: 0 0 7px; font-family: Georgia, "Times New Roman", serif; letter-spacing: 0; }
+.teacher-login h1 { font-size: 2rem; }
+.teacher-login > p:not(.section-label) { margin: 0 0 22px; color: var(--muted); }
+.teacher-login form { display: grid; gap: 14px; }
+.teacher-login label { display: grid; gap: 6px; color: var(--ink); font-size: 0.8rem; font-weight: 750; }
+.teacher-login input, .teacher-password { width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: 5px; background: #fbfdfc; }
+.teacher-login label > input { padding: 0 11px; }
+.teacher-password { display: flex; align-items: center; overflow: hidden; }
+.teacher-password input { min-width: 0; flex: 1; border: 0; padding: 0 11px; outline: 0; background: transparent; }
+.teacher-password button { display: grid; place-items: center; width: 42px; height: 42px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.teacher-login form > button { min-height: 44px; border: 0; border-radius: 5px; background: var(--teal); color: white; font-weight: 750; cursor: pointer; }
+.teacher-header { display: flex; align-items: end; justify-content: space-between; gap: 22px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 2px solid var(--teal); }
+.teacher-header h1 { font-size: clamp(2.1rem, 3.4vw, 3rem); }
+.teacher-header p:last-child { margin: 0; color: var(--muted); }
+.teacher-header-actions { display: flex; gap: 8px; }
+.teacher-header-actions button, .add-student-form > button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; border: 1px solid var(--teal); border-radius: 5px; padding: 0 13px; background: var(--teal); color: white; font-weight: 750; cursor: pointer; }
+.teacher-header-actions button.secondary { border-color: var(--line); background: var(--paper); color: var(--muted); }
+.add-student-form { display: grid; grid-template-columns: 42px minmax(170px, 1.2fr) minmax(150px, 0.9fr) minmax(160px, 0.9fr) auto; align-items: end; gap: 11px; margin-bottom: 18px; border: 1px solid #b9dcd1; border-radius: 7px; padding: 15px; background: #f9fdfb; }
+.add-student-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 6px; background: var(--teal-soft); color: var(--teal-dark); }
+.add-student-form label { display: grid; gap: 5px; color: var(--muted); font-size: 0.74rem; font-weight: 800; text-transform: uppercase; }
+.add-student-form input, .add-student-form select { width: 100%; min-height: 42px; border: 1px solid var(--line); border-radius: 5px; padding: 0 10px; background: var(--paper); color: var(--ink); }
+.teacher-error { margin: 0 0 14px; border-left: 3px solid var(--coral); padding: 9px 11px; background: var(--coral-soft); color: #a63f30; font-size: 0.84rem; }
+.teacher-summary { display: flex; align-items: center; gap: 22px; margin-bottom: 11px; color: var(--muted); font-size: 0.84rem; }
+.teacher-summary strong { color: var(--ink); font-size: 1rem; }
+.teacher-summary button { display: inline-flex; align-items: center; gap: 5px; margin-left: auto; border: 0; background: transparent; color: var(--teal-dark); font-weight: 750; cursor: pointer; }
+.student-admin-table-wrap { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); -webkit-overflow-scrolling: touch; }
+.student-admin-table { width: 100%; min-width: 980px; border-collapse: collapse; text-align: left; }
+.student-admin-table th { height: 42px; border-bottom: 1px solid var(--line); padding: 0 12px; background: #f2f7f4; color: var(--muted); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
+.student-admin-table td { height: 64px; border-bottom: 1px solid var(--line); padding: 9px 12px; color: var(--muted); font-size: 0.82rem; }
+.student-admin-table tr:last-child td { border-bottom: 0; }
+.student-admin-table tr.is-inactive { opacity: 0.58; }
+.student-admin-table td:first-child strong, .student-admin-table td:first-child small { display: block; }
+.student-admin-table td:first-child strong { color: var(--ink); font-size: 0.9rem; }
+.student-admin-table td:first-child small { margin-top: 3px; color: var(--muted); }
+.student-admin-table select { min-width: 116px; height: 36px; border: 1px solid var(--line); border-radius: 5px; padding: 0 8px; background: #fbfdfc; color: var(--ink); }
+.lesson-access-button { min-width: 110px; min-height: 36px; border: 1px solid #a9d8c7; border-radius: 5px; padding: 0 10px; background: #f1faf6; color: var(--teal-dark); font-size: 0.78rem; font-weight: 750; cursor: pointer; }
+.lesson-access-button:hover { border-color: var(--teal); background: var(--teal-soft); }
+.lesson-access-dialog { position: relative; width: min(100%, 620px); border: 1px solid var(--line); border-top: 4px solid var(--teal); border-radius: 8px; padding: 26px; background: var(--paper); box-shadow: 0 24px 70px rgba(20, 45, 39, 0.24); }
+.lesson-access-dialog h2 { margin: 0 0 6px; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.8rem; letter-spacing: 0; }
+.lesson-access-dialog > p:not(.section-label) { margin: 0; color: var(--muted); line-height: 1.5; }
+.lesson-access-shortcuts { display: flex; gap: 8px; margin: 18px 0 12px; }
+.lesson-access-shortcuts button { min-height: 34px; border: 1px solid var(--line); border-radius: 5px; padding: 0 11px; background: #f8fbfa; color: var(--teal-dark); font-size: 0.78rem; font-weight: 750; cursor: pointer; }
+.lesson-access-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.lesson-access-grid label { min-width: 0; cursor: pointer; }
+.lesson-access-grid input { position: absolute; opacity: 0; pointer-events: none; }
+.lesson-access-grid span { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 42px; border: 1px solid var(--line); border-radius: 5px; background: #fbfdfc; color: var(--muted); font-size: 0.78rem; font-weight: 720; white-space: nowrap; }
+.lesson-access-grid label.is-selected span { border-color: #83cbaa; background: var(--teal-soft); color: var(--teal-dark); }
+.lesson-access-actions { display: flex; align-items: center; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.lesson-access-actions > span { margin-right: auto; color: var(--muted); font-size: 0.8rem; }
+.lesson-access-actions button { min-height: 40px; border: 1px solid var(--teal); border-radius: 5px; padding: 0 13px; background: var(--teal); color: white; font-weight: 750; cursor: pointer; }
+.lesson-access-actions button.secondary { border-color: var(--line); background: var(--paper); color: var(--muted); }
+.status-toggle { min-width: 68px; min-height: 32px; border: 1px solid #e3b0a7; border-radius: 16px; background: var(--coral-soft); color: #a54132; font-size: 0.75rem; font-weight: 750; cursor: pointer; }
+.status-toggle.is-active { border-color: #9ed5bc; background: var(--teal-soft); color: var(--teal-dark); }
+.text-action { border: 0; padding: 5px 0; background: transparent; color: var(--teal-dark); font-size: 0.78rem; font-weight: 750; cursor: pointer; white-space: nowrap; }
+
 button:focus-visible, input:focus-visible { outline: 3px solid rgba(229, 160, 53, 0.48); outline-offset: 2px; }
 button:active:not(:disabled) { transform: scale(0.98); }
 
@@ -359,18 +483,39 @@ button:active:not(:disabled) { transform: scale(0.98); }
 @media (max-width: 900px) {
   .practice-toolbar, .sentence-toolbar, .everyday-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .practice-search { grid-column: 1 / -1; }
+  .add-student-form { grid-template-columns: 42px repeat(2, minmax(0, 1fr)); }
+  .add-student-form > button { grid-column: 2 / -1; }
 }
 
 @media (max-width: 700px) {
   .topbar { position: static; display: block; padding: 12px 14px 0; }
   .brand { margin-bottom: 11px; }
-  .primary-nav { width: 100%; border-top: 1px solid var(--line); }
+  .header-actions { display: grid; grid-template-columns: 1fr auto; width: 100%; border-top: 1px solid var(--line); }
+  .primary-nav { min-width: 0; }
   .primary-nav button { flex: 1; border-radius: 0; padding: 0 8px; }
+  .student-login-button { margin: 6px 0; padding: 0 10px; }
+  .student-login-button { font-size: 0; gap: 0; }
+  .student-login-button svg { width: 19px; height: 19px; }
+  .student-menu > span { display: none; }
+  .student-menu { margin: 6px 0; }
+  .student-menu > button { border-left: 0; }
+  .teacher-header { display: block; }
+  .teacher-header-actions { margin-top: 16px; }
+  .add-student-form { grid-template-columns: 1fr; }
+  .add-student-icon { display: none; }
+  .add-student-form > button { grid-column: auto; width: 100%; }
+  .lesson-access-dialog { padding: 22px 16px; }
+  .lesson-access-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lesson-access-actions { flex-wrap: wrap; }
+  .lesson-access-actions > span { width: 100%; }
   .content-page { padding: 28px 14px 48px; }
   .hub-page { padding-top: 18px; }
   .hub-intro { padding: 14px 0 20px; }
   .hub-heading h1 { font-size: 2.15rem; }
   .hub-section { margin-top: 28px; }
+  .student-welcome { grid-template-columns: 42px minmax(0, 1fr); padding: 16px; }
+  .student-welcome-icon { width: 42px; height: 42px; }
+  .student-welcome > button { grid-column: 1 / -1; width: 100%; }
   .resource-grid { grid-template-columns: 1fr; }
   .resource-card { min-height: 166px; padding: 18px; }
   .course-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
@@ -402,6 +547,7 @@ button:active:not(:disabled) { transform: scale(0.98); }
   .brand-copy strong { font-size: 1.03rem; }
   .primary-nav button { gap: 5px; padding: 0 5px; font-size: 0.78rem; }
   .primary-nav button svg { width: 16px; height: 16px; }
+  .student-dialog { padding: 24px 20px; }
   .resource-card { grid-template-columns: 44px minmax(0, 1fr) 18px; gap: 12px; }
   .resource-icon { width: 44px; height: 44px; }
   .resource-copy > strong { font-size: 1.35rem; }

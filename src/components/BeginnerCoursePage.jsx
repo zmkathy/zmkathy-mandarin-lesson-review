@@ -4,9 +4,16 @@ import EverydayVocabulary from "./EverydayVocabulary.jsx";
 import LessonCard from "./LessonCard.jsx";
 import SentencePractice from "./SentencePractice.jsx";
 import VocabularyPractice from "./VocabularyPractice.jsx";
+import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
 
-export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson }) {
+export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson, student }) {
   const [mode, setMode] = useState("lessons");
+  const availableLessonNumbers = getAvailableLessonNumbers(student, 1, lessons.length);
+  const availableLessonSet = new Set(availableLessonNumbers);
+  const availableLessonCount = availableLessonNumbers.length;
+  const availableLessons = lessons
+    .map((lesson, index) => ({ ...lesson, lessonNumber: index + 1 }))
+    .filter((lesson) => availableLessonSet.has(lesson.lessonNumber));
 
   return (
     <main className="content-page course-page">
@@ -14,9 +21,11 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson 
         <div>
           <p className="section-label">Beginner level</p>
           <h1>Beginner Course</h1>
-          <p>Review lessons, vocabulary, and sentences from Lessons 1–{lessons.length}.</p>
+          <p>{availableLessonCount > 0
+            ? `Review ${availableLessonCount} available ${availableLessonCount === 1 ? "lesson" : "lessons"}, vocabulary, and sentences.`
+            : "Your Level 1 lessons have not been opened yet."}</p>
         </div>
-        <span className="lesson-count">{lessons.length} lessons</span>
+        <span className="lesson-count">{availableLessonCount} of {lessons.length} lessons available</span>
       </header>
 
       {loadError ? <p className="content-note">{loadError}</p> : null}
@@ -37,11 +46,11 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson 
       </nav>
 
       {mode === "everyday" ? (
-        <EverydayVocabulary />
+        <EverydayVocabulary student={student} />
       ) : mode === "sentences" ? (
-        <SentencePractice lessons={lessons} />
+        <SentencePractice lessons={availableLessons} />
       ) : mode === "vocabulary" ? (
-        <VocabularyPractice lessons={lessons} />
+        <VocabularyPractice lessons={availableLessons} student={student} />
       ) : (
         <section className="course-module" aria-labelledby="lesson-review-title">
           <div className="section-heading course-module-heading">
@@ -52,7 +61,7 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson 
           </div>
           <div className="lesson-list" aria-label="Lessons">
             {lessons.map((lesson, index) => (
-              <LessonCard key={lesson.id} lesson={lesson} lessonNumber={index + 1} onSelect={onSelectLesson} />
+              <LessonCard key={lesson.id} lesson={lesson} lessonNumber={index + 1} onSelect={onSelectLesson} locked={!availableLessonSet.has(index + 1)} />
             ))}
           </div>
         </section>

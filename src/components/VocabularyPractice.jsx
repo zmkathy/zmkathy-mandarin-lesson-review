@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, Eye, EyeOff, RotateCcw, Search, Shuffle } from "lucide-react";
+import { getCardProgress, saveCardProgress } from "../services/studentPortal.js";
 
 const STORAGE_KEY = "mis-mandarin-vocabulary-progress-v1";
 
-function loadProgress() {
+function loadProgress(storageKey) {
   try {
-    return JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || {};
+    return JSON.parse(window.localStorage.getItem(storageKey)) || {};
   } catch {
     return {};
   }
@@ -15,12 +16,13 @@ function collectVocabulary(lessons) {
   const uniqueItems = new Map();
 
   lessons.forEach((lesson, lessonIndex) => {
+    const lessonNumber = lesson.lessonNumber ?? lessonIndex + 1;
     lesson.vocabulary.forEach((item, itemIndex) => {
       const key = `${item.hanzi}-${item.pinyin}`;
       const existing = uniqueItems.get(key);
 
       if (existing) {
-        existing.lessonNumbers.push(lessonIndex + 1);
+        existing.lessonNumbers.push(lessonNumber);
         return;
       }
 
@@ -28,7 +30,7 @@ function collectVocabulary(lessons) {
         ...item,
         id: `${lesson.id}-${itemIndex}`,
         progressKey: key,
-        lessonNumbers: [lessonIndex + 1]
+        lessonNumbers: [lessonNumber]
       });
     });
   });
@@ -45,23 +47,31 @@ function shuffleItems(items) {
   return result;
 }
 
-export default function VocabularyPractice({ lessons }) {
+export default function VocabularyPractice({ lessons, student }) {
+  const storageKey = student?.id ? `${STORAGE_KEY}-${student.id}` : STORAGE_KEY;
   const [lessonFilter, setLessonFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [revealed, setRevealed] = useState(() => new Set());
   const [shuffleVersion, setShuffleVersion] = useState(0);
-  const [progress, setProgress] = useState(loadProgress);
+  const [progress, setProgress] = useState(() => loadProgress(storageKey));
   const vocabulary = useMemo(() => collectVocabulary(lessons), [lessons]);
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      window.localStorage.setItem(storageKey, JSON.stringify(progress));
     } catch {
       // Practice still works when browser storage is unavailable.
     }
-  }, [progress]);
+  }, [progress, storageKey]);
+
+  useEffect(() => {
+    if (!student?.token || student.id === "demo") return;
+    getCardProgress(student.token, "lesson_vocabulary").then((savedProgress) => {
+      setProgress((current) => ({ ...current, ...savedProgress }));
+    });
+  }, [student?.id, student?.token]);
 
   const visibleVocabulary = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -94,6 +104,9 @@ export default function VocabularyPractice({ lessons }) {
 
   function markItem(progressKey, status) {
     setProgress((current) => ({ ...current, [progressKey]: status }));
+    if (student?.token && student.id !== "demo") {
+      saveCardProgress(student.token, "lesson_vocabulary", progressKey, status);
+    }
   }
 
   function resetProgress() {
@@ -118,7 +131,7 @@ export default function VocabularyPractice({ lessons }) {
           <select value={lessonFilter} onChange={(event) => setLessonFilter(event.target.value)}>
             <option value="all">All lessons</option>
             {lessons.map((lesson, index) => (
-              <option value={index + 1} key={lesson.id}>Lesson {index + 1}: {lesson.title}</option>
+              <option value={lesson.lessonNumber ?? index + 1} key={lesson.id}>Lesson {lesson.lessonNumber ?? index + 1}: {lesson.title}</option>
             ))}
           </select>
         </label>

@@ -1,10 +1,12 @@
-import { ArrowRight, AudioLines, BookOpen } from "lucide-react";
+import { ArrowRight, AudioLines, BookOpen, CheckCircle2, LockKeyhole, ShieldCheck } from "lucide-react";
+import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
 
-export default function HomePage({ lessons, onNavigate, loadError }) {
+export default function HomePage({ lessons, onNavigate, loadError, student, studentPortalEnabled }) {
   const totalItems = lessons.reduce(
     (total, lesson) => total + lesson.vocabulary.length + lesson.sentences.length,
     0
   );
+  const availableLessonCount = getAvailableLessonNumbers(student, 1, lessons.length).length;
 
   return (
     <main className="content-page hub-page">
@@ -20,6 +22,20 @@ export default function HomePage({ lessons, onNavigate, loadError }) {
 
       {loadError ? <p className="content-note">{loadError}</p> : null}
 
+      {student ? (
+        <section className="student-welcome" aria-label="Student learning access">
+          <span className="student-welcome-icon"><CheckCircle2 size={23} /></span>
+          <div>
+            <p className="section-label">Your learning space</p>
+            <h2>Welcome back, {student.displayName}</h2>
+            <p>{availableLessonCount > 0
+              ? `${availableLessonCount} ${availableLessonCount === 1 ? "lesson is" : "lessons are"} ready for you. Pinyin and everyday vocabulary are always available.`
+              : "Your Level 1 lessons have not been opened yet. Pinyin and everyday vocabulary are still available."}</p>
+          </div>
+          <button type="button" onClick={() => onNavigate("course")}>Continue learning <ArrowRight size={18} /></button>
+        </section>
+      ) : null}
+
       <section className="hub-section" aria-labelledby="start-learning-title">
         <div className="section-heading">
           <div>
@@ -34,9 +50,9 @@ export default function HomePage({ lessons, onNavigate, loadError }) {
               <span className="resource-kicker">Beginner level</span>
               <strong>Beginner Course</strong>
               <span>Review vocabulary and useful sentences from every class.</span>
-              <small>{lessons.length} lessons · {totalItems} review items</small>
+              <small>{student ? `${availableLessonCount} of ${lessons.length} lessons available` : studentPortalEnabled ? "Sign in to see your available lessons" : `${lessons.length} lessons · ${totalItems} review items`}</small>
             </span>
-            <ArrowRight className="resource-arrow" size={23} />
+            {studentPortalEnabled && !student ? <LockKeyhole className="resource-arrow" size={21} /> : <ArrowRight className="resource-arrow" size={23} />}
           </button>
 
           <button className="resource-card resource-pinyin" type="button" onClick={() => onNavigate("pinyin")}>
@@ -51,6 +67,10 @@ export default function HomePage({ lessons, onNavigate, loadError }) {
           </button>
         </div>
       </section>
+
+      <footer className="hub-footer">
+        <button type="button" onClick={() => onNavigate("teacher")}><ShieldCheck size={15} /> Teacher access</button>
+      </footer>
     </main>
   );
 }
