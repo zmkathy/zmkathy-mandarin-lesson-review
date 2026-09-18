@@ -2,6 +2,13 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import VocabularyCard from "./VocabularyCard.jsx";
 import SentenceCard from "./SentenceCard.jsx";
 
+function getLessonAudioSrc(lessonNumber, section, itemNumber) {
+  if (lessonNumber !== 1) return undefined;
+
+  const filename = `${section}-${String(itemNumber).padStart(2, "0")}.mp3`;
+  return `${import.meta.env.BASE_URL}audio/lesson-review/lesson-1/${filename}`;
+}
+
 export default function LessonPage({
   lesson,
   lessonNumber,
@@ -37,7 +44,12 @@ export default function LessonPage({
         </div>
         <div className="card-list">
           {lesson.vocabulary.map((item, index) => (
-            <VocabularyCard key={`${lesson.id}-${item.hanzi}`} item={item} index={index + 1} />
+            <VocabularyCard
+              key={`${lesson.id}-${item.hanzi}`}
+              item={item}
+              index={index + 1}
+              audioSrc={getLessonAudioSrc(lessonNumber, "vocabulary", index + 1)}
+            />
           ))}
         </div>
       </section>
@@ -49,7 +61,12 @@ export default function LessonPage({
         </div>
         <div className="card-list">
           {lesson.sentences.map((item, index) => (
-            <SentenceCard key={`${lesson.id}-${item.hanzi}`} item={item} index={index + 1} />
+            <SentenceCard
+              key={`${lesson.id}-${item.hanzi}`}
+              item={item}
+              index={index + 1}
+              audioSrc={getLessonAudioSrc(lessonNumber, "sentence", index + 1)}
+            />
           ))}
         </div>
       </section>

@@ -1,6 +1,6 @@
 import SpeakButton from "./SpeakButton.jsx";
 
-export default function VocabularyCard({ item, index }) {
+export default function VocabularyCard({ item, index, audioSrc }) {
   return (
     <article className="review-card vocabulary-card">
       <span className="item-number">{String(index).padStart(2, "0")}</span>
@@ -9,7 +9,7 @@ export default function VocabularyCard({ item, index }) {
         <p className="pinyin">{item.pinyin}</p>
         <p className="english">{item.english}</p>
       </div>
-      <SpeakButton text={item.hanzi} />
+      <SpeakButton text={item.hanzi} audioSrc={audioSrc} />
     </article>
   );
 }
