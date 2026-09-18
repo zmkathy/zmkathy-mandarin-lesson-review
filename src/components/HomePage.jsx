@@ -1,7 +1,7 @@
 import { ArrowRight, AudioLines, BookOpen, CheckCircle2, LockKeyhole, ShieldCheck } from "lucide-react";
 import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
 
-export default function HomePage({ lessons, onNavigate, loadError, student, studentPortalEnabled }) {
+export default function HomePage({ lessons, onNavigate, loadError, student, studentPortalEnabled, teacherLoggedIn }) {
   const totalItems = lessons.reduce(
     (total, lesson) => total + lesson.vocabulary.length + lesson.sentences.length,
     0
@@ -50,9 +50,15 @@ export default function HomePage({ lessons, onNavigate, loadError, student, stud
               <span className="resource-kicker">Beginner level</span>
               <strong>Beginner Course</strong>
               <span>Review vocabulary and useful sentences from every class.</span>
-              <small>{student ? `${availableLessonCount} of ${lessons.length} lessons available` : studentPortalEnabled ? "Sign in to see your available lessons" : `${lessons.length} lessons · ${totalItems} review items`}</small>
+              <small>{student
+                ? `${availableLessonCount} of ${lessons.length} lessons available`
+                : teacherLoggedIn
+                  ? `${lessons.length} lessons · Full teacher access`
+                  : studentPortalEnabled
+                    ? "Sign in to see your available lessons"
+                    : `${lessons.length} lessons · ${totalItems} review items`}</small>
             </span>
-            {studentPortalEnabled && !student ? <LockKeyhole className="resource-arrow" size={21} /> : <ArrowRight className="resource-arrow" size={23} />}
+            {studentPortalEnabled && !student && !teacherLoggedIn ? <LockKeyhole className="resource-arrow" size={21} /> : <ArrowRight className="resource-arrow" size={23} />}
           </button>
 
           <button className="resource-card resource-pinyin" type="button" onClick={() => onNavigate("pinyin")}>

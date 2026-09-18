@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Eye, EyeOff, LogOut, Plus, RefreshCw, ShieldCheck, UserRoundPlus, X } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, Eye, EyeOff, LogOut, Plus, RefreshCw, ShieldCheck, UserRoundPlus, X } from "lucide-react";
 import {
   createTeacherStudent,
   getTeacherStudents,
@@ -24,7 +24,7 @@ function formatStudyTime(seconds) {
   return `${Math.floor(minutes / 60)}h ${minutes % 60}m`;
 }
 
-export default function TeacherPage({ onBack }) {
+export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
   const [teacher, setTeacher] = useState(null);
   const [students, setStudents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,6 +40,7 @@ export default function TeacherPage({ onBack }) {
     restoreTeacher()
       .then((restoredTeacher) => {
         setTeacher(restoredTeacher);
+        onTeacherChange(Boolean(restoredTeacher));
         if (restoredTeacher) return refreshStudents();
         return null;
       })
@@ -62,6 +63,7 @@ export default function TeacherPage({ onBack }) {
     try {
       const signedInTeacher = await signInTeacher(email.trim(), password);
       setTeacher(signedInTeacher);
+      onTeacherChange(true);
       await refreshStudents();
     } catch (signInError) {
       setError(signInError.message || "Email or password does not match.");
@@ -73,6 +75,7 @@ export default function TeacherPage({ onBack }) {
   async function handleSignOut() {
     await signOutTeacher();
     setTeacher(null);
+    onTeacherChange(false);
     setStudents([]);
     setPassword("");
   }
@@ -204,6 +207,7 @@ export default function TeacherPage({ onBack }) {
           <p>Manage access for two 15-lesson beginner levels.</p>
         </div>
         <div className="teacher-header-actions">
+          <button className="secondary" type="button" onClick={onOpenCourse}><BookOpen size={18} /> View full course</button>
           <button type="button" onClick={() => setShowAddStudent((value) => !value)}><Plus size={18} /> Add student</button>
           <button className="secondary" type="button" onClick={handleSignOut}><LogOut size={18} /> Sign out</button>
         </div>

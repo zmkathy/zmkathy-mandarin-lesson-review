@@ -10,6 +10,7 @@ import { lessons as fallbackLessons } from "./data/lessons.js";
 import { parseLessonsText } from "./data/parseLessonsText.js";
 import { getAvailableLessonNumbers } from "./lib/courseAccess.js";
 import { addStudyTime, isStudentPortalConfigured, restoreStudentSession, signInStudent, signOutStudent, startStudySession } from "./services/studentPortal.js";
+import { restoreTeacher } from "./services/teacherPortal.js";
 
 export default function App() {
   const [lessons, setLessons] = useState(fallbackLessons);
@@ -17,6 +18,7 @@ export default function App() {
   const [activeView, setActiveView] = useState(() => new URLSearchParams(window.location.search).get("view") === "teacher" ? "teacher" : "home");
   const [loadError, setLoadError] = useState("");
   const [student, setStudent] = useState(null);
+  const [teacherLoggedIn, setTeacherLoggedIn] = useState(false);
   const [showStudentLogin, setShowStudentLogin] = useState(false);
   const studentPortalEnabled = isStudentPortalConfigured;
 
@@ -67,7 +69,12 @@ export default function App() {
   }, [student?.id, student?.token]);
 
   useEffect(() => {
-    restoreStudentSession().then((restoredStudent) => {
+    Promise.all([restoreStudentSession(), restoreTeacher()]).then(([restoredStudent, restoredTeacher]) => {
+      if (restoredTeacher) {
+        setTeacherLoggedIn(true);
+        if (restoredStudent?.token) signOutStudent(restoredStudent.token);
+        return;
+      }
       if (restoredStudent) setStudent(restoredStudent);
     });
   }, []);
@@ -82,7 +89,7 @@ export default function App() {
   const selectedAvailableIndex = availableLessonNumbers.indexOf(selectedLessonNumber);
 
   function navigate(view) {
-    if (view === "course" && studentPortalEnabled && !student) {
+    if (view === "course" && studentPortalEnabled && !student && !teacherLoggedIn) {
       setShowStudentLogin(true);
       return;
     }
@@ -106,6 +113,14 @@ export default function App() {
     setStudent(null);
     setSelectedLessonId(null);
     setActiveView("home");
+  }
+
+  function handleTeacherChange(isLoggedIn) {
+    setTeacherLoggedIn(isLoggedIn);
+    if (isLoggedIn && student) {
+      signOutStudent(student.token);
+      setStudent(null);
+    }
   }
 
   if (selectedLesson) {
@@ -136,9 +151,14 @@ export default function App() {
           onNavigate={navigate}
           student={student}
           studentPortalEnabled={studentPortalEnabled}
+          teacherLoggedIn={teacherLoggedIn}
         />
       ) : activeView === "teacher" ? (
-        <TeacherPage onBack={() => navigate("home")} />
+        <TeacherPage
+          onBack={() => navigate("home")}
+          onOpenCourse={() => navigate("course")}
+          onTeacherChange={handleTeacherChange}
+        />
       ) : activeView === "pinyin" ? (
         <PinyinChart />
       ) : (
