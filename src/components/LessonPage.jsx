@@ -3,7 +3,7 @@ import VocabularyCard from "./VocabularyCard.jsx";
 import SentenceCard from "./SentenceCard.jsx";
 
 function getLessonAudioSrc(lessonNumber, section, itemNumber) {
-  if (lessonNumber > 2) return undefined;
+  if (lessonNumber > 3) return undefined;
 
   const filename = `${section}-${String(itemNumber).padStart(2, "0")}.mp3`;
   return `${import.meta.env.BASE_URL}audio/lesson-review/lesson-${lessonNumber}/${filename}`;
