@@ -10,6 +10,7 @@ export const lessons = [
       { hanzi: "叫", pinyin: "jiào", english: "to be called" },
       { hanzi: "是", pinyin: "shì", english: "am; is; are" },
       { hanzi: "名字", pinyin: "míngzi", english: "name" },
+      { hanzi: "姓名", pinyin: "xìngmíng", english: "full name" },
       { hanzi: "姓", pinyin: "xìng", english: "surname" },
       { hanzi: "请问", pinyin: "qǐngwèn", english: "may I ask" },
       { hanzi: "贵姓", pinyin: "guìxìng", english: "your surname, polite" },
@@ -20,18 +21,23 @@ export const lessons = [
     ],
     sentences: [
       { hanzi: "你好！", pinyin: "nǐ hǎo!", english: "Hello!" },
-      { hanzi: "我叫 Kathy。", pinyin: "wǒ jiào Kathy.", english: "My name is Kathy." },
+      { hanzi: "我叫密。", pinyin: "wǒ jiào Mì.", english: "My name is Mi." },
       {
         hanzi: "你叫什么名字？",
         pinyin: "nǐ jiào shénme míngzi?",
         english: "What is your name?"
       },
       {
+        hanzi: "你姓什么？",
+        pinyin: "nǐ xìng shénme?",
+        english: "What is your surname?"
+      },
+      {
         hanzi: "请问，您贵姓？",
         pinyin: "qǐngwèn, nín guìxìng?",
         english: "May I ask your surname?"
       },
-      { hanzi: "我姓 Zhang。", pinyin: "wǒ xìng Zhang.", english: "My surname is Zhang." },
+      { hanzi: "我姓张。", pinyin: "wǒ xìng Zhāng.", english: "My surname is Zhang." },
       { hanzi: "我是加拿大人。", pinyin: "wǒ shì Jiānádà rén.", english: "I am Canadian." },
       { hanzi: "我来自加拿大。", pinyin: "wǒ láizì Jiānádà.", english: "I am from Canada." },
       {
