@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, Eye, EyeOff, RotateCcw, Search, Volume2 } from "lucide-react";
+import { Check, ChevronRight, Eye, EyeOff, Headphones, RotateCcw, Search, Volume2, X } from "lucide-react";
 import { getCardProgress, saveCardProgress } from "../services/studentPortal.js";
 
 const STORAGE_KEY = "mis-mandarin-everyday-vocabulary-progress-v1";
@@ -107,6 +107,23 @@ function CardImage({ item }) {
   );
 }
 
+function getChallengeChoices(items, activeItem, version) {
+  if (!activeItem) return [];
+
+  const alternatives = items.filter((item) => item.id !== activeItem.id);
+  const seed = [...`${activeItem.id}-${version}`].reduce((total, character) => total + character.charCodeAt(0), 0);
+  const picked = alternatives
+    .map((item, index) => ({ item, order: (index * 19 + seed) % 101 }))
+    .sort((first, second) => first.order - second.order)
+    .slice(0, 3)
+    .map(({ item }) => item);
+
+  return [activeItem, ...picked]
+    .map((item, index) => ({ item, order: (index * 29 + seed) % 97 }))
+    .sort((first, second) => first.order - second.order)
+    .map(({ item }) => item);
+}
+
 export default function EverydayVocabulary({ student, showHeading = true }) {
   const storageKey = student?.id ? `${STORAGE_KEY}-${student.id}` : STORAGE_KEY;
   const [category, setCategory] = useState("all");
@@ -116,6 +133,11 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
   const [revealed, setRevealed] = useState(() => new Set());
   const [progress, setProgress] = useState(() => loadProgress(storageKey));
   const [playingId, setPlayingId] = useState(null);
+  const [view, setView] = useState("flashcards");
+  const [challengeIndex, setChallengeIndex] = useState(0);
+  const [challengeAnswer, setChallengeAnswer] = useState(null);
+  const [challengeScore, setChallengeScore] = useState({ correct: 0, answered: 0 });
+  const [challengeVersion, setChallengeVersion] = useState(0);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -149,6 +171,23 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
     });
   }, [category, progress, query, statusFilter]);
 
+  const activeChallengeIndex = Math.min(challengeIndex, Math.max(visibleVocabulary.length - 1, 0));
+  const activeChallengeItem = visibleVocabulary[activeChallengeIndex];
+  const challengeChoices = useMemo(
+    () => getChallengeChoices(vocabulary, activeChallengeItem, challengeVersion),
+    [activeChallengeItem, challengeVersion]
+  );
+
+  useEffect(() => {
+    setChallengeIndex(0);
+    setChallengeAnswer(null);
+    setChallengeScore({ correct: 0, answered: 0 });
+  }, [category, query, statusFilter]);
+
+  useEffect(() => {
+    setChallengeAnswer(null);
+  }, [activeChallengeItem?.id]);
+
   function toggleCard(id) {
     setRevealed((current) => {
       const next = new Set(current);
@@ -181,6 +220,22 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
     audio.play().catch(() => setPlayingId(null));
   }
 
+  function answerChallenge(item) {
+    if (!activeChallengeItem || challengeAnswer) return;
+    const correct = item.id === activeChallengeItem.id;
+    setChallengeAnswer({ id: item.id, correct });
+    setChallengeScore((current) => ({
+      correct: current.correct + (correct ? 1 : 0),
+      answered: current.answered + 1
+    }));
+  }
+
+  function nextChallenge() {
+    if (visibleVocabulary.length < 2) return;
+    setChallengeIndex((current) => (current + 1) % visibleVocabulary.length);
+    setChallengeVersion((current) => current + 1);
+  }
+
   const markedCount = Object.keys(progress).length;
 
   return (
@@ -194,6 +249,15 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
           <span className="result-count">{visibleVocabulary.length} words</span>
         </div>
       ) : null}
+
+      <div className="practice-view-switch" role="group" aria-label="Everyday vocabulary view">
+        <button className={view === "flashcards" ? "is-active" : ""} type="button" onClick={() => setView("flashcards")}>
+          Flashcards
+        </button>
+        <button className={view === "challenge" ? "is-active" : ""} type="button" onClick={() => setView("challenge")}>
+          <Headphones size={17} /> Listening challenge
+        </button>
+      </div>
 
       <div className="category-filter" aria-label="Vocabulary categories">
         {categories.map(([value, label]) => (
@@ -227,23 +291,68 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
           </span>
         </label>
 
-        <label className="answer-toggle">
-          <input type="checkbox" checked={showAll} onChange={(event) => setShowAll(event.target.checked)} />
-          <span>
-            {showAll ? <EyeOff size={18} /> : <Eye size={18} />}
-            {showAll ? "Hide answers" : "Show answers"}
-          </span>
-        </label>
-      </div>
-
-      <div className="progress-note" aria-live="polite">
-        <span>Progress is saved on this device · {markedCount} marked</span>
-        {markedCount > 0 ? (
-          <button type="button" onClick={resetProgress}><RotateCcw size={15} /> Reset progress</button>
+        {view === "flashcards" ? (
+          <label className="answer-toggle">
+            <input type="checkbox" checked={showAll} onChange={(event) => setShowAll(event.target.checked)} />
+            <span>
+              {showAll ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showAll ? "Hide answers" : "Show answers"}
+            </span>
+          </label>
         ) : null}
       </div>
 
-      {visibleVocabulary.length > 0 ? (
+      {view === "challenge" && activeChallengeItem ? (
+        <article className="everyday-challenge" aria-live="polite">
+          <div className="everyday-challenge-top">
+            <span>{category === "all" ? "All topics" : categories.find(([id]) => id === category)?.[1]}</span>
+            <strong>{challengeScore.correct} / {challengeScore.answered} correct</strong>
+          </div>
+          <div className="everyday-challenge-prompt">
+            <button className={`everyday-challenge-audio${playingId === activeChallengeItem.id ? " is-playing" : ""}`} type="button" onClick={() => playAudio(activeChallengeItem)} aria-label={`Play ${activeChallengeItem.pinyin}`} title="Listen again">
+              <Volume2 size={24} />
+            </button>
+            <div>
+              <p className="section-label">Listen and choose</p>
+              <h3>Which picture matches the word?</h3>
+              <p>Play the word as many times as you need.</p>
+            </div>
+          </div>
+          <div className="everyday-challenge-choices" role="group" aria-label="Choose the matching picture">
+            {challengeChoices.map((item, index) => {
+              const isCorrect = item.id === activeChallengeItem.id;
+              const isSelected = challengeAnswer?.id === item.id;
+              const resultClass = challengeAnswer
+                ? isCorrect ? "is-correct" : isSelected ? "is-incorrect" : ""
+                : "";
+              return (
+                <button className={`everyday-challenge-choice ${resultClass}`.trim()} type="button" key={item.id} disabled={Boolean(challengeAnswer)} onClick={() => answerChallenge(item)} aria-label={`Choose picture ${index + 1}`}>
+                  <CardImage item={item} />
+                  {challengeAnswer ? <span>{item.pinyin}</span> : null}
+                  {challengeAnswer && isCorrect ? <Check className="challenge-result-icon" size={20} /> : challengeAnswer && isSelected ? <X className="challenge-result-icon" size={20} /> : null}
+                </button>
+              );
+            })}
+          </div>
+          {challengeAnswer ? (
+            <div className={`everyday-challenge-feedback ${challengeAnswer.correct ? "is-correct" : "is-incorrect"}`}>
+              {challengeAnswer.correct ? "Correct. Nice listening." : "Try listening for the word again."}
+              <span>{activeChallengeItem.pinyin} · {activeChallengeItem.hanzi} · {activeChallengeItem.english}</span>
+            </div>
+          ) : null}
+          <div className="everyday-challenge-actions">
+            <button type="button" onClick={nextChallenge} disabled={visibleVocabulary.length < 2}>Next word <ChevronRight size={18} /></button>
+          </div>
+        </article>
+      ) : view === "flashcards" ? (
+        <>
+          <div className="progress-note" aria-live="polite">
+            <span>Progress is saved on this device · {markedCount} marked</span>
+            {markedCount > 0 ? (
+              <button type="button" onClick={resetProgress}><RotateCcw size={15} /> Reset progress</button>
+            ) : null}
+          </div>
+          {visibleVocabulary.length > 0 ? (
         <div className="everyday-grid">
           {visibleVocabulary.map((item) => {
             const isRevealed = showAll || revealed.has(item.id);
@@ -289,6 +398,10 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
             );
           })}
         </div>
+          ) : (
+            <p className="empty-state">No vocabulary matches these filters.</p>
+          )}
+        </>
       ) : (
         <p className="empty-state">No vocabulary matches these filters.</p>
       )}

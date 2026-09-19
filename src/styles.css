@@ -296,6 +296,35 @@ button { letter-spacing: 0; }
 .everyday-card:hover { transform: translateY(-2px); border-color: #a9d8bf; box-shadow: 0 10px 22px rgba(39, 68, 61, 0.1); }
 .everyday-card.is-revealed, .everyday-card.is-known { border-bottom-color: var(--teal); }
 .everyday-card.is-review { border-bottom-color: var(--coral); }
+.everyday-challenge { width: min(100%, 760px); margin: 0 auto; border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: 7px; padding: 22px; background: var(--paper); box-shadow: 0 10px 26px rgba(39, 68, 61, 0.08); }
+.everyday-challenge-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 0.8rem; }
+.everyday-challenge-top span { color: #8b621d; font-weight: 800; }
+.everyday-challenge-top strong { color: var(--teal-dark); }
+.everyday-challenge-prompt { display: flex; align-items: center; gap: 15px; margin: 22px 0 18px; padding: 16px; border: 1px solid #f0d49c; border-radius: 6px; background: #fffaf0; }
+.everyday-challenge-audio { display: grid; flex: 0 0 auto; place-items: center; width: 56px; height: 56px; border: 1px solid #c68b24; border-radius: 50%; background: var(--gold); color: #553705; box-shadow: 0 5px 12px rgba(183, 125, 21, 0.16); cursor: pointer; }
+.everyday-challenge-audio:hover, .everyday-challenge-audio.is-playing { background: #e8b84f; }
+.everyday-challenge-prompt .section-label { margin: 0 0 4px; color: #956718; }
+.everyday-challenge-prompt h3 { margin: 0; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; line-height: 1.2; }
+.everyday-challenge-prompt p:last-child { margin: 5px 0 0; color: var(--muted); font-size: 0.88rem; line-height: 1.4; }
+.everyday-challenge-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+.everyday-challenge-choice { position: relative; min-width: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; padding: 0; background: #fbfdfc; color: var(--ink); cursor: pointer; }
+.everyday-challenge-choice:hover:not(:disabled) { border-color: #d5ad62; box-shadow: 0 6px 15px rgba(80, 65, 33, 0.1); transform: translateY(-1px); }
+.everyday-challenge-choice:disabled { cursor: default; }
+.everyday-challenge-choice .everyday-card-image { aspect-ratio: 4 / 3; }
+.everyday-challenge-choice .everyday-card-sprite { aspect-ratio: 4 / 3; }
+.everyday-challenge-choice > span { display: block; padding: 9px 10px; color: var(--teal-dark); font-size: 0.88rem; font-weight: 800; text-align: center; }
+.everyday-challenge-choice.is-correct { border-color: #7fca9e; background: var(--teal-soft); }
+.everyday-challenge-choice.is-incorrect { border-color: #eeafa4; background: var(--coral-soft); }
+.challenge-result-icon { position: absolute; top: 9px; right: 9px; width: 30px; height: 30px; border-radius: 50%; padding: 5px; background: var(--paper); color: var(--teal-dark); box-shadow: 0 2px 7px rgba(39, 68, 61, 0.12); }
+.is-incorrect .challenge-result-icon { color: #a13d31; }
+.everyday-challenge-feedback { display: grid; gap: 4px; margin-top: 14px; border-radius: 5px; padding: 12px 14px; font-size: 0.9rem; font-weight: 800; }
+.everyday-challenge-feedback span { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 0.85rem; font-weight: 650; }
+.everyday-challenge-feedback.is-correct { background: var(--teal-soft); color: var(--teal-dark); }
+.everyday-challenge-feedback.is-incorrect { background: var(--coral-soft); color: #a13d31; }
+.everyday-challenge-actions { display: flex; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.everyday-challenge-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 40px; border: 1px solid var(--teal); border-radius: 5px; padding: 0 13px; background: var(--teal); color: white; font-size: 0.82rem; font-weight: 750; cursor: pointer; }
+.everyday-challenge-actions button:hover:not(:disabled) { background: var(--teal-dark); }
+.everyday-challenge-actions button:disabled { cursor: default; opacity: 0.45; }
 .everyday-image-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-bottom: 1px solid var(--line); background: #f2f7f4; }
 .everyday-card-image { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
 .everyday-card-image > img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -584,6 +613,9 @@ button:active:not(:disabled) { transform: scale(0.98); }
   .toolbar-button, .answer-toggle > span { width: 100%; }
   .practice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .everyday-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .everyday-challenge { padding: 16px; }
+  .everyday-challenge-prompt { align-items: flex-start; padding: 14px; }
+  .everyday-challenge-prompt h3 { font-size: 1.18rem; }
   .practice-view-switch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
   .practice-view-switch button { min-height: 42px; padding: 0 8px; }
   .focus-card-main { min-height: 235px; padding: 26px 16px; }
