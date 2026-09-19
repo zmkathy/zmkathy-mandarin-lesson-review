@@ -24,7 +24,7 @@ export default function App() {
   const studentPortalEnabled = isStudentPortalConfigured;
 
   useEffect(() => {
-    fetch("./lessons.txt")
+    fetch("./lessons.txt", { cache: "no-store" })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Lesson text file was not found.");
