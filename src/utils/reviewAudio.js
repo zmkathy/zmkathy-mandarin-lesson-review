@@ -5,5 +5,6 @@ export function getReviewAudioSrc(lessonNumber, section, itemNumber) {
 
   const extension = [5, 9].includes(lessonNumber) ? "m4a" : "mp3";
   const filename = `${section}-${String(itemNumber).padStart(2, "0")}.${extension}`;
-  return `${import.meta.env.BASE_URL}audio/lesson-review/lesson-${lessonNumber}/${filename}`;
+  const revision = lessonNumber === 9 ? "?v=20260919-2" : "";
+  return `${import.meta.env.BASE_URL}audio/lesson-review/lesson-${lessonNumber}/${filename}${revision}`;
 }
