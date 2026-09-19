@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Volume2 } from "lucide-react";
 import { speakMandarin } from "../utils/speech.js";
 
@@ -6,6 +6,19 @@ let activeAudio = null;
 
 export default function SpeakButton({ text, audioSrc, className = "" }) {
   const audioRef = useRef(null);
+
+  useEffect(() => {
+    const previousAudio = audioRef.current;
+
+    if (!previousAudio) return undefined;
+
+    previousAudio.pause();
+    previousAudio.currentTime = 0;
+    if (activeAudio === previousAudio) activeAudio = null;
+    audioRef.current = null;
+
+    return undefined;
+  }, [audioSrc]);
 
   function playPronunciation() {
     if (!audioSrc) {
