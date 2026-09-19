@@ -4,7 +4,7 @@ import { speakMandarin } from "../utils/speech.js";
 
 let activeAudio = null;
 
-export default function SpeakButton({ text, audioSrc }) {
+export default function SpeakButton({ text, audioSrc, className = "" }) {
   const audioRef = useRef(null);
 
   function playPronunciation() {
@@ -32,7 +32,7 @@ export default function SpeakButton({ text, audioSrc }) {
 
   return (
     <button
-      className="speak-button"
+      className={`speak-button ${className}`.trim()}
       type="button"
       onClick={playPronunciation}
       aria-label={`Play ${sourceLabel} for ${text}`}

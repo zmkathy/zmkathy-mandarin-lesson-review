@@ -1,13 +1,7 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import VocabularyCard from "./VocabularyCard.jsx";
 import SentenceCard from "./SentenceCard.jsx";
-
-function getLessonAudioSrc(lessonNumber, section, itemNumber) {
-  if (lessonNumber > 3) return undefined;
-
-  const filename = `${section}-${String(itemNumber).padStart(2, "0")}.mp3`;
-  return `${import.meta.env.BASE_URL}audio/lesson-review/lesson-${lessonNumber}/${filename}`;
-}
+import { getReviewAudioSrc } from "../utils/reviewAudio.js";
 
 export default function LessonPage({
   lesson,
@@ -48,7 +42,7 @@ export default function LessonPage({
               key={`${lesson.id}-${item.hanzi}`}
               item={item}
               index={index + 1}
-              audioSrc={getLessonAudioSrc(lessonNumber, "vocabulary", index + 1)}
+              audioSrc={getReviewAudioSrc(lessonNumber, "vocabulary", index + 1)}
             />
           ))}
         </div>
@@ -65,7 +59,7 @@ export default function LessonPage({
               key={`${lesson.id}-${item.hanzi}`}
               item={item}
               index={index + 1}
-              audioSrc={getLessonAudioSrc(lessonNumber, "sentence", index + 1)}
+              audioSrc={getReviewAudioSrc(lessonNumber, "sentence", index + 1)}
             />
           ))}
         </div>
