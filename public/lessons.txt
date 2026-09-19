@@ -221,6 +221,14 @@
 累 | lèi | tired
 困 | kùn | sleepy
 饱 | bǎo | full
+酸 | suān | sour
+甜 | tián | sweet
+苦 | kǔ | bitter
+辣 | là | spicy
+咸 | xián | salty
+很 | hěn | very
+不 | bù | not
+太 | tài | too; very
 饭 | fàn | meal; rice
 米饭 | mǐfàn | rice
 面 | miàn | noodles
@@ -249,6 +257,10 @@
 有点儿饿。 | yǒudiǎnr è. | A little hungry.
 不太累。 | bú tài lèi. | Not very tired.
 太困了！ | tài kùn le! | So sleepy!
+这个面包很甜。 | zhège miànbāo hěn tián. | This bread is very sweet.
+这个咖啡不苦。 | zhège kāfēi bù kǔ. | This coffee is not bitter.
+这个面有点儿辣。 | zhège miàn yǒudiǎnr là. | These noodles are a little spicy.
+这个面太咸了。 | zhège miàn tài xián le. | These noodles are too salty.
 我想吃面。 | wǒ xiǎng chī miàn. | I want to eat noodles.
 我想喝水。 | wǒ xiǎng hē shuǐ. | I want to drink water.
 我想休息。 | wǒ xiǎng xiūxi. | I want to rest.
