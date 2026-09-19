@@ -40,7 +40,6 @@ export default function HomePage({ lessons, onNavigate, onOpenCourse, student, s
             <p className="section-label">Beginner Course</p>
             <h2 id="start-learning-title">Choose your practice</h2>
           </div>
-          <span className="section-summary">{student ? `${availableLessonCount} lessons open` : `${lessons.length} lessons`}</span>
         </div>
         <p className="course-start-copy">Start with a lesson, then use cards to build confidence with words and sentences.</p>
         <div className="course-action-grid">
