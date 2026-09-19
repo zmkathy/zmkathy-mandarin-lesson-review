@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, Eye, EyeOff, Headphones, Search, Shuffle, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Eye, EyeOff, Headphones, Search, Shuffle, X } from "lucide-react";
 import SpeakButton from "./SpeakButton.jsx";
 import { getReviewAudioSrc } from "../utils/reviewAudio.js";
 
@@ -57,12 +57,14 @@ function shuffleItems(items) {
 }
 
 export default function SentencePractice({ lessons }) {
-  const [view, setView] = useState("cards");
+  const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [stages, setStages] = useState({});
   const [shuffleVersion, setShuffleVersion] = useState(0);
+  const [practiceIndex, setPracticeIndex] = useState(0);
+  const [practiceRevealed, setPracticeRevealed] = useState(false);
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizAnswer, setQuizAnswer] = useState(null);
   const sentences = useMemo(() => collectSentences(lessons), [lessons]);
@@ -83,6 +85,8 @@ export default function SentencePractice({ lessons }) {
 
   const activeQuizIndex = Math.min(quizIndex, Math.max(visibleSentences.length - 1, 0));
   const activeQuizItem = visibleSentences[activeQuizIndex];
+  const activePracticeIndex = Math.min(practiceIndex, Math.max(visibleSentences.length - 1, 0));
+  const activePracticeItem = visibleSentences[activePracticeIndex];
   const quizChoices = useMemo(
     () => getQuizChoices(visibleSentences, activeQuizItem, shuffleVersion),
     [activeQuizItem, shuffleVersion, visibleSentences]
@@ -90,6 +94,8 @@ export default function SentencePractice({ lessons }) {
 
   useEffect(() => {
     setQuizIndex(0);
+    setPracticeIndex(0);
+    setPracticeRevealed(false);
   }, [lessonFilter, query, shuffleVersion]);
 
   useEffect(() => {
@@ -108,6 +114,12 @@ export default function SentencePractice({ lessons }) {
     setQuizIndex((current) => (current + direction + visibleSentences.length) % visibleSentences.length);
   }
 
+  function movePractice(direction) {
+    if (visibleSentences.length < 2) return;
+    setPracticeIndex((current) => (current + direction + visibleSentences.length) % visibleSentences.length);
+    setPracticeRevealed(false);
+  }
+
   return (
     <section className="sentence-practice" aria-labelledby="sentence-practice-title">
       <div className="section-heading practice-heading">
@@ -119,8 +131,11 @@ export default function SentencePractice({ lessons }) {
       </div>
 
       <div className="practice-view-switch" role="group" aria-label="Sentence practice view">
-        <button className={view === "cards" ? "is-active" : ""} type="button" onClick={() => setView("cards")}>
+        <button className={view === "practice" ? "is-active" : ""} type="button" onClick={() => setView("practice")}>
           Sentence cards
+        </button>
+        <button className={view === "browse" ? "is-active" : ""} type="button" onClick={() => setView("browse")}>
+          Browse sentences
         </button>
         <button className={view === "quiz" ? "is-active" : ""} type="button" onClick={() => setView("quiz")}>
           <Headphones size={17} /> Listening quiz
@@ -150,7 +165,7 @@ export default function SentencePractice({ lessons }) {
           <Shuffle size={18} /> Shuffle
         </button>
 
-        {view === "cards" ? (
+        {view === "browse" ? (
           <label className="answer-toggle">
             <input type="checkbox" checked={showAll} onChange={(event) => setShowAll(event.target.checked)} />
             <span>
@@ -161,7 +176,37 @@ export default function SentencePractice({ lessons }) {
         ) : null}
       </div>
 
-      {view === "quiz" && activeQuizItem ? (
+      {view === "practice" && activePracticeItem ? (
+        <article className={`focus-sentence-card ${practiceRevealed ? "is-revealed" : ""}`}>
+          <div className="focus-card-top">
+            <small>{activePracticeItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
+            <span>{activePracticeIndex + 1} / {visibleSentences.length}</span>
+          </div>
+          <button className="focus-card-main focus-sentence-main" type="button" onClick={() => setPracticeRevealed((current) => !current)}>
+            <span className="focus-sentence-pinyin">{activePracticeItem.pinyin}</span>
+            {practiceRevealed ? (
+              <span className="focus-answer">
+                <span>{activePracticeItem.hanzi}</span>
+                <small>{activePracticeItem.english}</small>
+              </span>
+            ) : (
+              <span className="focus-reveal"><Eye size={17} /> Reveal meaning</span>
+            )}
+          </button>
+          <div className="focus-card-actions">
+            <button className="focus-nav-button" type="button" onClick={() => movePractice(-1)} disabled={visibleSentences.length < 2} aria-label="Previous sentence" title="Previous sentence"><ChevronLeft size={21} /></button>
+            <SpeakButton
+              className="practice-audio-button"
+              text={activePracticeItem.hanzi}
+              audioSrc={getReviewAudioSrc(activePracticeItem.audioLessonNumber, "sentence", activePracticeItem.audioItemNumber)}
+            />
+            <button className="focus-sentence-reveal" type="button" onClick={() => setPracticeRevealed((current) => !current)}>
+              {practiceRevealed ? <EyeOff size={17} /> : <Eye size={17} />} {practiceRevealed ? "Hide meaning" : "Reveal meaning"}
+            </button>
+            <button className="focus-nav-button" type="button" onClick={() => movePractice(1)} disabled={visibleSentences.length < 2} aria-label="Next sentence" title="Next sentence"><ChevronRight size={21} /></button>
+          </div>
+        </article>
+      ) : view === "quiz" && activeQuizItem ? (
         <article className="listening-quiz" aria-live="polite">
           <div className="listening-quiz-top">
             <small>{activeQuizItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
@@ -211,7 +256,7 @@ export default function SentencePractice({ lessons }) {
             <button type="button" onClick={() => moveQuiz(1)} disabled={visibleSentences.length < 2}>Next sentence</button>
           </div>
         </article>
-      ) : view === "cards" && visibleSentences.length > 0 ? (
+      ) : view === "browse" && visibleSentences.length > 0 ? (
         <div className="sentence-practice-grid">
           {visibleSentences.map((item) => {
             const stage = showAll ? 2 : stages[item.id] || 0;
