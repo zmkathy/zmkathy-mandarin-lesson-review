@@ -175,7 +175,7 @@ export default function SentencePractice({ lessons }) {
             />
             <div>
               <p className="section-label">Listen and choose</p>
-              <h3>Which sentence did you hear?</h3>
+              <h3>What did you hear?</h3>
               <p>Play the sentence as many times as you need.</p>
             </div>
           </div>
@@ -195,15 +195,15 @@ export default function SentencePractice({ lessons }) {
                   onClick={() => setQuizAnswer({ id: choice.id, correct: isCorrect })}
                 >
                   {quizAnswer && isCorrect ? <Check size={18} /> : quizAnswer && isSelected ? <X size={18} /> : null}
-                  <span>{choice.pinyin}</span>
+                  <span>{choice.english}</span>
                 </button>
               );
             })}
           </div>
           {quizAnswer ? (
             <div className={`listening-feedback ${quizAnswer.correct ? "is-correct" : "is-incorrect"}`}>
-              {quizAnswer.correct ? "Correct. Nice listening." : `The answer was: ${activeQuizItem.pinyin}`}
-              <span>{activeQuizItem.hanzi} · {activeQuizItem.english}</span>
+              {quizAnswer.correct ? "Correct. Nice listening." : `The answer was: ${activeQuizItem.english}`}
+              <span>{activeQuizItem.hanzi} · {activeQuizItem.pinyin} · {activeQuizItem.english}</span>
             </div>
           ) : null}
           <div className="listening-quiz-actions">
