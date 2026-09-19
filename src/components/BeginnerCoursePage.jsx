@@ -5,8 +5,8 @@ import SentencePractice from "./SentencePractice.jsx";
 import VocabularyPractice from "./VocabularyPractice.jsx";
 import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
 
-export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson, student }) {
-  const [mode, setMode] = useState("lessons");
+export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson, student, initialMode = "lessons" }) {
+  const [mode, setMode] = useState(initialMode);
   const availableLessonNumbers = getAvailableLessonNumbers(student, 1, lessons.length);
   const availableLessonSet = new Set(availableLessonNumbers);
   const availableLessonCount = availableLessonNumbers.length;
@@ -34,7 +34,7 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson,
           <BookOpen size={18} /> Lesson Review
         </button>
         <button className={mode === "vocabulary" ? "is-active" : ""} type="button" onClick={() => setMode("vocabulary")}>
-          <GalleryHorizontalEnd size={18} /> Vocabulary Practice
+          <GalleryHorizontalEnd size={18} /> Vocabulary Cards
         </button>
         <button className={mode === "sentences" ? "is-active" : ""} type="button" onClick={() => setMode("sentences")}>
           <MessagesSquare size={18} /> Sentence Practice

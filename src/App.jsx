@@ -16,6 +16,7 @@ import { restoreTeacher } from "./services/teacherPortal.js";
 export default function App() {
   const [lessons, setLessons] = useState(fallbackLessons);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
+  const [courseMode, setCourseMode] = useState("lessons");
   const [activeView, setActiveView] = useState(() => new URLSearchParams(window.location.search).get("view") === "teacher" ? "teacher" : "home");
   const [loadError, setLoadError] = useState("");
   const [student, setStudent] = useState(null);
@@ -95,9 +96,22 @@ export default function App() {
       return;
     }
     setSelectedLessonId(null);
+    if (view === "course") setCourseMode("lessons");
     setActiveView(view);
     const nextUrl = view === "teacher" ? `${window.location.pathname}?view=teacher` : window.location.pathname;
     window.history.replaceState({}, "", nextUrl);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function openCourseMode(mode) {
+    if (studentPortalEnabled && !student && !teacherLoggedIn) {
+      setShowStudentLogin(true);
+      return;
+    }
+    setSelectedLessonId(null);
+    setCourseMode(mode);
+    setActiveView("course");
+    window.history.replaceState({}, "", window.location.pathname);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -148,8 +162,8 @@ export default function App() {
       {activeView === "home" ? (
         <HomePage
           lessons={lessons}
-          loadError={loadError}
           onNavigate={navigate}
+          onOpenCourse={openCourseMode}
           student={student}
           studentPortalEnabled={studentPortalEnabled}
           teacherLoggedIn={teacherLoggedIn}
@@ -165,7 +179,7 @@ export default function App() {
       ) : activeView === "everyday" ? (
         <EverydayVocabularyPage student={student} />
       ) : (
-        <BeginnerCoursePage lessons={lessons} loadError={loadError} onSelectLesson={(lessonId) => {
+        <BeginnerCoursePage key={courseMode} initialMode={courseMode} lessons={lessons} loadError={loadError} onSelectLesson={(lessonId) => {
           const lessonNumber = lessons.findIndex((lesson) => lesson.id === lessonId) + 1;
           if (availableLessonSet.has(lessonNumber)) setSelectedLessonId(lessonId);
         }} student={student} />
