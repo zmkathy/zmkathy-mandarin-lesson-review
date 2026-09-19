@@ -1,4 +1,4 @@
-const recordedLessonNumbers = new Set([1, 2, 3, 4]);
+const recordedLessonNumbers = new Set([1, 2, 3]);
 
 export function getReviewAudioSrc(lessonNumber, section, itemNumber) {
   if (!recordedLessonNumbers.has(lessonNumber)) return undefined;
