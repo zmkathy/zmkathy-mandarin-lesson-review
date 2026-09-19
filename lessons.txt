@@ -293,7 +293,7 @@
 你要喝什么？ | nǐ yào hē shénme? | What would you like to drink?
 我要一杯茶。 | wǒ yào yì bēi chá. | I’d like one cup of tea.
 请给我菜单。 | qǐng gěi wǒ càidān. | Please give me the menu.
-请给我筷子。 | qǐng gěi wǒ kuàizi. | Please give me chopsticks.
+请给我两双筷子。 | qǐng gěi wǒ liǎng shuāng kuàizi. | Please give me two pairs of chopsticks.
 这个辣吗？ | zhège là ma? | Is this spicy?
 有点儿辣。 | yǒudiǎnr là. | A little spicy.
 我不要辣。 | wǒ bú yào là. | I don’t want spicy food.
