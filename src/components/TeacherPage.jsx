@@ -150,9 +150,10 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
     const form = new FormData(event.currentTarget);
     const displayName = String(form.get("displayName") || "").trim();
     const trialDate = String(form.get("trialDate") || "");
-    const pin = trialDate ? `${trialDate.slice(5, 7)}${trialDate.slice(8, 10)}` : "";
+    const manualPin = String(form.get("pin") || "").trim();
+    const pin = manualPin || (trialDate ? `${trialDate.slice(5, 7)}${trialDate.slice(8, 10)}` : "");
     if (!displayName || !/^\d{4}$/.test(pin)) {
-      setError("Enter the student's name and trial date.");
+      setError("Enter the student's name and a 4-digit PIN, or choose their first lesson date.");
       return;
     }
 
@@ -168,7 +169,7 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
       setShowAddStudent(false);
       await refreshStudents();
     } catch (createError) {
-      setError(createError.message?.includes("duplicate") ? "A student with this login name already exists." : "The student could not be added.");
+      setError(createError.message?.includes("duplicate") ? "A student with this login name already exists." : createError.message || "The student could not be added.");
     } finally {
       setSavingKey("");
     }
@@ -217,7 +218,8 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
         <form className="add-student-form" onSubmit={handleCreateStudent}>
           <span className="add-student-icon"><UserRoundPlus size={22} /></span>
           <label><span>Student name</span><input name="displayName" type="text" placeholder="Student name" required /></label>
-          <label><span>Trial date</span><input name="trialDate" type="date" required /></label>
+          <label><span>4-digit PIN</span><input name="pin" type="text" inputMode="numeric" pattern="[0-9]{4}" maxLength="4" placeholder="e.g. 0617" /></label>
+          <label><span>First lesson date (optional)</span><input name="trialDate" type="date" /></label>
           <label><span>Level 1 access</span><select name="stage1Lesson" defaultValue="1">{lessonOptions.slice(1).map((number) => <option key={number} value={number}>Lesson {number}</option>)}</select></label>
           <button type="submit" disabled={savingKey === "new-student"}>{savingKey === "new-student" ? "Adding..." : "Add student"}</button>
         </form>
