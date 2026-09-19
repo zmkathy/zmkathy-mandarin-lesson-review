@@ -1,4 +1,4 @@
-import { ArrowRight, AudioLines, BookOpen, CheckCircle2, LockKeyhole, ShieldCheck } from "lucide-react";
+import { ArrowRight, AudioLines, BookOpen, CheckCircle2, Images, LockKeyhole, ShieldCheck } from "lucide-react";
 import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
 
 export default function HomePage({ lessons, onNavigate, loadError, student, studentPortalEnabled, teacherLoggedIn }) {
@@ -29,8 +29,8 @@ export default function HomePage({ lessons, onNavigate, loadError, student, stud
             <p className="section-label">Your learning space</p>
             <h2>Welcome back, {student.displayName}</h2>
             <p>{availableLessonCount > 0
-              ? `${availableLessonCount} ${availableLessonCount === 1 ? "lesson is" : "lessons are"} ready for you. Pinyin and everyday vocabulary are always available.`
-              : "Your Level 1 lessons have not been opened yet. Pinyin and everyday vocabulary are still available."}</p>
+              ? `${availableLessonCount} ${availableLessonCount === 1 ? "lesson is" : "lessons are"} ready for you. Pinyin and everyday vocabulary are also ready to practice.`
+              : "Your Level 1 lessons have not been opened yet. Pinyin and everyday vocabulary are still ready to practice."}</p>
           </div>
           <button type="button" onClick={() => onNavigate("course")}>Continue learning <ArrowRight size={18} /></button>
         </section>
@@ -70,6 +70,21 @@ export default function HomePage({ lessons, onNavigate, loadError, student, stud
               <small>403 sounds · Tone Perfect native audio</small>
             </span>
             <ArrowRight className="resource-arrow" size={23} />
+          </button>
+
+          <button className="resource-card resource-everyday" type="button" onClick={() => onNavigate("everyday")}>
+            <span className="resource-icon"><Images size={25} /></span>
+            <span className="resource-copy">
+              <span className="resource-kicker">Extra practice</span>
+              <strong>Everyday Vocabulary</strong>
+              <span>Picture flashcards for useful words and everyday topics.</span>
+              <small>{student
+                ? "Picture cards · audio · saved progress"
+                : teacherLoggedIn
+                  ? "Full teacher access"
+                  : "Sign in to open your vocabulary practice"}</small>
+            </span>
+            {studentPortalEnabled && !student && !teacherLoggedIn ? <LockKeyhole className="resource-arrow" size={21} /> : <ArrowRight className="resource-arrow" size={23} />}
           </button>
         </div>
       </section>

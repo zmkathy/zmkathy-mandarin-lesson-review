@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import BeginnerCoursePage from "./components/BeginnerCoursePage.jsx";
+import EverydayVocabularyPage from "./components/EverydayVocabularyPage.jsx";
 import HomePage from "./components/HomePage.jsx";
 import LessonPage from "./components/LessonPage.jsx";
 import PinyinChart from "./components/PinyinChart.jsx";
@@ -89,7 +90,7 @@ export default function App() {
   const selectedAvailableIndex = availableLessonNumbers.indexOf(selectedLessonNumber);
 
   function navigate(view) {
-    if (view === "course" && studentPortalEnabled && !student && !teacherLoggedIn) {
+    if ((view === "course" || view === "everyday") && studentPortalEnabled && !student && !teacherLoggedIn) {
       setShowStudentLogin(true);
       return;
     }
@@ -161,6 +162,8 @@ export default function App() {
         />
       ) : activeView === "pinyin" ? (
         <PinyinChart />
+      ) : activeView === "everyday" ? (
+        <EverydayVocabularyPage student={student} />
       ) : (
         <BeginnerCoursePage lessons={lessons} loadError={loadError} onSelectLesson={(lessonId) => {
           const lessonNumber = lessons.findIndex((lesson) => lesson.id === lessonId) + 1;

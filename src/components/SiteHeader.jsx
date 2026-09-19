@@ -1,4 +1,4 @@
-import { AudioLines, BookOpen, GraduationCap, House, LogOut, UserRound } from "lucide-react";
+import { AudioLines, BookOpen, GraduationCap, House, Images, LogOut, UserRound } from "lucide-react";
 
 export default function SiteHeader({ activeView, onNavigate, student, studentPortalEnabled, onStudentLogin, onStudentLogout }) {
   return (
@@ -14,6 +14,9 @@ export default function SiteHeader({ activeView, onNavigate, student, studentPor
         </button>
         <button className={activeView === "course" ? "is-active" : ""} type="button" onClick={() => onNavigate("course")}>
           <BookOpen size={18} /> Beginner Course
+        </button>
+        <button className={activeView === "everyday" ? "is-active" : ""} type="button" onClick={() => onNavigate("everyday")}>
+          <Images size={18} /> Everyday Vocab
         </button>
         <button className={activeView === "pinyin" ? "is-active" : ""} type="button" onClick={() => onNavigate("pinyin")}>
           <AudioLines size={18} /> Pinyin Chart

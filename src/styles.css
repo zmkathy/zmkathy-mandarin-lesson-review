@@ -193,9 +193,11 @@ button { letter-spacing: 0; }
 .resource-card:hover { transform: translateY(-3px); box-shadow: 0 13px 28px rgba(31, 68, 67, 0.12); }
 .resource-lessons { border-left: 4px solid var(--coral); }
 .resource-pinyin { border-left: 4px solid var(--teal); }
+.resource-everyday { border-left: 4px solid var(--gold); }
 .resource-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 7px; }
 .resource-lessons .resource-icon { background: var(--coral-soft); color: #b84432; }
 .resource-pinyin .resource-icon { background: var(--teal-soft); color: var(--teal-dark); }
+.resource-everyday .resource-icon { background: #fff2d9; color: #a76f15; }
 .resource-copy { display: block; min-width: 0; }
 .resource-kicker { display: block; margin-bottom: 7px; color: var(--muted); font-size: 0.76rem; font-weight: 800; text-transform: uppercase; }
 .resource-copy > strong { display: block; margin-bottom: 8px; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.45rem; line-height: 1.15; }
@@ -203,6 +205,7 @@ button { letter-spacing: 0; }
 .resource-copy small { display: block; margin-top: 13px; color: var(--muted); font-size: 0.78rem; font-weight: 750; }
 .resource-lessons .resource-copy small { color: var(--muted); }
 .resource-pinyin .resource-copy small { color: var(--teal-dark); }
+.resource-everyday .resource-copy small { color: #8b621d; }
 .resource-arrow { align-self: center; color: var(--muted); }
 .hub-footer { display: flex; justify-content: center; margin-top: 42px; padding-top: 18px; border-top: 1px solid var(--line); }
 .hub-footer button { display: inline-flex; align-items: center; gap: 6px; border: 0; padding: 6px; background: transparent; color: #81908c; font-size: 0.76rem; cursor: pointer; }

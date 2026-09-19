@@ -107,7 +107,7 @@ function CardImage({ item }) {
   );
 }
 
-export default function EverydayVocabulary({ student }) {
+export default function EverydayVocabulary({ student, showHeading = true }) {
   const storageKey = student?.id ? `${STORAGE_KEY}-${student.id}` : STORAGE_KEY;
   const [category, setCategory] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -184,14 +184,16 @@ export default function EverydayVocabulary({ student }) {
   const markedCount = Object.keys(progress).length;
 
   return (
-    <section className="everyday-vocabulary" aria-labelledby="everyday-vocabulary-title">
-      <div className="section-heading practice-heading">
-        <div>
-          <p className="section-label">Picture flashcards</p>
-          <h2 id="everyday-vocabulary-title">Everyday Vocabulary</h2>
+    <section className="everyday-vocabulary" aria-label={showHeading ? undefined : "Everyday vocabulary flashcards"} aria-labelledby={showHeading ? "everyday-vocabulary-title" : undefined}>
+      {showHeading ? (
+        <div className="section-heading practice-heading">
+          <div>
+            <p className="section-label">Picture flashcards</p>
+            <h2 id="everyday-vocabulary-title">Everyday Vocabulary</h2>
+          </div>
+          <span className="result-count">{visibleVocabulary.length} words</span>
         </div>
-        <span className="result-count">{visibleVocabulary.length} words</span>
-      </div>
+      ) : null}
 
       <div className="category-filter" aria-label="Vocabulary categories">
         {categories.map(([value, label]) => (
