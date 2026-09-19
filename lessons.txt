@@ -351,8 +351,8 @@
 
 ## Key Sentences
 请问，地铁站怎么走？ | qǐngwèn, dìtiězhàn zěnme zǒu? | Excuse me, how do I get to the metro station?
-一直走，然后左拐。 | yìzhí zǒu, ránhòu zuǒ guǎi. | Go straight, then turn left.
-一直走，然后右拐。 | yìzhí zǒu, ránhòu yòu guǎi. | Go straight, then turn right.
+一直走，然后向左拐。 | yìzhí zǒu, ránhòu xiàng zuǒ guǎi. | Go straight, then turn left.
+一直走，然后向右拐。 | yìzhí zǒu, ránhòu xiàng yòu guǎi. | Go straight, then turn right.
 地铁站在酒店的前面。 | dìtiězhàn zài jiǔdiàn de qiánmiàn. | The metro station is in front of the hotel.
 咖啡店在酒店的左边。 | kāfēidiàn zài jiǔdiàn de zuǒbiān. | The café is on the left of the hotel.
 地铁站在哪儿？ | dìtiězhàn zài nǎr? | Where is the metro station?
