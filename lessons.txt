@@ -280,7 +280,12 @@
 辣 | là | spicy
 甜 | tián | sweet
 酸 | suān | sour
+苦 | kǔ | bitter
 咸 | xián | salty
+很 | hěn | very
+不 | bù | not
+有点儿 | yǒudiǎnr | a little
+太 | tài | too; very
 
 ## Key Sentences
 你要吃什么？ | nǐ yào chī shénme? | What would you like to eat?
@@ -292,6 +297,10 @@
 这个辣吗？ | zhège là ma? | Is this spicy?
 有点儿辣。 | yǒudiǎnr là. | A little spicy.
 我不要辣。 | wǒ bú yào là. | I don’t want spicy food.
+这个面条很辣。 | zhège miàntiáo hěn là. | These noodles are very spicy.
+这个汤不咸。 | zhège tāng bù xián. | This soup is not salty.
+这杯茶有点儿苦。 | zhè bēi chá yǒudiǎnr kǔ. | This tea is a little bitter.
+这个汤太咸了。 | zhège tāng tài xián le. | This soup is too salty.
 
 # Lesson 9: Transportation
 
