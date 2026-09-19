@@ -188,6 +188,9 @@
 水 | shuǐ | water
 杯子 | bēizi | cup
 车票 | chēpiào | ticket
+张 | zhāng | measure word for flat objects
+瓶 | píng | measure word for bottles
+杯 | bēi | measure word for cups
 商店 | shāngdiàn | shop; store
 买 | mǎi | buy
 这个 | zhège | this one
@@ -202,7 +205,7 @@
 这瓶水多少钱？ | zhè píng shuǐ duōshao qián? | How much is this bottle of water?
 八块。 | bā kuài. | Eight kuai.
 十八块五。 | shíbā kuài wǔ. | 18.5 kuai.
-这个苹果多少钱？ | zhège píngguǒ duōshao qián? | How much is this apple?
+那张车票多少钱？ | nà zhāng chēpiào duōshao qián? | How much is that ticket?
 一共多少钱？ | yígòng duōshao qián? | How much in total?
 可以刷卡吗？ | kěyǐ shuākǎ ma? | Can I pay by card?
 可以扫码吗？ | kěyǐ sǎomǎ ma? | Can I scan to pay?
