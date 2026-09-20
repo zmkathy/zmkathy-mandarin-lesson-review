@@ -5,7 +5,11 @@ export default function SiteHeader({ activeView, onNavigate, student, studentPor
     <header className="topbar">
       <button className="brand" type="button" onClick={() => onNavigate("home")}>
         <span className="brand-mark" aria-label="Mì">Mì</span>
-        <span className="brand-copy"><strong>Mi's Mandarin</strong><small>Learning Hub</small></span>
+        <span className="brand-copy">
+          <strong>Mi's Mandarin</strong>
+          <small>Learning Hub</small>
+          <span className="brand-description">Lessons · Pinyin · vocabulary · sentence practice</span>
+        </span>
       </button>
       <div className="header-actions">
       <nav className="primary-nav" aria-label="Main navigation">
