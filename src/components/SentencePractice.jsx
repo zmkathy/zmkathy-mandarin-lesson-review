@@ -1,7 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, ChevronLeft, ChevronRight, Eye, EyeOff, Headphones, Search, Shuffle, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Eye, EyeOff, Headphones, RotateCcw, Search, Shuffle, X } from "lucide-react";
 import SpeakButton from "./SpeakButton.jsx";
 import { getReviewAudioSrc } from "../utils/reviewAudio.js";
+import { getCardProgress, saveCardProgress } from "../services/studentPortal.js";
+
+const STORAGE_KEY = "mis-mandarin-sentence-progress-v1";
+
+function loadProgress(storageKey) {
+  try {
+    return JSON.parse(window.localStorage.getItem(storageKey)) || {};
+  } catch {
+    return {};
+  }
+}
 
 function collectSentences(lessons) {
   const uniqueItems = new Map();
@@ -20,6 +31,7 @@ function collectSentences(lessons) {
       uniqueItems.set(key, {
         ...item,
         id: `${lesson.id}-sentence-${itemIndex}`,
+        progressKey: key,
         audioLessonNumber: lessonNumber,
         audioItemNumber: itemIndex + 1,
         lessonNumbers: [lessonNumber]
@@ -56,7 +68,8 @@ function shuffleItems(items) {
   return result;
 }
 
-export default function SentencePractice({ lessons }) {
+export default function SentencePractice({ lessons, student }) {
+  const storageKey = student?.id ? `${STORAGE_KEY}-${student.id}` : STORAGE_KEY;
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
   const [query, setQuery] = useState("");
@@ -67,7 +80,23 @@ export default function SentencePractice({ lessons }) {
   const [practiceRevealed, setPracticeRevealed] = useState(false);
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizAnswer, setQuizAnswer] = useState(null);
+  const [progress, setProgress] = useState(() => loadProgress(storageKey));
   const sentences = useMemo(() => collectSentences(lessons), [lessons]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(storageKey, JSON.stringify(progress));
+    } catch {
+      // Practice still works when browser storage is unavailable.
+    }
+  }, [progress, storageKey]);
+
+  useEffect(() => {
+    if (!student?.token || student.id === "demo") return;
+    getCardProgress(student.token, "lesson_sentences").then((savedProgress) => {
+      setProgress((current) => ({ ...current, ...savedProgress }));
+    });
+  }, [student?.id, student?.token]);
 
   const visibleSentences = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -118,6 +147,18 @@ export default function SentencePractice({ lessons }) {
     if (visibleSentences.length < 2) return;
     setPracticeIndex((current) => (current + direction + visibleSentences.length) % visibleSentences.length);
     setPracticeRevealed(false);
+  }
+
+  function markPracticeItem(status) {
+    if (!activePracticeItem) return;
+    setProgress((current) => ({ ...current, [activePracticeItem.progressKey]: status }));
+    if (student?.token && student.id !== "demo") {
+      saveCardProgress(student.token, "lesson_sentences", activePracticeItem.progressKey, status);
+    }
+    setPracticeRevealed(false);
+    if (visibleSentences.length > 1) {
+      setPracticeIndex((current) => (current + 1) % visibleSentences.length);
+    }
   }
 
   return (
@@ -177,7 +218,7 @@ export default function SentencePractice({ lessons }) {
       </div>
 
       {view === "practice" && activePracticeItem ? (
-        <article className={`focus-sentence-card ${practiceRevealed ? "is-revealed" : ""}`}>
+        <article className={`focus-sentence-card ${practiceRevealed ? "is-revealed" : ""} ${progress[activePracticeItem.progressKey] ? `is-${progress[activePracticeItem.progressKey]}` : ""}`}>
           <div className="focus-card-top">
             <small>{activePracticeItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
             <span>{activePracticeIndex + 1} / {visibleSentences.length}</span>
@@ -202,6 +243,12 @@ export default function SentencePractice({ lessons }) {
             />
             <button className="focus-sentence-reveal" type="button" onClick={() => setPracticeRevealed((current) => !current)}>
               {practiceRevealed ? <EyeOff size={17} /> : <Eye size={17} />} {practiceRevealed ? "Hide meaning" : "Reveal meaning"}
+            </button>
+            <button className="focus-status-button is-review" type="button" onClick={() => markPracticeItem("review")}>
+              <RotateCcw size={17} /> Review again
+            </button>
+            <button className="focus-status-button is-known" type="button" onClick={() => markPracticeItem("known")}>
+              <Check size={17} /> Know it
             </button>
             <button className="focus-nav-button" type="button" onClick={() => movePractice(1)} disabled={visibleSentences.length < 2} aria-label="Next sentence" title="Next sentence"><ChevronRight size={21} /></button>
           </div>

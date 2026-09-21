@@ -22,7 +22,7 @@ create table if not exists public.student_sessions (
 
 create table if not exists public.card_progress (
   student_id uuid not null references public.students(id) on delete cascade,
-  practice_type text not null check (practice_type in ('lesson_vocabulary', 'everyday_vocabulary')),
+  practice_type text not null check (practice_type in ('lesson_vocabulary', 'lesson_sentences', 'everyday_vocabulary')),
   item_key text not null,
   status text not null check (status in ('known', 'review')),
   updated_at timestamptz not null default now(),

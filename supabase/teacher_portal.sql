@@ -370,7 +370,7 @@ declare matched_student_id uuid;
 begin
   matched_student_id := public.student_id_for_token(input_token);
   if matched_student_id is null then return; end if;
-  if input_practice_type not in ('lesson_vocabulary', 'everyday_vocabulary') or input_status not in ('known', 'review') then return; end if;
+  if input_practice_type not in ('lesson_vocabulary', 'lesson_sentences', 'everyday_vocabulary') or input_status not in ('known', 'review') then return; end if;
   insert into public.card_progress (student_id, practice_type, item_key, status, updated_at)
   values (matched_student_id, input_practice_type, input_item_key, input_status, now())
   on conflict (student_id, practice_type, item_key) do update

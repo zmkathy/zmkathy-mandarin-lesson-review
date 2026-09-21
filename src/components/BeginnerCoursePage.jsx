@@ -42,7 +42,7 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson,
       </nav>
 
       {mode === "sentences" ? (
-        <SentencePractice lessons={availableLessons} />
+        <SentencePractice lessons={availableLessons} student={student} />
       ) : mode === "vocabulary" ? (
         <VocabularyPractice lessons={availableLessons} student={student} />
       ) : (

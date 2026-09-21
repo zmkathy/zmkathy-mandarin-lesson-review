@@ -1,5 +1,6 @@
 import { ArrowRight, AudioLines, BookOpen, CheckCircle2, GalleryHorizontalEnd, Images, LockKeyhole, MessagesSquare, ShieldCheck } from "lucide-react";
 import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
+import StudentProgress from "./StudentProgress.jsx";
 
 export default function HomePage({ lessons, onNavigate, onOpenCourse, student, studentPortalEnabled, teacherLoggedIn }) {
   const totalItems = lessons.reduce(
@@ -11,17 +12,25 @@ export default function HomePage({ lessons, onNavigate, onOpenCourse, student, s
   return (
     <main className="content-page hub-page">
       {student ? (
-        <section className="student-welcome" aria-label="Student learning access">
-          <span className="student-welcome-icon"><CheckCircle2 size={23} /></span>
-          <div>
-            <p className="section-label">Your learning space</p>
-            <h2>Welcome back, {student.displayName}</h2>
-            <p>{availableLessonCount > 0
-              ? `${availableLessonCount} ${availableLessonCount === 1 ? "lesson is" : "lessons are"} ready for you. Pinyin and everyday vocabulary are also ready to practice.`
-              : "Your Level 1 lessons have not been opened yet. Pinyin and everyday vocabulary are still ready to practice."}</p>
-          </div>
-          <button type="button" onClick={() => onOpenCourse("lessons")}>Continue learning <ArrowRight size={18} /></button>
-        </section>
+        <>
+          <section className="student-welcome" aria-label="Student learning access">
+            <span className="student-welcome-icon"><CheckCircle2 size={23} /></span>
+            <div>
+              <p className="section-label">Your learning space</p>
+              <h2>Welcome back, {student.displayName}</h2>
+              <p>{availableLessonCount > 0
+                ? `${availableLessonCount} ${availableLessonCount === 1 ? "lesson is" : "lessons are"} ready for you. Pinyin and everyday vocabulary are also ready to practice.`
+                : "Your Level 1 lessons have not been opened yet. Pinyin and everyday vocabulary are still ready to practice."}</p>
+            </div>
+            <button type="button" onClick={() => onOpenCourse("lessons")}>Continue learning <ArrowRight size={18} /></button>
+          </section>
+          <StudentProgress
+            lessons={lessons}
+            availableLessonNumbers={getAvailableLessonNumbers(student, 1, lessons.length)}
+            student={student}
+            onContinue={() => onOpenCourse("vocabulary")}
+          />
+        </>
       ) : null}
 
       <section className="hub-section core-learning" aria-labelledby="core-learning-title">
