@@ -38,7 +38,8 @@ export default function SiteHeader({ activeView, onNavigate, student, studentPor
         </div>
       ) : studentPortalEnabled && activeView !== "teacher" ? (
         <button className="student-login-button" type="button" onClick={onStudentLogin}>
-          <UserRound size={17} /> Student sign in
+          <UserRound size={17} />
+          <span className="student-login-label"><span>Student</span><span>sign in</span></span>
         </button>
       ) : null}
       </div>
