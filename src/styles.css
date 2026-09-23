@@ -730,6 +730,7 @@ button:active:not(:disabled) { transform: scale(0.98); }
   .everyday-challenge-prompt h3 { font-size: 1.18rem; }
   .practice-view-switch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
   .practice-view-switch button { min-height: 42px; padding: 0 8px; }
+  .practice-view-switch button:nth-child(3):last-child { grid-column: 1 / -1; }
   .focus-card-main { min-height: 235px; padding: 26px 16px; }
   .focus-card-actions { grid-template-columns: 38px 38px minmax(0, 1fr) minmax(0, 1fr) 38px; gap: 6px; padding: 10px; }
   .focus-sentence-card .focus-card-actions { grid-template-columns: 38px 38px minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 38px; }

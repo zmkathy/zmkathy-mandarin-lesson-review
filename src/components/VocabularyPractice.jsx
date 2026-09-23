@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, ChevronLeft, ChevronRight, Eye, EyeOff, Grid2X2, Layers3, RotateCcw, Search, Shuffle } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Eye, EyeOff, Grid2X2, Headphones, Layers3, RotateCcw, Search, Shuffle, X } from "lucide-react";
 import SpeakButton from "./SpeakButton.jsx";
 import { getReviewAudioSrc } from "../utils/reviewAudio.js";
 import { getCardProgress, saveCardProgress } from "../services/studentPortal.js";
@@ -52,6 +52,23 @@ function shuffleItems(items) {
   return result;
 }
 
+function getQuizChoices(items, activeItem, version) {
+  if (!activeItem) return [];
+
+  const alternatives = items.filter((item) => item.id !== activeItem.id);
+  const seed = [...`${activeItem.id}-${version}`].reduce((total, character) => total + character.charCodeAt(0), 0);
+  const picked = alternatives
+    .map((item, index) => ({ item, order: (index * 17 + seed) % 97 }))
+    .sort((first, second) => first.order - second.order)
+    .slice(0, 2)
+    .map(({ item }) => item);
+
+  return [activeItem, ...picked]
+    .map((item, index) => ({ item, order: (index * 23 + seed) % 89 }))
+    .sort((first, second) => first.order - second.order)
+    .map(({ item }) => item);
+}
+
 export default function VocabularyPractice({ lessons, student }) {
   const storageKey = student?.id ? STORAGE_KEY + "-" + student.id : STORAGE_KEY;
   const [view, setView] = useState("practice");
@@ -63,6 +80,8 @@ export default function VocabularyPractice({ lessons, student }) {
   const [practiceRevealed, setPracticeRevealed] = useState(false);
   const [practiceIndex, setPracticeIndex] = useState(0);
   const [shuffleVersion, setShuffleVersion] = useState(0);
+  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizAnswer, setQuizAnswer] = useState(null);
   const [progress, setProgress] = useState(() => loadProgress(storageKey));
   const vocabulary = useMemo(() => collectVocabulary(lessons), [lessons]);
 
@@ -102,12 +121,23 @@ export default function VocabularyPractice({ lessons, student }) {
   );
   const activeIndex = Math.min(practiceIndex, Math.max(visibleVocabulary.length - 1, 0));
   const activeItem = visibleVocabulary[activeIndex];
+  const activeQuizIndex = Math.min(quizIndex, Math.max(visibleVocabulary.length - 1, 0));
+  const activeQuizItem = visibleVocabulary[activeQuizIndex];
+  const quizChoices = useMemo(
+    () => getQuizChoices(visibleVocabulary, activeQuizItem, shuffleVersion),
+    [activeQuizItem, shuffleVersion, visibleVocabulary]
+  );
   const markedCount = Object.keys(progress).length;
 
   useEffect(() => {
     setPracticeIndex(0);
     setPracticeRevealed(false);
+    setQuizIndex(0);
   }, [lessonFilter, statusFilter, query, shuffleVersion]);
+
+  useEffect(() => {
+    setQuizAnswer(null);
+  }, [activeQuizItem?.id]);
 
   function toggleCard(id) {
     setRevealed((current) => {
@@ -144,6 +174,11 @@ export default function VocabularyPractice({ lessons, student }) {
     }
   }
 
+  function moveQuiz(direction) {
+    if (visibleVocabulary.length < 2) return;
+    setQuizIndex((current) => (current + direction + visibleVocabulary.length) % visibleVocabulary.length);
+  }
+
   function resetProgress() {
     if (window.confirm("Reset all saved vocabulary progress on this device?")) {
       setProgress({});
@@ -166,6 +201,9 @@ export default function VocabularyPractice({ lessons, student }) {
         </button>
         <button className={view === "browse" ? "is-active" : ""} type="button" onClick={() => setView("browse")}>
           <Grid2X2 size={17} /> Browse all
+        </button>
+        <button className={view === "quiz" ? "is-active" : ""} type="button" onClick={() => setView("quiz")}>
+          <Headphones size={17} /> Listening quiz
         </button>
       </div>
 
@@ -257,6 +295,56 @@ export default function VocabularyPractice({ lessons, student }) {
             <button className="focus-nav-button" type="button" onClick={() => movePractice(1)} disabled={visibleVocabulary.length < 2} aria-label="Next word">
               <ChevronRight size={20} />
             </button>
+          </div>
+        </article>
+      ) : view === "quiz" && activeQuizItem ? (
+        <article className="listening-quiz" aria-live="polite">
+          <div className="listening-quiz-top">
+            <small>{activeQuizItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
+            <span>{activeQuizIndex + 1} / {visibleVocabulary.length}</span>
+          </div>
+          <div className="listening-quiz-prompt">
+            <SpeakButton
+              className="listening-audio-button"
+              text={activeQuizItem.hanzi}
+              audioSrc={getReviewAudioSrc(activeQuizItem.lessonNumber, "vocabulary", activeQuizItem.audioItemNumber)}
+            />
+            <div>
+              <p className="section-label">Listen and choose</p>
+              <h3>What word did you hear?</h3>
+              <p>Play the word as many times as you need.</p>
+            </div>
+          </div>
+          <div className="listening-choices" role="group" aria-label="Choose the word you heard">
+            {quizChoices.map((choice) => {
+              const isCorrect = choice.id === activeQuizItem.id;
+              const isSelected = quizAnswer && choice.id === quizAnswer.id;
+              const resultClass = quizAnswer
+                ? isCorrect ? "is-correct" : isSelected ? "is-incorrect" : ""
+                : "";
+              return (
+                <button
+                  className={`listening-choice ${resultClass}`.trim()}
+                  type="button"
+                  key={choice.id}
+                  disabled={Boolean(quizAnswer)}
+                  onClick={() => setQuizAnswer({ id: choice.id, correct: isCorrect })}
+                >
+                  {quizAnswer && isCorrect ? <Check size={18} /> : quizAnswer && isSelected ? <X size={18} /> : null}
+                  <span>{choice.english}</span>
+                </button>
+              );
+            })}
+          </div>
+          {quizAnswer ? (
+            <div className={`listening-feedback ${quizAnswer.correct ? "is-correct" : "is-incorrect"}`}>
+              {quizAnswer.correct ? "Correct. Nice listening." : `The answer was: ${activeQuizItem.english}`}
+              <span>{activeQuizItem.hanzi} · {activeQuizItem.pinyin} · {activeQuizItem.english}</span>
+            </div>
+          ) : null}
+          <div className="listening-quiz-actions">
+            <button type="button" onClick={() => moveQuiz(-1)} disabled={visibleVocabulary.length < 2}>Previous</button>
+            <button type="button" onClick={() => moveQuiz(1)} disabled={visibleVocabulary.length < 2}>Next word</button>
           </div>
         </article>
       ) : (
