@@ -8,7 +8,7 @@ export default function SiteHeader({ activeView, onNavigate, student, studentPor
         <span className="brand-copy">
           <strong>Mi's Mandarin</strong>
           <small>Learning Hub</small>
-          <span className="brand-description">Lessons · Pinyin · vocabulary · sentence practice</span>
+          <span className="brand-description">Lessons · Pinyin · Vocabulary · Sentence Practice</span>
         </span>
       </button>
       <div className="header-actions">
