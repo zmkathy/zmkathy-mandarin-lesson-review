@@ -17,7 +17,7 @@ export default function SiteHeader({ activeView, onNavigate, student, studentPor
           <House size={18} /> Home
         </button>
         <button className={activeView === "course" ? "is-active" : ""} type="button" onClick={() => onNavigate("course")}>
-          <BookOpen size={18} /> Beginner Course
+          <BookOpen size={18} /> My Courses
         </button>
         <button className={activeView === "everyday" ? "is-active" : ""} type="button" onClick={() => onNavigate("everyday")}>
           <Images size={18} /> Everyday Vocab

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import BeginnerCoursePage from "./components/BeginnerCoursePage.jsx";
+import CourseLibraryPage from "./components/CourseLibraryPage.jsx";
 import EverydayVocabularyPage from "./components/EverydayVocabularyPage.jsx";
 import HomePage from "./components/HomePage.jsx";
 import LessonPage from "./components/LessonPage.jsx";
@@ -17,6 +18,7 @@ export default function App() {
   const [lessons, setLessons] = useState(fallbackLessons);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [courseMode, setCourseMode] = useState("lessons");
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
   const [activeView, setActiveView] = useState(() => new URLSearchParams(window.location.search).get("view") === "teacher" ? "teacher" : "home");
   const [loadError, setLoadError] = useState("");
   const [student, setStudent] = useState(null);
@@ -96,7 +98,10 @@ export default function App() {
       return;
     }
     setSelectedLessonId(null);
-    if (view === "course") setCourseMode("lessons");
+    if (view === "course") {
+      setCourseMode("lessons");
+      setSelectedCourseId(null);
+    }
     setActiveView(view);
     const nextUrl = view === "teacher" ? `${window.location.pathname}?view=teacher` : window.location.pathname;
     window.history.replaceState({}, "", nextUrl);
@@ -110,6 +115,7 @@ export default function App() {
     }
     setSelectedLessonId(null);
     setCourseMode(mode);
+    setSelectedCourseId("beginner-level-1");
     setActiveView("course");
     window.history.replaceState({}, "", window.location.pathname);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -178,10 +184,25 @@ export default function App() {
         <PinyinChart />
       ) : activeView === "everyday" ? (
         <EverydayVocabularyPage student={student} />
+      ) : activeView === "course" && !selectedCourseId ? (
+        <CourseLibraryPage
+          lessons={lessons}
+          student={student}
+          teacherLoggedIn={teacherLoggedIn}
+          onOpenCourse={(courseId) => {
+            setSelectedCourseId(courseId);
+            setCourseMode("lessons");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        />
       ) : (
         <BeginnerCoursePage key={courseMode} initialMode={courseMode} lessons={lessons} loadError={loadError} onSelectLesson={(lessonId) => {
           const lessonNumber = lessons.findIndex((lesson) => lesson.id === lessonId) + 1;
           if (availableLessonSet.has(lessonNumber)) setSelectedLessonId(lessonId);
+        }} onBackToCourses={() => {
+          setSelectedLessonId(null);
+          setSelectedCourseId(null);
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }} student={student} />
       )}
       <StudentLoginDialog

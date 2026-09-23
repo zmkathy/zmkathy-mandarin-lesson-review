@@ -17,7 +17,7 @@ export default function LessonPage({
     <main className="content-page lesson-page">
       <button className="back-button" type="button" onClick={onBack}>
         <ArrowLeft size={19} />
-        Beginner Course
+        Beginner Mandarin · Level 1
       </button>
 
       <header className="lesson-header">
