@@ -48,7 +48,7 @@ export default function HomePage({ lessons, onNavigate, onOpenCourse, student, s
               <span className="resource-kicker">{hasCurrentCourse ? "Level 1 · Foundation Course" : "Structured Mandarin practice"}</span>
               <strong>{hasCurrentCourse ? "Beginner Mandarin · Level 1" : "Learning Courses"}</strong>
               <span>{hasCurrentCourse
-                ? "Move through your lessons, then strengthen what you learned with focused practice."
+                ? "Review lessons, vocabulary, and useful sentences in one place."
                 : "Sign in to track your learning path and save your practice progress."}</span>
               <small>{student
                 ? `${availableLessonCount} of ${lessons.length} lessons available`
