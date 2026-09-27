@@ -16,6 +16,7 @@ const categories = [
   ["transportation", "Transportation"],
   ["tableware", "Tableware"],
   ["items", "Daily Items"],
+  ["home", "Home"],
   ["places", "Places"]
 ];
 
@@ -72,6 +73,12 @@ const vocabulary = [
   { id: "qianbao", category: "items", pinyin: "qiánbāo", hanzi: "钱包", english: "wallet" },
   { id: "yaoshi", category: "items", pinyin: "yàoshi", hanzi: "钥匙", english: "keys" },
   { id: "shu", category: "items", pinyin: "shū", hanzi: "书", english: "book" },
+  { id: "chuang", category: "home", pinyin: "chuáng", hanzi: "床", english: "bed", imageFit: "contain", imageExtension: "png", audioExtension: "m4a" },
+  { id: "men", category: "home", pinyin: "mén", hanzi: "门", english: "door", imageFit: "contain", imageExtension: "png", audioExtension: "m4a" },
+  { id: "deng", category: "home", pinyin: "dēng", hanzi: "灯", english: "lamp", imageFit: "contain", imageExtension: "png", audioExtension: "m4a" },
+  { id: "jingzi", category: "home", pinyin: "jìngzi", hanzi: "镜子", english: "mirror", imageFit: "contain", imageExtension: "png", audioExtension: "m4a" },
+  { id: "yashua", category: "home", pinyin: "yáshuā", hanzi: "牙刷", english: "toothbrush", imageFit: "contain", imageExtension: "png", audioExtension: "m4a" },
+  { id: "linyu", category: "home", pinyin: "línyù", hanzi: "淋浴", english: "shower", imageFit: "contain", imageExtension: "png", audioExtension: "m4a" },
   { id: "jia", category: "places", pinyin: "jiā", hanzi: "家", english: "home" },
   { id: "xuexiao", category: "places", pinyin: "xuéxiào", hanzi: "学校", english: "school" },
   { id: "chaoshi", category: "places", pinyin: "chāoshì", hanzi: "超市", english: "supermarket" },
@@ -102,7 +109,7 @@ function CardImage({ item }) {
 
   return (
     <span className={`everyday-card-image${item.imageFit === "contain" ? " is-contain" : ""}`}>
-      <img src={`${IMAGE_ROOT}/${item.id}.webp`} alt="" />
+      <img src={`${IMAGE_ROOT}/${item.id}.${item.imageExtension || "webp"}`} alt="" />
     </span>
   );
 }
@@ -212,7 +219,7 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
 
   function playAudio(item) {
     audioRef.current?.pause();
-    const audio = new Audio(`${AUDIO_ROOT}/${item.id}.mp3?v=${AUDIO_VERSION}`);
+    const audio = new Audio(`${AUDIO_ROOT}/${item.id}.${item.audioExtension || "mp3"}?v=${AUDIO_VERSION}`);
     audioRef.current = audio;
     setPlayingId(item.id);
     audio.addEventListener("ended", () => setPlayingId(null), { once: true });
