@@ -28,12 +28,13 @@ export async function getTeacherStudents() {
   return data;
 }
 
-export async function createTeacherStudent({ displayName, loginName, pin, stage1Lesson }) {
+export async function createTeacherStudent({ displayName, loginName, pin, stage, initialLesson }) {
   const { error } = await supabase.rpc("teacher_create_student", {
     input_display_name: displayName,
     input_login_name: loginName,
     input_pin: pin,
-    input_stage_1: stage1Lesson
+    input_stage: stage,
+    input_initial_lesson: initialLesson
   });
   if (error) throw error;
 }

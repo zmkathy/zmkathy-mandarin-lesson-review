@@ -2,10 +2,11 @@ import { ArrowRight, BookOpen } from "lucide-react";
 import { courses } from "../data/courses.js";
 import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
 
-export default function CourseLibraryPage({ lessons, student, teacherLoggedIn, onOpenCourse }) {
+export default function CourseLibraryPage({ lessonCountByStage, student, teacherLoggedIn, onOpenCourse }) {
   const availableCourses = courses.filter((course) => {
+    if (course.published === false) return false;
     if (teacherLoggedIn || !student) return true;
-    return getAvailableLessonNumbers(student, course.stage, lessons.length).length > 0;
+    return getAvailableLessonNumbers(student, course.stage, lessonCountByStage[course.stage] || 0).length > 0;
   });
 
   return (
@@ -19,18 +20,20 @@ export default function CourseLibraryPage({ lessons, student, teacherLoggedIn, o
       {availableCourses.length > 0 ? (
         <section className="course-library-grid" aria-label="Available courses">
           {availableCourses.map((course) => {
-            const availableLessonCount = getAvailableLessonNumbers(student, course.stage, lessons.length).length;
+            const readyLessonCount = lessonCountByStage[course.stage] || 0;
+            const availableLessonCount = getAvailableLessonNumbers(student, course.stage, readyLessonCount).length;
             const accessNote = teacherLoggedIn
-              ? `${lessons.length} lessons · Full teacher access`
+              ? `${readyLessonCount} ${readyLessonCount === 1 ? "lesson" : "lessons"} ready · Full teacher access`
               : `${availableLessonCount} ${availableLessonCount === 1 ? "lesson" : "lessons"} available`;
 
             return (
-              <button className="course-library-card" type="button" key={course.id} onClick={() => onOpenCourse(course.id)}>
+              <button className={`course-library-card course-stage-${course.stage}`} type="button" key={course.id} onClick={() => onOpenCourse(course.id)}>
                 <span className="course-library-icon"><BookOpen size={26} /></span>
                 <span className="course-library-copy">
                   <span className="resource-kicker">{course.level} · {course.type}</span>
                   <strong>{course.title}</strong>
                   <span>{course.description}</span>
+                  {course.subtitle ? <em>{course.subtitle}</em> : null}
                   <small>{accessNote}</small>
                 </span>
                 <ArrowRight className="course-library-arrow" size={23} />

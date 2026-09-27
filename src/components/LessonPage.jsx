@@ -5,6 +5,7 @@ import { getReviewAudioSrc } from "../utils/reviewAudio.js";
 
 export default function LessonPage({
   lesson,
+  course,
   lessonNumber,
   totalLessons,
   onBack,
@@ -17,7 +18,7 @@ export default function LessonPage({
     <main className="content-page lesson-page">
       <button className="back-button" type="button" onClick={onBack}>
         <ArrowLeft size={19} />
-        Beginner Mandarin · Level 1
+        {course.title}
       </button>
 
       <header className="lesson-header">
@@ -42,7 +43,7 @@ export default function LessonPage({
               key={`${lesson.id}-${item.hanzi}`}
               item={item}
               index={index + 1}
-              audioSrc={getReviewAudioSrc(lessonNumber, "vocabulary", index + 1)}
+              audioSrc={course.recordedAudio ? getReviewAudioSrc(lessonNumber, "vocabulary", index + 1) : undefined}
             />
           ))}
         </div>
@@ -59,7 +60,7 @@ export default function LessonPage({
               key={`${lesson.id}-${item.hanzi}`}
               item={item}
               index={index + 1}
-              audioSrc={getReviewAudioSrc(lessonNumber, "sentence", index + 1)}
+              audioSrc={course.recordedAudio ? getReviewAudioSrc(lessonNumber, "sentence", index + 1) : undefined}
             />
           ))}
         </div>

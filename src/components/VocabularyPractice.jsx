@@ -14,7 +14,7 @@ function loadProgress(storageKey) {
   }
 }
 
-function collectVocabulary(lessons) {
+function collectVocabulary(lessons, courseId) {
   const uniqueItems = new Map();
 
   lessons.forEach((lesson, lessonIndex) => {
@@ -32,7 +32,7 @@ function collectVocabulary(lessons) {
       uniqueItems.set(key, {
         ...item,
         id: lesson.id + "-" + itemIndex,
-        progressKey: key,
+        progressKey: `${courseId}:${key}`,
         lessonNumber,
         audioItemNumber: itemIndex + 1,
         lessonNumbers: [lessonNumber]
@@ -69,8 +69,8 @@ function getQuizChoices(items, activeItem, version) {
     .map(({ item }) => item);
 }
 
-export default function VocabularyPractice({ lessons, student }) {
-  const storageKey = student?.id ? STORAGE_KEY + "-" + student.id : STORAGE_KEY;
+export default function VocabularyPractice({ lessons, student, course }) {
+  const storageKey = `${STORAGE_KEY}-${course.id}${student?.id ? `-${student.id}` : ""}`;
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -83,7 +83,7 @@ export default function VocabularyPractice({ lessons, student }) {
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizAnswer, setQuizAnswer] = useState(null);
   const [progress, setProgress] = useState(() => loadProgress(storageKey));
-  const vocabulary = useMemo(() => collectVocabulary(lessons), [lessons]);
+  const vocabulary = useMemo(() => collectVocabulary(lessons, course.id), [course.id, lessons]);
 
   useEffect(() => {
     try {
@@ -284,7 +284,7 @@ export default function VocabularyPractice({ lessons, student }) {
             <SpeakButton
               className="practice-audio-button"
               text={activeItem.hanzi}
-              audioSrc={getReviewAudioSrc(activeItem.lessonNumber, "vocabulary", activeItem.audioItemNumber)}
+              audioSrc={course.recordedAudio ? getReviewAudioSrc(activeItem.lessonNumber, "vocabulary", activeItem.audioItemNumber) : undefined}
             />
             <button className="focus-status-button is-review" type="button" onClick={() => markPracticeItem("review")}>
               <RotateCcw size={17} /> Review again
@@ -307,7 +307,7 @@ export default function VocabularyPractice({ lessons, student }) {
             <SpeakButton
               className="listening-audio-button"
               text={activeQuizItem.hanzi}
-              audioSrc={getReviewAudioSrc(activeQuizItem.lessonNumber, "vocabulary", activeQuizItem.audioItemNumber)}
+              audioSrc={course.recordedAudio ? getReviewAudioSrc(activeQuizItem.lessonNumber, "vocabulary", activeQuizItem.audioItemNumber) : undefined}
             />
             <div>
               <p className="section-label">Listen and choose</p>
@@ -376,7 +376,7 @@ export default function VocabularyPractice({ lessons, student }) {
                   <SpeakButton
                     className="browse-audio-button"
                     text={item.hanzi}
-                    audioSrc={getReviewAudioSrc(item.lessonNumber, "vocabulary", item.audioItemNumber)}
+                    audioSrc={course.recordedAudio ? getReviewAudioSrc(item.lessonNumber, "vocabulary", item.audioItemNumber) : undefined}
                   />
                   <button className={itemStatus === "known" ? "is-active" : ""} type="button" onClick={() => markItem(item.progressKey, "known")}>
                     <Check size={15} /> Know it

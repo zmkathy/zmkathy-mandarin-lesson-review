@@ -14,7 +14,7 @@ function loadProgress(storageKey) {
   }
 }
 
-function collectSentences(lessons) {
+function collectSentences(lessons, courseId) {
   const uniqueItems = new Map();
 
   lessons.forEach((lesson, lessonIndex) => {
@@ -31,7 +31,7 @@ function collectSentences(lessons) {
       uniqueItems.set(key, {
         ...item,
         id: `${lesson.id}-sentence-${itemIndex}`,
-        progressKey: key,
+        progressKey: `${courseId}:${key}`,
         audioLessonNumber: lessonNumber,
         audioItemNumber: itemIndex + 1,
         lessonNumbers: [lessonNumber]
@@ -68,8 +68,8 @@ function shuffleItems(items) {
   return result;
 }
 
-export default function SentencePractice({ lessons, student }) {
-  const storageKey = student?.id ? `${STORAGE_KEY}-${student.id}` : STORAGE_KEY;
+export default function SentencePractice({ lessons, student, course }) {
+  const storageKey = `${STORAGE_KEY}-${course.id}${student?.id ? `-${student.id}` : ""}`;
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
   const [query, setQuery] = useState("");
@@ -81,7 +81,7 @@ export default function SentencePractice({ lessons, student }) {
   const [quizIndex, setQuizIndex] = useState(0);
   const [quizAnswer, setQuizAnswer] = useState(null);
   const [progress, setProgress] = useState(() => loadProgress(storageKey));
-  const sentences = useMemo(() => collectSentences(lessons), [lessons]);
+  const sentences = useMemo(() => collectSentences(lessons, course.id), [course.id, lessons]);
 
   useEffect(() => {
     try {
@@ -239,7 +239,7 @@ export default function SentencePractice({ lessons, student }) {
             <SpeakButton
               className="practice-audio-button"
               text={activePracticeItem.hanzi}
-              audioSrc={getReviewAudioSrc(activePracticeItem.audioLessonNumber, "sentence", activePracticeItem.audioItemNumber)}
+              audioSrc={course.recordedAudio ? getReviewAudioSrc(activePracticeItem.audioLessonNumber, "sentence", activePracticeItem.audioItemNumber) : undefined}
             />
             <button className="focus-sentence-reveal" type="button" onClick={() => setPracticeRevealed((current) => !current)}>
               {practiceRevealed ? <EyeOff size={17} /> : <Eye size={17} />} {practiceRevealed ? "Hide meaning" : "Reveal meaning"}
@@ -263,7 +263,7 @@ export default function SentencePractice({ lessons, student }) {
             <SpeakButton
               className="listening-audio-button"
               text={activeQuizItem.hanzi}
-              audioSrc={getReviewAudioSrc(activeQuizItem.audioLessonNumber, "sentence", activeQuizItem.audioItemNumber)}
+              audioSrc={course.recordedAudio ? getReviewAudioSrc(activeQuizItem.audioLessonNumber, "sentence", activeQuizItem.audioItemNumber) : undefined}
             />
             <div>
               <p className="section-label">Listen and choose</p>

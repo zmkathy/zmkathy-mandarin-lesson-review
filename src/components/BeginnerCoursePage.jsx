@@ -5,9 +5,9 @@ import SentencePractice from "./SentencePractice.jsx";
 import VocabularyPractice from "./VocabularyPractice.jsx";
 import { getAvailableLessonNumbers } from "../lib/courseAccess.js";
 
-export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson, onBackToCourses, student, initialMode = "lessons" }) {
+export default function BeginnerCoursePage({ course, lessons, loadError, onSelectLesson, onBackToCourses, student, initialMode = "lessons" }) {
   const [mode, setMode] = useState(initialMode);
-  const availableLessonNumbers = getAvailableLessonNumbers(student, 1, lessons.length);
+  const availableLessonNumbers = getAvailableLessonNumbers(student, course.stage, lessons.length);
   const availableLessonSet = new Set(availableLessonNumbers);
   const availableLessonCount = availableLessonNumbers.length;
   const availableLessons = lessons
@@ -22,11 +22,11 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson,
       </button>
       <header className="page-intro course-intro">
         <div>
-          <p className="section-label">My Courses · Level 1</p>
-          <h1>Beginner Mandarin · Level 1</h1>
+          <p className="section-label">My Courses · {course.level}</p>
+          <h1>{course.title}</h1>
           <p>{availableLessonCount > 0
             ? `Review ${availableLessonCount} available ${availableLessonCount === 1 ? "lesson" : "lessons"}, vocabulary, and sentences.`
-            : "Your Level 1 lessons have not been opened yet."}</p>
+            : "Your lessons have not been opened yet."}</p>
         </div>
         <span className="lesson-count">{availableLessonCount} of {lessons.length} lessons available</span>
       </header>
@@ -46,14 +46,14 @@ export default function BeginnerCoursePage({ lessons, loadError, onSelectLesson,
       </nav>
 
       {mode === "sentences" ? (
-        <SentencePractice lessons={availableLessons} student={student} />
+        <SentencePractice lessons={availableLessons} student={student} course={course} />
       ) : mode === "vocabulary" ? (
-        <VocabularyPractice lessons={availableLessons} student={student} />
+        <VocabularyPractice lessons={availableLessons} student={student} course={course} />
       ) : (
         <section className="course-module" aria-labelledby="lesson-review-title">
           <div className="section-heading course-module-heading">
             <div>
-              <p className="section-label">Level 1 course</p>
+              <p className="section-label">{course.type}</p>
               <h2 id="lesson-review-title">Lesson Review</h2>
             </div>
           </div>

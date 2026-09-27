@@ -10,8 +10,10 @@ import {
   signInTeacher,
   signOutTeacher
 } from "../services/teacherPortal.js";
+import { courses } from "../data/courses.js";
 
-const lessonOptions = Array.from({ length: 16 }, (_, index) => index);
+const beginnerLevelOne = courses.find((course) => course.id === "beginner-level-1");
+const studentCourseChoices = courses.filter((course) => course.published !== false);
 
 function formatLastSeen(value) {
   if (!value) return "Not yet";
@@ -33,6 +35,7 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showAddStudent, setShowAddStudent] = useState(false);
+  const [newStudentStage, setNewStudentStage] = useState(beginnerLevelOne.stage);
   const [savingKey, setSavingKey] = useState("");
   const [accessEditor, setAccessEditor] = useState(null);
 
@@ -81,12 +84,13 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
   }
 
   function openAccessEditor(student, stage) {
+    const course = courses.find((item) => item.stage === stage);
     const savedLessons = student[`stage_${stage}_lessons`];
     const fallbackMax = Number(student[`stage_${stage}_lesson`] || 0);
     const selectedLessons = Array.isArray(savedLessons)
       ? savedLessons.map(Number)
       : Array.from({ length: fallbackMax }, (_, index) => index + 1);
-    setAccessEditor({ student, stage, selectedLessons });
+    setAccessEditor({ student, stage, course, selectedLessons });
   }
 
   function toggleEditorLesson(lessonNumber) {
@@ -163,9 +167,11 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
         displayName,
         loginName: displayName,
         pin,
-        stage1Lesson: Number(form.get("stage1Lesson") || 1)
+        stage: Number(form.get("stage") || beginnerLevelOne.stage),
+        initialLesson: Number(form.get("initialLesson") || 1)
       });
       event.currentTarget.reset();
+      setNewStudentStage(beginnerLevelOne.stage);
       setShowAddStudent(false);
       await refreshStudents();
     } catch (createError) {
@@ -205,7 +211,7 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
         <div>
           <p className="section-label">Private teacher area</p>
           <h1>Student Management</h1>
-          <p>Manage access for two 15-lesson beginner levels.</p>
+          <p>Manage student access across your Mandarin courses.</p>
         </div>
         <div className="teacher-header-actions">
           <button className="secondary" type="button" onClick={onOpenCourse}><BookOpen size={18} /> View full course</button>
@@ -220,7 +226,8 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
           <label><span>Student name</span><input name="displayName" type="text" placeholder="Student name" required /></label>
           <label><span>4-digit PIN</span><input name="pin" type="text" inputMode="numeric" pattern="[0-9]{4}" maxLength="4" placeholder="e.g. 0617" /></label>
           <label><span>First lesson date (optional)</span><input name="trialDate" type="date" /></label>
-          <label><span>Level 1 access</span><select name="stage1Lesson" defaultValue="1">{lessonOptions.slice(1).map((number) => <option key={number} value={number}>Lesson {number}</option>)}</select></label>
+          <label><span>First course</span><select name="stage" value={newStudentStage} onChange={(event) => setNewStudentStage(Number(event.target.value))}>{studentCourseChoices.map((course) => <option key={course.id} value={course.stage}>{course.title}</option>)}</select></label>
+          <label><span>First lesson access</span><select name="initialLesson" defaultValue="1">{Array.from({ length: courses.find((course) => course.stage === newStudentStage).adminLessonCount }, (_, index) => index + 1).map((number) => <option key={number} value={number}>Lesson {number}</option>)}</select></label>
           <button type="submit" disabled={savingKey === "new-student"}>{savingKey === "new-student" ? "Adding..." : "Add student"}</button>
         </form>
       ) : null}
@@ -235,12 +242,12 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
 
       <div className="student-admin-table-wrap">
         <table className="student-admin-table">
-          <thead><tr><th>Student</th><th>Level 1</th><th>Level 2</th><th>Last visit</th><th>Study time</th><th>Cards</th><th>Status</th><th><span className="sr-only">Actions</span></th></tr></thead>
+          <thead><tr><th>Student</th>{courses.map((course) => <th key={course.id}>{course.adminTitle}</th>)}<th>Last visit</th><th>Study time</th><th>Cards</th><th>Status</th><th><span className="sr-only">Actions</span></th></tr></thead>
           <tbody>
             {students.map((student) => (
               <tr className={student.is_active ? "" : "is-inactive"} key={student.id}>
                 <td><strong>{student.display_name}</strong><small>{student.login_name}</small></td>
-                {[1, 2].map((stage) => {
+                {courses.map(({ stage }) => {
                   const selectedLessons = student[`stage_${stage}_lessons`];
                   const count = Array.isArray(selectedLessons) ? selectedLessons.length : Number(student[`stage_${stage}_lesson`] || 0);
                   return <td key={stage}><button className="lesson-access-button" type="button" onClick={() => openAccessEditor(student, stage)}>{count === 0 ? "Not open" : `${count} ${count === 1 ? "lesson" : "lessons"}`}</button></td>;
@@ -263,15 +270,15 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
         }}>
           <section className="lesson-access-dialog" role="dialog" aria-modal="true" aria-labelledby="lesson-access-title">
             <button className="dialog-close" type="button" onClick={() => setAccessEditor(null)} aria-label="Close lesson access"><X size={20} /></button>
-            <p className="section-label">{accessEditor.student.display_name} · Level {accessEditor.stage}</p>
+            <p className="section-label">{accessEditor.student.display_name} · {accessEditor.course.title}</p>
             <h2 id="lesson-access-title">Choose lesson access</h2>
             <p>Select only the lesson topics this student should be able to open.</p>
             <div className="lesson-access-shortcuts">
-              <button type="button" onClick={() => setAccessEditor((current) => ({ ...current, selectedLessons: lessonOptions.slice(1) }))}>Select all</button>
+              <button type="button" onClick={() => setAccessEditor((current) => ({ ...current, selectedLessons: Array.from({ length: current.course.adminLessonCount }, (_, index) => index + 1) }))}>Select all</button>
               <button type="button" onClick={() => setAccessEditor((current) => ({ ...current, selectedLessons: [] }))}>Clear</button>
             </div>
             <div className="lesson-access-grid">
-              {lessonOptions.slice(1).map((number) => {
+              {Array.from({ length: accessEditor.course.adminLessonCount }, (_, index) => index + 1).map((number) => {
                 const checked = accessEditor.selectedLessons.includes(number);
                 return <label className={checked ? "is-selected" : ""} key={number}>
                   <input type="checkbox" checked={checked} onChange={() => toggleEditorLesson(number)} />
@@ -280,7 +287,7 @@ export default function TeacherPage({ onBack, onOpenCourse, onTeacherChange }) {
               })}
             </div>
             <div className="lesson-access-actions">
-              <span>{accessEditor.selectedLessons.length} of 15 selected</span>
+              <span>{accessEditor.selectedLessons.length} of {accessEditor.course.adminLessonCount} lessons selected</span>
               <button className="secondary" type="button" onClick={() => setAccessEditor(null)}>Cancel</button>
               <button type="button" onClick={saveAccessEditor} disabled={savingKey === `${accessEditor.student.id}-${accessEditor.stage}`}>{savingKey ? "Saving..." : "Save access"}</button>
             </div>

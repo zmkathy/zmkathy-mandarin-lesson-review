@@ -10,12 +10,14 @@ import StudentLoginDialog from "./components/StudentLoginDialog.jsx";
 import TeacherPage from "./components/TeacherPage.jsx";
 import { lessons as fallbackLessons } from "./data/lessons.js";
 import { parseLessonsText } from "./data/parseLessonsText.js";
+import { courses } from "./data/courses.js";
 import { getAvailableLessonNumbers } from "./lib/courseAccess.js";
 import { addStudyTime, isStudentPortalConfigured, restoreStudentSession, signInStudent, signOutStudent, startStudySession } from "./services/studentPortal.js";
 import { restoreTeacher } from "./services/teacherPortal.js";
 
 export default function App() {
   const [lessons, setLessons] = useState(fallbackLessons);
+  const [conversationalLessons, setConversationalLessons] = useState([]);
   const [selectedLessonId, setSelectedLessonId] = useState(null);
   const [courseMode, setCourseMode] = useState("lessons");
   const [selectedCourseId, setSelectedCourseId] = useState(null);
@@ -45,6 +47,16 @@ export default function App() {
       .catch(() => {
         setLoadError("Using the built-in lesson copy because lessons.txt could not be loaded.");
       });
+  }, []);
+
+  useEffect(() => {
+    fetch("./conversational-lessons.txt", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Conversational lesson text was not found.");
+        return response.text();
+      })
+      .then((text) => setConversationalLessons(parseLessonsText(text)))
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -83,12 +95,16 @@ export default function App() {
     });
   }, []);
 
+  const activeCourse = courses.find((course) => course.id === selectedCourseId) || courses[0];
+  const lessonsBySource = { beginner: lessons, conversational: conversationalLessons };
+  const activeLessons = lessonsBySource[activeCourse.source] || [];
+  const lessonCountByStage = Object.fromEntries(courses.map((course) => [course.stage, (lessonsBySource[course.source] || []).length]));
   const selectedLesson = useMemo(
-    () => lessons.find((lesson) => lesson.id === selectedLessonId),
-    [lessons, selectedLessonId]
+    () => activeLessons.find((lesson) => lesson.id === selectedLessonId),
+    [activeLessons, selectedLessonId]
   );
-  const selectedLessonNumber = lessons.findIndex((lesson) => lesson.id === selectedLessonId) + 1;
-  const availableLessonNumbers = getAvailableLessonNumbers(student, 1, lessons.length);
+  const selectedLessonNumber = activeLessons.findIndex((lesson) => lesson.id === selectedLessonId) + 1;
+  const availableLessonNumbers = getAvailableLessonNumbers(student, activeCourse.stage, activeLessons.length);
   const availableLessonSet = new Set(availableLessonNumbers);
   const selectedAvailableIndex = availableLessonNumbers.indexOf(selectedLessonNumber);
 
@@ -151,12 +167,13 @@ export default function App() {
         <LessonPage
           lesson={selectedLesson}
           lessonNumber={selectedLessonNumber}
-          totalLessons={lessons.length}
+          totalLessons={activeLessons.length}
+          course={activeCourse}
           onBack={() => setSelectedLessonId(null)}
-          onPrevious={selectedAvailableIndex > 0 ? () => setSelectedLessonId(lessons[availableLessonNumbers[selectedAvailableIndex - 1] - 1].id) : null}
-          onNext={selectedAvailableIndex >= 0 && selectedAvailableIndex < availableLessonNumbers.length - 1 ? () => setSelectedLessonId(lessons[availableLessonNumbers[selectedAvailableIndex + 1] - 1].id) : null}
-          previousTitle={selectedAvailableIndex > 0 ? lessons[availableLessonNumbers[selectedAvailableIndex - 1] - 1].title : ""}
-          nextTitle={selectedAvailableIndex >= 0 && selectedAvailableIndex < availableLessonNumbers.length - 1 ? lessons[availableLessonNumbers[selectedAvailableIndex + 1] - 1].title : ""}
+          onPrevious={selectedAvailableIndex > 0 ? () => setSelectedLessonId(activeLessons[availableLessonNumbers[selectedAvailableIndex - 1] - 1].id) : null}
+          onNext={selectedAvailableIndex >= 0 && selectedAvailableIndex < availableLessonNumbers.length - 1 ? () => setSelectedLessonId(activeLessons[availableLessonNumbers[selectedAvailableIndex + 1] - 1].id) : null}
+          previousTitle={selectedAvailableIndex > 0 ? activeLessons[availableLessonNumbers[selectedAvailableIndex - 1] - 1].title : ""}
+          nextTitle={selectedAvailableIndex >= 0 && selectedAvailableIndex < availableLessonNumbers.length - 1 ? activeLessons[availableLessonNumbers[selectedAvailableIndex + 1] - 1].title : ""}
         />
       </div>
     );
@@ -186,7 +203,7 @@ export default function App() {
         <EverydayVocabularyPage student={student} />
       ) : activeView === "course" && !selectedCourseId ? (
         <CourseLibraryPage
-          lessons={lessons}
+          lessonCountByStage={lessonCountByStage}
           student={student}
           teacherLoggedIn={teacherLoggedIn}
           onOpenCourse={(courseId) => {
@@ -196,8 +213,8 @@ export default function App() {
           }}
         />
       ) : (
-        <BeginnerCoursePage key={courseMode} initialMode={courseMode} lessons={lessons} loadError={loadError} onSelectLesson={(lessonId) => {
-          const lessonNumber = lessons.findIndex((lesson) => lesson.id === lessonId) + 1;
+        <BeginnerCoursePage key={`${activeCourse.id}-${courseMode}`} course={activeCourse} initialMode={courseMode} lessons={activeLessons} loadError={activeCourse.source === "beginner" ? loadError : ""} onSelectLesson={(lessonId) => {
+          const lessonNumber = activeLessons.findIndex((lesson) => lesson.id === lessonId) + 1;
           if (availableLessonSet.has(lessonNumber)) setSelectedLessonId(lessonId);
         }} onBackToCourses={() => {
           setSelectedLessonId(null);
