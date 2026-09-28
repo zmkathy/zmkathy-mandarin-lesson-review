@@ -1,16 +1,8 @@
 # Lesson 1: Greetings & Introductions
 ## Key Vocabulary
-我 | wǒ | I; me
-你 | nǐ | you
-您 | nín | you, respectful
-他 | tā | he; him
-她 | tā | she; her
-你好 | nǐ hǎo | hello
-您好 | nín hǎo | hello, respectful
-叫 | jiào | to be called
-名字 | míngzi | name
-姓 | xìng | surname
+叫什么名字 | jiào shénme míngzi | what is your name
 贵姓 | guì xìng | honorable surname
+很高兴 | hěn gāoxìng | very pleased; glad
 认识 | rènshi | to know; meet
 老师 | lǎoshī | teacher
 学生 | xuésheng | student
@@ -36,10 +28,13 @@
 您贵姓？ | nín guì xìng? | What is your surname? Respectful.
 很高兴认识你。 | hěn gāoxìng rènshi nǐ. | Nice to meet you.
 我也很高兴认识你。 | wǒ yě hěn gāoxìng rènshi nǐ. | Nice to meet you too.
+她是我的朋友。 | tā shì wǒ de péngyou. | She is my friend.
 我是学生。 | wǒ shì xuésheng. | I am a student.
 他不是老师。 | tā bú shì lǎoshī. | He is not a teacher.
 她很漂亮。 | tā hěn piàoliang. | She is very pretty.
 他很聪明，也很幽默。 | tā hěn cōngming, yě hěn yōumò. | He is smart and humorous.
+谢谢你。 | xièxie nǐ. | Thank you.
+不客气。 | bú kèqi. | You're welcome.
 
 # Lesson 2: Age & Chinese Zodiac
 ## Key Vocabulary
@@ -51,18 +46,19 @@
 多大 | duō dà | how old
 出生 | chūshēng | to be born
 年纪 | niánjì | age
-属 | shǔ | to belong to a zodiac sign
+属相 | shǔxiàng | Chinese zodiac animal
 觉得 | juéde | to think; feel
 左右 | zuǒyòu | approximately
-对 | duì | right; correct
 
 ## Key Sentences
 这是你妈妈吗？ | zhè shì nǐ māma ma? | Is this your mom?
 是，这是我妈妈。 | shì, zhè shì wǒ māma. | Yes, this is my mom.
 那是你爸爸吗？ | nà shì nǐ bàba ma? | Is that your dad?
+这是我阿姨。 | zhè shì wǒ āyí. | This is my aunt.
 她真年轻。 | tā zhēn niánqīng. | She is really young.
 你多大？ | nǐ duō dà? | How old are you?
 我二十岁。 | wǒ èrshí suì. | I am twenty years old.
+这个小朋友几岁？ | zhège xiǎo péngyou jǐ suì? | How old is this child?
 你几岁？ | nǐ jǐ suì? | How old are you? For a child.
 您多大年纪？ | nín duō dà niánjì? | How old are you? Respectful.
 您高寿？ | nín gāoshòu? | How old are you? A respectful traditional expression for an older person.
