@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import VocabularyCard from "./VocabularyCard.jsx";
 import SentenceCard from "./SentenceCard.jsx";
+import ConversationLessonPage from "./ConversationLessonPage.jsx";
 import { getReviewAudioSrc } from "../utils/reviewAudio.js";
 
 export default function LessonPage({
@@ -14,6 +15,10 @@ export default function LessonPage({
   previousTitle,
   nextTitle
 }) {
+  if (course.source === "conversational" && lessonNumber <= 2) {
+    return <ConversationLessonPage key={lesson.id} lesson={lesson} course={course} lessonNumber={lessonNumber} totalLessons={totalLessons} onBack={onBack} onPrevious={onPrevious} onNext={onNext} previousTitle={previousTitle} nextTitle={nextTitle} />;
+  }
+
   return (
     <main className="content-page lesson-page">
       <button className="back-button" type="button" onClick={onBack}>
