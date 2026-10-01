@@ -396,3 +396,44 @@
 我的杯子在哪儿？ | wǒ de bēizi zài nǎr? | Where is my cup?
 小狗在椅子下面。 | xiǎo gǒu zài yǐzi xiàmiàn. | The puppy is under the chair.
 书在椅子上面。 | shū zài yǐzi shàngmiàn. | The book is on the chair.
+
+# Lesson 12: Yesterday's Activities
+
+## Key Vocabulary
+昨天 | zuótiān | yesterday
+上午 | shàngwǔ | morning; before noon
+去哪儿 | qù nǎr | where did you go
+商店 | shāngdiàn | shop; store
+书店 | shūdiàn | bookstore
+买 | mǎi | buy
+东西 | dōngxi | thing; stuff
+一点儿 | yìdiǎnr | a little; a few
+回来 | huílái | come back; return
+看见 | kànjiàn | see; catch sight of
+先生 | xiānsheng | Mr.; gentleman
+开车 | kāichē | drive
+分钟 | fēnzhōng | minute
+后 | hòu | after
+漂亮 | piàoliang | beautiful; pretty
+不少 | bù shǎo | quite a few; many
+这些 | zhèxiē | these
+都 | dōu | all; both
+苹果 | píngguǒ | apple
+衣服 | yīfu | clothes
+
+## Key Sentences
+昨天上午你去哪儿了？ | zuótiān shàngwǔ nǐ qù nǎr le? | Where did you go yesterday morning?
+我去商店买东西了。 | wǒ qù shāngdiàn mǎi dōngxi le. | I went shopping.
+你买什么了？ | nǐ mǎi shénme le? | What did you buy?
+我买了一点儿苹果。 | wǒ mǎi le yìdiǎnr píngguǒ. | I bought a few apples.
+我吃苹果了。 | wǒ chī píngguǒ le. | I ate an apple.
+她买了不少衣服。 | tā mǎi le bù shǎo yīfu. | She bought quite a few clothes.
+我没吃苹果。 | wǒ méi chī píngguǒ. | I did not eat an apple.
+他没去商店。 | tā méi qù shāngdiàn. | He did not go to the store.
+你看见张先生了吗？ | nǐ kànjiàn Zhāng xiānsheng le ma? | Have you seen Mr. Zhang?
+看见了，他去学开车了。 | kànjiàn le, tā qù xué kāichē le. | Yes. He went to learn to drive.
+他什么时候回来？ | tā shénme shíhou huílái? | When will he come back?
+四十分钟后回来。 | sìshí fēnzhōng hòu huílái. | Come back after forty minutes.
+你的衣服太漂亮了！ | nǐ de yīfu tài piàoliang le! | Your clothes are so beautiful!
+是啊，我买了不少衣服。 | shì a, wǒ mǎi le bù shǎo yīfu. | Yes, I bought quite a few clothes.
+我没买，这些都是她的东西。 | wǒ méi mǎi, zhèxiē dōu shì tā de dōngxi. | I did not buy them; these are all her things.
