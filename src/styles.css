@@ -358,7 +358,12 @@ button { letter-spacing: 0; }
 .filter-field, .practice-search { display: grid; gap: 6px; min-width: 0; color: var(--muted); font-size: 0.76rem; font-weight: 800; text-transform: uppercase; }
 .filter-field select, .search-input-wrap { width: 100%; min-height: 42px; border: 1px solid var(--line); border-radius: 5px; background: #fbfdfc; color: var(--ink); }
 .filter-field select { padding: 0 35px 0 10px; }
-.filter-help { color: var(--muted); font-size: 0.7rem; font-weight: 600; line-height: 1.25; text-transform: none; }
+.filter-label-with-help { display: inline-flex; align-items: center; gap: 5px; }
+.filter-help-trigger { position: relative; display: inline-flex; align-items: center; color: #8b9b98; cursor: help; outline: 0; }
+.filter-help-trigger:focus-visible { border-radius: 50%; outline: 2px solid rgba(229, 160, 53, 0.48); outline-offset: 2px; }
+.filter-help-popover { position: absolute; z-index: 12; top: calc(100% + 8px); left: -8px; display: grid; width: 245px; gap: 7px; padding: 10px 11px; border: 1px solid #d7e3df; border-radius: 6px; background: #f7faf9; box-shadow: 0 8px 20px rgba(31, 68, 67, 0.13); color: #647572; font-size: 0.72rem; font-weight: 600; line-height: 1.35; opacity: 0; pointer-events: none; text-transform: none; transform: translateY(-3px); transition: opacity 140ms ease, transform 140ms ease; }
+.filter-help-popover strong { margin-right: 4px; color: var(--ink); font-weight: 800; }
+.filter-help-trigger:hover .filter-help-popover, .filter-help-trigger:focus .filter-help-popover { opacity: 1; transform: translateY(0); }
 .search-input-wrap { display: flex; align-items: center; gap: 7px; padding: 0 10px; color: var(--teal-dark); }
 .search-input-wrap input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); }
 .toolbar-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; border: 1px solid var(--line); border-radius: 5px; padding: 0 12px; background: var(--paper); color: var(--teal-dark); font-weight: 750; cursor: pointer; }

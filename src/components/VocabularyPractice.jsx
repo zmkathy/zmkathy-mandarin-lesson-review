@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Check, ChevronLeft, ChevronRight, Eye, EyeOff, Grid2X2, Headphones, Layers3, RotateCcw, Search, Shuffle, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, CircleHelp, Eye, EyeOff, Grid2X2, Headphones, Layers3, RotateCcw, Search, Shuffle, X } from "lucide-react";
 import SpeakButton from "./SpeakButton.jsx";
 import { getReviewAudioSrc } from "../utils/reviewAudio.js";
 import { getCardProgress, saveCardProgress } from "../services/studentPortal.js";
@@ -133,13 +133,6 @@ export default function VocabularyPractice({ lessons, student, course }) {
     [activeQuizItem, shuffleVersion, visibleVocabulary]
   );
   const markedCount = Object.keys(progress).length;
-  const practiceSetHelp = statusFilter === "continue"
-    ? "New cards and cards you chose to review."
-    : statusFilter === "review"
-      ? "Only cards marked Review again."
-      : view === "quiz"
-        ? "Test every card in the selected lesson or course."
-        : "Review every card in the selected lesson or course.";
 
   useEffect(() => {
     setPracticeIndex(0);
@@ -250,13 +243,22 @@ export default function VocabularyPractice({ lessons, student, course }) {
         </label>
 
         <label className="filter-field">
-          <span>{view === "quiz" ? "Quiz set" : "Practice set"}</span>
+          <span className="filter-label-with-help">
+            {view === "quiz" ? "Quiz set" : "Practice set"}
+            <span className="filter-help-trigger" tabIndex="0" aria-label="About practice sets">
+              <CircleHelp size={14} />
+              <span className="filter-help-popover" role="tooltip">
+                <span><strong>Still new</strong> New cards and cards you chose to review.</span>
+                <span><strong>Review again</strong> Only cards marked for another try.</span>
+                <span><strong>All cards</strong> Every card in the selected lesson or course.</span>
+              </span>
+            </span>
+          </span>
           <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
-            <option value="continue">Still learning</option>
+            <option value="continue">Still new</option>
             <option value="review">Review again</option>
             <option value="all">All cards</option>
           </select>
-          <small className="filter-help">{practiceSetHelp}</small>
         </label>
 
         <label className="practice-search">
