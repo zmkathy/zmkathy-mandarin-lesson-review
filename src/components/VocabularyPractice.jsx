@@ -74,6 +74,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [quizMode, setQuizMode] = useState("review");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [revealed, setRevealed] = useState(() => new Set());
@@ -119,10 +120,16 @@ export default function VocabularyPractice({ lessons, student, course }) {
     () => (shuffleVersion === 0 ? filteredVocabulary : shuffleItems(filteredVocabulary)),
     [filteredVocabulary, shuffleVersion]
   );
+  const quizVocabulary = useMemo(
+    () => (quizMode === "review"
+      ? visibleVocabulary.filter((item) => progress[item.progressKey] !== "known")
+      : visibleVocabulary),
+    [progress, quizMode, visibleVocabulary]
+  );
   const activeIndex = Math.min(practiceIndex, Math.max(visibleVocabulary.length - 1, 0));
   const activeItem = visibleVocabulary[activeIndex];
-  const activeQuizIndex = Math.min(quizIndex, Math.max(visibleVocabulary.length - 1, 0));
-  const activeQuizItem = visibleVocabulary[activeQuizIndex];
+  const activeQuizIndex = Math.min(quizIndex, Math.max(quizVocabulary.length - 1, 0));
+  const activeQuizItem = quizVocabulary[activeQuizIndex];
   const quizChoices = useMemo(
     () => getQuizChoices(visibleVocabulary, activeQuizItem, shuffleVersion),
     [activeQuizItem, shuffleVersion, visibleVocabulary]
@@ -133,7 +140,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
     setPracticeIndex(0);
     setPracticeRevealed(false);
     setQuizIndex(0);
-  }, [lessonFilter, statusFilter, query, shuffleVersion]);
+  }, [lessonFilter, statusFilter, query, quizMode, shuffleVersion]);
 
   useEffect(() => {
     setQuizAnswer(null);
@@ -175,8 +182,8 @@ export default function VocabularyPractice({ lessons, student, course }) {
   }
 
   function moveQuiz(direction) {
-    if (visibleVocabulary.length < 2) return;
-    setQuizIndex((current) => (current + direction + visibleVocabulary.length) % visibleVocabulary.length);
+    if (quizVocabulary.length < 2) return;
+    setQuizIndex((current) => (current + direction + quizVocabulary.length) % quizVocabulary.length);
   }
 
   function resetProgress() {
@@ -192,7 +199,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
           <p className="section-label">Beginner course</p>
           <h2 id="vocabulary-practice-title">Vocabulary Practice</h2>
         </div>
-        <span className="result-count">{visibleVocabulary.length} words</span>
+        <span className="result-count">{view === "quiz" ? quizVocabulary.length : visibleVocabulary.length} words</span>
       </div>
 
       <div className="practice-view-switch" role="group" aria-label="Vocabulary view">
@@ -236,6 +243,16 @@ export default function VocabularyPractice({ lessons, student, course }) {
           </span>
         </label>
 
+        {view === "quiz" ? (
+          <label className="filter-field">
+            <span>Quiz set</span>
+            <select value={quizMode} onChange={(event) => setQuizMode(event.target.value)}>
+              <option value="review">Needs review</option>
+              <option value="all">All words</option>
+            </select>
+          </label>
+        ) : null}
+
         <button className="toolbar-button" type="button" onClick={() => setShuffleVersion((value) => value + 1)}>
           <Shuffle size={18} /> Shuffle
         </button>
@@ -258,8 +275,8 @@ export default function VocabularyPractice({ lessons, student, course }) {
         ) : null}
       </div>
 
-      {visibleVocabulary.length === 0 ? (
-        <p className="empty-state">No vocabulary matches these filters.</p>
+      {(view === "quiz" ? quizVocabulary : visibleVocabulary).length === 0 ? (
+        <p className="empty-state">{view === "quiz" && quizMode === "review" ? "Everything in this set is marked Know it. Choose All words to practise again." : "No vocabulary matches these filters."}</p>
       ) : view === "practice" ? (
         <article className={"focus-practice-card" + (practiceRevealed ? " is-revealed" : "")}>
           <div className="focus-card-top">
@@ -301,7 +318,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
         <article className="listening-quiz" aria-live="polite">
           <div className="listening-quiz-top">
             <small>{activeQuizItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
-            <span>{activeQuizIndex + 1} / {visibleVocabulary.length}</span>
+            <span>{activeQuizIndex + 1} / {quizVocabulary.length}</span>
           </div>
           <div className="listening-quiz-prompt">
             <SpeakButton
@@ -343,8 +360,8 @@ export default function VocabularyPractice({ lessons, student, course }) {
             </div>
           ) : null}
           <div className="listening-quiz-actions">
-            <button type="button" onClick={() => moveQuiz(-1)} disabled={visibleVocabulary.length < 2}>Previous</button>
-            <button type="button" onClick={() => moveQuiz(1)} disabled={visibleVocabulary.length < 2}>Next word</button>
+            <button type="button" onClick={() => moveQuiz(-1)} disabled={quizVocabulary.length < 2}>Previous</button>
+            <button type="button" onClick={() => moveQuiz(1)} disabled={quizVocabulary.length < 2}>Next word</button>
           </div>
         </article>
       ) : (

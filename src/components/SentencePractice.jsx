@@ -72,6 +72,7 @@ export default function SentencePractice({ lessons, student, course }) {
   const storageKey = `${STORAGE_KEY}-${course.id}${student?.id ? `-${student.id}` : ""}`;
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
+  const [quizMode, setQuizMode] = useState("review");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [stages, setStages] = useState({});
@@ -112,8 +113,15 @@ export default function SentencePractice({ lessons, student, course }) {
     return shuffleItems(filtered);
   }, [lessonFilter, query, sentences, shuffleVersion]);
 
-  const activeQuizIndex = Math.min(quizIndex, Math.max(visibleSentences.length - 1, 0));
-  const activeQuizItem = visibleSentences[activeQuizIndex];
+  const quizSentences = useMemo(
+    () => (quizMode === "review"
+      ? visibleSentences.filter((item) => progress[item.progressKey] !== "known")
+      : visibleSentences),
+    [progress, quizMode, visibleSentences]
+  );
+
+  const activeQuizIndex = Math.min(quizIndex, Math.max(quizSentences.length - 1, 0));
+  const activeQuizItem = quizSentences[activeQuizIndex];
   const activePracticeIndex = Math.min(practiceIndex, Math.max(visibleSentences.length - 1, 0));
   const activePracticeItem = visibleSentences[activePracticeIndex];
   const quizChoices = useMemo(
@@ -125,7 +133,7 @@ export default function SentencePractice({ lessons, student, course }) {
     setQuizIndex(0);
     setPracticeIndex(0);
     setPracticeRevealed(false);
-  }, [lessonFilter, query, shuffleVersion]);
+  }, [lessonFilter, query, quizMode, shuffleVersion]);
 
   useEffect(() => {
     setQuizAnswer(null);
@@ -139,8 +147,8 @@ export default function SentencePractice({ lessons, student, course }) {
   }
 
   function moveQuiz(direction) {
-    if (visibleSentences.length < 2) return;
-    setQuizIndex((current) => (current + direction + visibleSentences.length) % visibleSentences.length);
+    if (quizSentences.length < 2) return;
+    setQuizIndex((current) => (current + direction + quizSentences.length) % quizSentences.length);
   }
 
   function movePractice(direction) {
@@ -168,7 +176,7 @@ export default function SentencePractice({ lessons, student, course }) {
           <p className="section-label">Beginner course</p>
           <h2 id="sentence-practice-title">Sentence Practice</h2>
         </div>
-        <span className="result-count">{visibleSentences.length} sentences</span>
+        <span className="result-count">{view === "quiz" ? quizSentences.length : visibleSentences.length} sentences</span>
       </div>
 
       <div className="practice-view-switch" role="group" aria-label="Sentence practice view">
@@ -202,6 +210,16 @@ export default function SentencePractice({ lessons, student, course }) {
           </span>
         </label>
 
+        {view === "quiz" ? (
+          <label className="filter-field">
+            <span>Quiz set</span>
+            <select value={quizMode} onChange={(event) => setQuizMode(event.target.value)}>
+              <option value="review">Needs review</option>
+              <option value="all">All sentences</option>
+            </select>
+          </label>
+        ) : null}
+
         <button className="toolbar-button" type="button" onClick={() => setShuffleVersion((value) => value + 1)}>
           <Shuffle size={18} /> Shuffle
         </button>
@@ -217,7 +235,9 @@ export default function SentencePractice({ lessons, student, course }) {
         ) : null}
       </div>
 
-      {view === "practice" && activePracticeItem ? (
+      {view === "quiz" && quizSentences.length === 0 ? (
+        <p className="empty-state">{quizMode === "review" ? "Everything in this set is marked Know it. Choose All sentences to practise again." : "No sentences match these filters."}</p>
+      ) : view === "practice" && activePracticeItem ? (
         <article className={`focus-sentence-card ${practiceRevealed ? "is-revealed" : ""} ${progress[activePracticeItem.progressKey] ? `is-${progress[activePracticeItem.progressKey]}` : ""}`}>
           <div className="focus-card-top">
             <small>{activePracticeItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
@@ -257,7 +277,7 @@ export default function SentencePractice({ lessons, student, course }) {
         <article className="listening-quiz" aria-live="polite">
           <div className="listening-quiz-top">
             <small>{activeQuizItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
-            <span>{activeQuizIndex + 1} / {visibleSentences.length}</span>
+            <span>{activeQuizIndex + 1} / {quizSentences.length}</span>
           </div>
           <div className="listening-quiz-prompt">
             <SpeakButton
@@ -299,8 +319,8 @@ export default function SentencePractice({ lessons, student, course }) {
             </div>
           ) : null}
           <div className="listening-quiz-actions">
-            <button type="button" onClick={() => moveQuiz(-1)} disabled={visibleSentences.length < 2}>Previous</button>
-            <button type="button" onClick={() => moveQuiz(1)} disabled={visibleSentences.length < 2}>Next sentence</button>
+            <button type="button" onClick={() => moveQuiz(-1)} disabled={quizSentences.length < 2}>Previous</button>
+            <button type="button" onClick={() => moveQuiz(1)} disabled={quizSentences.length < 2}>Next sentence</button>
           </div>
         </article>
       ) : view === "browse" && visibleSentences.length > 0 ? (
