@@ -358,6 +358,7 @@ button { letter-spacing: 0; }
 .filter-field, .practice-search { display: grid; gap: 6px; min-width: 0; color: var(--muted); font-size: 0.76rem; font-weight: 800; text-transform: uppercase; }
 .filter-field select, .search-input-wrap { width: 100%; min-height: 42px; border: 1px solid var(--line); border-radius: 5px; background: #fbfdfc; color: var(--ink); }
 .filter-field select { padding: 0 35px 0 10px; }
+.filter-help { color: var(--muted); font-size: 0.7rem; font-weight: 600; line-height: 1.25; text-transform: none; }
 .search-input-wrap { display: flex; align-items: center; gap: 7px; padding: 0 10px; color: var(--teal-dark); }
 .search-input-wrap input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); }
 .toolbar-button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 42px; border: 1px solid var(--line); border-radius: 5px; padding: 0 12px; background: var(--paper); color: var(--teal-dark); font-weight: 750; cursor: pointer; }

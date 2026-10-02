@@ -131,6 +131,13 @@ export default function SentencePractice({ lessons, student, course }) {
     () => getQuizChoices(visibleSentences, activeQuizItem, shuffleVersion),
     [activeQuizItem, shuffleVersion, visibleSentences]
   );
+  const practiceSetHelp = statusFilter === "continue"
+    ? "New cards and cards you chose to review."
+    : statusFilter === "review"
+      ? "Only cards marked Review again."
+      : view === "quiz"
+        ? "Test every card in the selected lesson or course."
+        : "Review every card in the selected lesson or course.";
 
   useEffect(() => {
     setPracticeIndex(0);
@@ -227,12 +234,11 @@ export default function SentencePractice({ lessons, student, course }) {
         <label className="filter-field">
           <span>{view === "quiz" ? "Quiz set" : "Practice set"}</span>
           <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
-            <option value="continue">Continue learning</option>
+            <option value="continue">Still learning</option>
             <option value="review">Review again</option>
             <option value="all">All cards</option>
-            <option value="unmarked">Not marked</option>
-            <option value="known">Know it</option>
           </select>
+          <small className="filter-help">{practiceSetHelp}</small>
         </label>
 
         <label className="practice-search">
