@@ -73,7 +73,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
   const storageKey = `${STORAGE_KEY}-${course.id}${student?.id ? `-${student.id}` : ""}`;
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("continue");
   const [quizMode, setQuizMode] = useState("review");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -108,6 +108,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
         || item.lessonNumbers.includes(Number(lessonFilter));
       const itemStatus = progress[item.progressKey];
       const matchesStatus = statusFilter === "all"
+        || (statusFilter === "continue" && itemStatus !== "known")
         || (statusFilter === "unmarked" && !itemStatus)
         || itemStatus === statusFilter;
       const matchesQuery = !normalizedQuery
@@ -174,7 +175,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
     if (!activeItem) return;
     markItem(activeItem.progressKey, status);
     setPracticeRevealed(false);
-    if (statusFilter !== "unmarked") {
+    if (!(statusFilter === "continue" && status === "known") && statusFilter !== "unmarked") {
       setPracticeIndex((current) => (
         visibleVocabulary.length > 1 ? (current + 1) % visibleVocabulary.length : 0
       ));
@@ -228,8 +229,9 @@ export default function VocabularyPractice({ lessons, student, course }) {
         <label className="filter-field">
           <span>Practice set</span>
           <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
-            <option value="all">All words</option>
+            <option value="continue">Continue learning</option>
             <option value="review">Review again</option>
+            <option value="all">All cards</option>
             <option value="unmarked">Not marked</option>
             <option value="known">Know it</option>
           </select>
@@ -276,7 +278,11 @@ export default function VocabularyPractice({ lessons, student, course }) {
       </div>
 
       {(view === "quiz" ? quizVocabulary : visibleVocabulary).length === 0 ? (
-        <p className="empty-state">{view === "quiz" && quizMode === "review" ? "Everything in this set is marked Know it. Choose All words to practise again." : "No vocabulary matches these filters."}</p>
+        <p className="empty-state">{view === "quiz" && quizMode === "review"
+          ? "Everything in this set is marked Know it. Choose All cards to practise again."
+          : statusFilter === "continue"
+            ? "You are all caught up. Choose All cards to practise this lesson again."
+            : "No vocabulary matches these filters."}</p>
       ) : view === "practice" ? (
         <article className={"focus-practice-card" + (practiceRevealed ? " is-revealed" : "")}>
           <div className="focus-card-top">

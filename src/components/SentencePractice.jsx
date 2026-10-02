@@ -72,6 +72,7 @@ export default function SentencePractice({ lessons, student, course }) {
   const storageKey = `${STORAGE_KEY}-${course.id}${student?.id ? `-${student.id}` : ""}`;
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("continue");
   const [quizMode, setQuizMode] = useState("review");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -104,14 +105,19 @@ export default function SentencePractice({ lessons, student, course }) {
     const filtered = sentences.filter((item) => {
       const matchesLesson = lessonFilter === "all"
         || item.lessonNumbers.includes(Number(lessonFilter));
+      const itemStatus = progress[item.progressKey];
+      const matchesStatus = statusFilter === "all"
+        || (statusFilter === "continue" && itemStatus !== "known")
+        || (statusFilter === "unmarked" && !itemStatus)
+        || itemStatus === statusFilter;
       const matchesQuery = !normalizedQuery
         || `${item.hanzi} ${item.pinyin} ${item.english}`.toLowerCase().includes(normalizedQuery);
-      return matchesLesson && matchesQuery;
+      return matchesLesson && matchesStatus && matchesQuery;
     });
 
     if (shuffleVersion === 0) return filtered;
     return shuffleItems(filtered);
-  }, [lessonFilter, query, sentences, shuffleVersion]);
+  }, [lessonFilter, progress, query, sentences, shuffleVersion, statusFilter]);
 
   const quizSentences = useMemo(
     () => (quizMode === "review"
@@ -133,7 +139,7 @@ export default function SentencePractice({ lessons, student, course }) {
     setQuizIndex(0);
     setPracticeIndex(0);
     setPracticeRevealed(false);
-  }, [lessonFilter, query, quizMode, shuffleVersion]);
+  }, [lessonFilter, query, quizMode, shuffleVersion, statusFilter]);
 
   useEffect(() => {
     setQuizAnswer(null);
@@ -164,7 +170,7 @@ export default function SentencePractice({ lessons, student, course }) {
       saveCardProgress(student.token, "lesson_sentences", activePracticeItem.progressKey, status);
     }
     setPracticeRevealed(false);
-    if (visibleSentences.length > 1) {
+    if (!(statusFilter === "continue" && status === "known") && visibleSentences.length > 1) {
       setPracticeIndex((current) => (current + 1) % visibleSentences.length);
     }
   }
@@ -202,6 +208,17 @@ export default function SentencePractice({ lessons, student, course }) {
           </select>
         </label>
 
+        <label className="filter-field">
+          <span>Practice set</span>
+          <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+            <option value="continue">Continue learning</option>
+            <option value="review">Review again</option>
+            <option value="all">All cards</option>
+            <option value="unmarked">Not marked</option>
+            <option value="known">Know it</option>
+          </select>
+        </label>
+
         <label className="practice-search">
           <span>Search</span>
           <span className="search-input-wrap">
@@ -236,7 +253,9 @@ export default function SentencePractice({ lessons, student, course }) {
       </div>
 
       {view === "quiz" && quizSentences.length === 0 ? (
-        <p className="empty-state">{quizMode === "review" ? "Everything in this set is marked Know it. Choose All sentences to practise again." : "No sentences match these filters."}</p>
+        <p className="empty-state">{quizMode === "review"
+          ? "Everything in this set is marked Know it. Choose All cards to practise again."
+          : "No sentences match these filters."}</p>
       ) : view === "practice" && activePracticeItem ? (
         <article className={`focus-sentence-card ${practiceRevealed ? "is-revealed" : ""} ${progress[activePracticeItem.progressKey] ? `is-${progress[activePracticeItem.progressKey]}` : ""}`}>
           <div className="focus-card-top">
@@ -346,7 +365,9 @@ export default function SentencePractice({ lessons, student, course }) {
           })}
         </div>
       ) : (
-        <p className="empty-state">No sentences match these filters.</p>
+        <p className="empty-state">{statusFilter === "continue"
+          ? "You are all caught up. Choose All cards to practise this lesson again."
+          : "No sentences match these filters."}</p>
       )}
     </section>
   );
