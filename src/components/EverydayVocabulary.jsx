@@ -145,6 +145,7 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
   const [challengeAnswer, setChallengeAnswer] = useState(null);
   const [challengeScore, setChallengeScore] = useState({ correct: 0, answered: 0 });
   const [challengeVersion, setChallengeVersion] = useState(0);
+  const [progressError, setProgressError] = useState("");
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -157,9 +158,12 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
 
   useEffect(() => {
     if (!student?.token || student.id === "demo") return;
-    getCardProgress(student.token, "everyday_vocabulary").then((savedProgress) => {
-      setProgress((current) => ({ ...current, ...savedProgress }));
-    });
+    getCardProgress(student.token, "everyday_vocabulary")
+      .then((savedProgress) => {
+        setProgress((current) => ({ ...current, ...savedProgress }));
+        setProgressError("");
+      })
+      .catch(() => setProgressError("Your saved progress could not be loaded. Please refresh and try again."));
   }, [student?.id, student?.token]);
 
   useEffect(() => () => audioRef.current?.pause(), []);
@@ -204,10 +208,15 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
     });
   }
 
-  function markItem(id, status) {
+  async function markItem(id, status) {
     setProgress((current) => ({ ...current, [id]: status }));
     if (student?.token && student.id !== "demo") {
-      saveCardProgress(student.token, "everyday_vocabulary", id, status);
+      try {
+        await saveCardProgress(student.token, "everyday_vocabulary", id, status);
+        setProgressError("");
+      } catch {
+        setProgressError("Your progress could not be saved. Please try again.");
+      }
     }
   }
 
@@ -359,6 +368,7 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
               <button type="button" onClick={resetProgress}><RotateCcw size={15} /> Reset progress</button>
             ) : null}
           </div>
+          {progressError ? <p className="progress-save-error" role="alert">{progressError}</p> : null}
           {visibleVocabulary.length > 0 ? (
         <div className="everyday-grid">
           {visibleVocabulary.map((item) => {

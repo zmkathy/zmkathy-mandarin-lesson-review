@@ -43,6 +43,21 @@ function collectVocabulary(lessons, courseId) {
   return [...uniqueItems.values()];
 }
 
+function normalizeSavedProgress(savedProgress, items) {
+  const legacyKeys = new Map(items.map((item) => [item.progressKey.slice(item.progressKey.indexOf(":") + 1), item.progressKey]));
+  const normalized = {};
+
+  Object.entries(savedProgress).forEach(([key, status]) => {
+    if (key.includes(":")) normalized[key] = status;
+  });
+  Object.entries(savedProgress).forEach(([key, status]) => {
+    const currentKey = legacyKeys.get(key);
+    if (currentKey && !normalized[currentKey]) normalized[currentKey] = status;
+  });
+
+  return normalized;
+}
+
 function shuffleItems(items) {
   const result = [...items];
   for (let index = result.length - 1; index > 0; index -= 1) {
@@ -84,6 +99,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
   const [quizAnswer, setQuizAnswer] = useState(null);
   const [quizStats, setQuizStats] = useState({ correct: 0, retries: 0 });
   const [progress, setProgress] = useState(() => loadProgress(storageKey));
+  const [progressError, setProgressError] = useState("");
   const vocabulary = useMemo(() => collectVocabulary(lessons, course.id), [course.id, lessons]);
 
   useEffect(() => {
@@ -96,10 +112,13 @@ export default function VocabularyPractice({ lessons, student, course }) {
 
   useEffect(() => {
     if (!student?.token || student.id === "demo") return;
-    getCardProgress(student.token, "lesson_vocabulary").then((savedProgress) => {
-      setProgress((current) => ({ ...current, ...savedProgress }));
-    });
-  }, [student?.id, student?.token]);
+    getCardProgress(student.token, "lesson_vocabulary")
+      .then((savedProgress) => {
+        setProgress((current) => ({ ...current, ...normalizeSavedProgress(savedProgress, vocabulary) }));
+        setProgressError("");
+      })
+      .catch(() => setProgressError("Your saved progress could not be loaded. Please refresh and try again."));
+  }, [student?.id, student?.token, vocabulary]);
 
   const filteredVocabulary = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -154,10 +173,15 @@ export default function VocabularyPractice({ lessons, student, course }) {
     });
   }
 
-  function markItem(progressKey, status) {
+  async function markItem(progressKey, status) {
     setProgress((current) => ({ ...current, [progressKey]: status }));
     if (student?.token && student.id !== "demo") {
-      saveCardProgress(student.token, "lesson_vocabulary", progressKey, status);
+      try {
+        await saveCardProgress(student.token, "lesson_vocabulary", progressKey, status);
+        setProgressError("");
+      } catch {
+        setProgressError("Your progress could not be saved. Please try again.");
+      }
     }
   }
 
@@ -290,6 +314,7 @@ export default function VocabularyPractice({ lessons, student, course }) {
           <button type="button" onClick={resetProgress}><RotateCcw size={15} /> Reset progress</button>
         ) : null}
       </div>
+      {progressError ? <p className="progress-save-error" role="alert">{progressError}</p> : null}
 
       {view === "quiz" && quizVocabulary.length === 0 ? (
         <section className="empty-state">

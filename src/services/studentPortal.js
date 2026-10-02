@@ -69,15 +69,16 @@ export async function getCardProgress(token, practiceType) {
     input_token: token,
     input_practice_type: practiceType
   });
-  if (error) return {};
-  return Object.fromEntries(data.map((item) => [item.item_key, item.status]));
+  if (error) throw error;
+  return Object.fromEntries((data || []).map((item) => [item.item_key, item.status]));
 }
 
 export async function saveCardProgress(token, practiceType, itemKey, status) {
-  await supabase.rpc("student_save_card_progress", {
+  const { error } = await supabase.rpc("student_save_card_progress", {
     input_token: token,
     input_practice_type: practiceType,
     input_item_key: itemKey,
     input_status: status
   });
+  if (error) throw error;
 }

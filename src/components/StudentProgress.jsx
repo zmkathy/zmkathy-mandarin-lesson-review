@@ -6,8 +6,14 @@ function getProgressKey(item, courseId) {
   return `${courseId}:${item.hanzi}-${item.pinyin}`;
 }
 
+function getSavedStatus(progress, type, key, courseId) {
+  const legacyKey = key.startsWith(`${courseId}:`) ? key.slice(courseId.length + 1) : key;
+  return progress[type]?.[key] ?? progress[type]?.[legacyKey];
+}
+
 export default function StudentProgress({ lessons, availableLessonNumbers, student, onContinue, courseId }) {
   const [progress, setProgress] = useState({ vocabulary: {}, sentences: {} });
+  const [loadError, setLoadError] = useState("");
   const availableLessons = useMemo(
     () => lessons.filter((_, index) => availableLessonNumbers.includes(index + 1)),
     [availableLessonNumbers, lessons]
@@ -20,7 +26,11 @@ export default function StudentProgress({ lessons, availableLessonNumbers, stude
       getCardProgress(student.token, "lesson_vocabulary"),
       getCardProgress(student.token, "lesson_sentences")
     ]).then(([vocabulary, sentences]) => {
-      if (isCurrent) setProgress({ vocabulary, sentences });
+      if (!isCurrent) return;
+      setProgress({ vocabulary, sentences });
+      setLoadError("");
+    }).catch(() => {
+      if (isCurrent) setLoadError("Your saved progress could not be loaded right now. Please refresh and try again.");
     });
     return () => { isCurrent = false; };
   }, [student?.id, student?.token]);
@@ -32,7 +42,7 @@ export default function StudentProgress({ lessons, availableLessonNumbers, stude
       lesson.sentences.forEach((item) => allItems.push({ type: "sentences", key: getProgressKey(item, courseId) }));
     });
     const uniqueItems = [...new Map(allItems.map((item) => [`${item.type}:${item.key}`, item])).values()];
-    const getStatus = ({ type, key }) => progress[type]?.[key];
+    const getStatus = ({ type, key }) => getSavedStatus(progress, type, key, courseId);
     const known = uniqueItems.filter((item) => getStatus(item) === "known").length;
     const review = uniqueItems.filter((item) => getStatus(item) === "review").length;
     return {
@@ -59,6 +69,8 @@ export default function StudentProgress({ lessons, availableLessonNumbers, stude
         <button type="button" onClick={onContinue}>Continue cards <ArrowRight size={17} /></button>
       </div>
 
+      {loadError ? <p className="progress-save-error" role="alert">{loadError}</p> : null}
+
       <div className="student-progress-overview">
         <div className="student-progress-ring" style={{ "--progress": `${progressPercent}%` }}>
           <strong>{progressPercent}%</strong>
@@ -81,7 +93,7 @@ export default function StudentProgress({ lessons, availableLessonNumbers, stude
           ];
           const uniqueItems = [...new Map(items.map((item) => [`${item.type}:${item.key}`, item])).values()];
           const reviewed = uniqueItems.filter(({ type, key }) => {
-            return Boolean(progress[type]?.[key]);
+            return Boolean(getSavedStatus(progress, type, key, courseId));
           }).length;
           const percent = uniqueItems.length ? Math.round((reviewed / uniqueItems.length) * 100) : 0;
           return (

@@ -42,6 +42,21 @@ function collectSentences(lessons, courseId) {
   return [...uniqueItems.values()];
 }
 
+function normalizeSavedProgress(savedProgress, items) {
+  const legacyKeys = new Map(items.map((item) => [item.progressKey.slice(item.progressKey.indexOf(":") + 1), item.progressKey]));
+  const normalized = {};
+
+  Object.entries(savedProgress).forEach(([key, status]) => {
+    if (key.includes(":")) normalized[key] = status;
+  });
+  Object.entries(savedProgress).forEach(([key, status]) => {
+    const currentKey = legacyKeys.get(key);
+    if (currentKey && !normalized[currentKey]) normalized[currentKey] = status;
+  });
+
+  return normalized;
+}
+
 function getQuizChoices(items, activeItem, version) {
   if (!activeItem) return [];
 
@@ -83,6 +98,7 @@ export default function SentencePractice({ lessons, student, course }) {
   const [quizAnswer, setQuizAnswer] = useState(null);
   const [quizStats, setQuizStats] = useState({ correct: 0, retries: 0 });
   const [progress, setProgress] = useState(() => loadProgress(storageKey));
+  const [progressError, setProgressError] = useState("");
   const sentences = useMemo(() => collectSentences(lessons, course.id), [course.id, lessons]);
 
   useEffect(() => {
@@ -95,10 +111,13 @@ export default function SentencePractice({ lessons, student, course }) {
 
   useEffect(() => {
     if (!student?.token || student.id === "demo") return;
-    getCardProgress(student.token, "lesson_sentences").then((savedProgress) => {
-      setProgress((current) => ({ ...current, ...savedProgress }));
-    });
-  }, [student?.id, student?.token]);
+    getCardProgress(student.token, "lesson_sentences")
+      .then((savedProgress) => {
+        setProgress((current) => ({ ...current, ...normalizeSavedProgress(savedProgress, sentences) }));
+        setProgressError("");
+      })
+      .catch(() => setProgressError("Your saved progress could not be loaded. Please refresh and try again."));
+  }, [sentences, student?.id, student?.token]);
 
   const visibleSentences = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -179,11 +198,16 @@ export default function SentencePractice({ lessons, student, course }) {
     setPracticeRevealed(false);
   }
 
-  function markPracticeItem(status) {
+  async function markPracticeItem(status) {
     if (!activePracticeItem) return;
     setProgress((current) => ({ ...current, [activePracticeItem.progressKey]: status }));
     if (student?.token && student.id !== "demo") {
-      saveCardProgress(student.token, "lesson_sentences", activePracticeItem.progressKey, status);
+      try {
+        await saveCardProgress(student.token, "lesson_sentences", activePracticeItem.progressKey, status);
+        setProgressError("");
+      } catch {
+        setProgressError("Your progress could not be saved. Please try again.");
+      }
     }
     setPracticeRevealed(false);
     if (!(statusFilter === "continue" && status === "known") && visibleSentences.length > 1) {
@@ -212,6 +236,8 @@ export default function SentencePractice({ lessons, student, course }) {
           <Headphones size={17} /> Listening quiz
         </button>
       </div>
+
+      {progressError ? <p className="progress-save-error" role="alert">{progressError}</p> : null}
 
       <div className="practice-toolbar sentence-toolbar">
         <label className="filter-field">
