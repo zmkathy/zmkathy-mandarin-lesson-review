@@ -29,6 +29,7 @@ export default function HomePage({ lessons, onNavigate, onOpenCourse, student, s
             lessons={lessons}
             availableLessonNumbers={getAvailableLessonNumbers(student, 1, lessons.length)}
             student={student}
+            courseId="beginner-level-1"
             onContinue={() => onOpenCourse("vocabulary")}
           />
         </>

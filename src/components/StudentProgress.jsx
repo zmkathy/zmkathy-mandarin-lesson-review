@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, BookOpenCheck, CheckCircle2, RotateCcw } from "lucide-react";
 import { getCardProgress } from "../services/studentPortal.js";
 
-function getProgressKey(item) {
-  return `${item.hanzi}-${item.pinyin}`;
+function getProgressKey(item, courseId) {
+  return `${courseId}:${item.hanzi}-${item.pinyin}`;
 }
 
-export default function StudentProgress({ lessons, availableLessonNumbers, student, onContinue }) {
+export default function StudentProgress({ lessons, availableLessonNumbers, student, onContinue, courseId }) {
   const [progress, setProgress] = useState({ vocabulary: {}, sentences: {} });
   const availableLessons = useMemo(
     () => lessons.filter((_, index) => availableLessonNumbers.includes(index + 1)),
@@ -26,26 +26,23 @@ export default function StudentProgress({ lessons, availableLessonNumbers, stude
   }, [student?.id, student?.token]);
 
   const overview = useMemo(() => {
-    const allKeys = new Set();
+    const allItems = [];
     availableLessons.forEach((lesson) => {
-      lesson.vocabulary.forEach((item) => allKeys.add(`vocabulary:${getProgressKey(item)}`));
-      lesson.sentences.forEach((item) => allKeys.add(`sentences:${getProgressKey(item)}`));
+      lesson.vocabulary.forEach((item) => allItems.push({ type: "vocabulary", key: getProgressKey(item, courseId) }));
+      lesson.sentences.forEach((item) => allItems.push({ type: "sentences", key: getProgressKey(item, courseId) }));
     });
-    const keys = [...allKeys];
-    const getStatus = (key) => {
-      const [type, itemKey] = key.split(":");
-      return progress[type]?.[itemKey];
-    };
-    const known = keys.filter((key) => getStatus(key) === "known").length;
-    const review = keys.filter((key) => getStatus(key) === "review").length;
+    const uniqueItems = [...new Map(allItems.map((item) => [`${item.type}:${item.key}`, item])).values()];
+    const getStatus = ({ type, key }) => progress[type]?.[key];
+    const known = uniqueItems.filter((item) => getStatus(item) === "known").length;
+    const review = uniqueItems.filter((item) => getStatus(item) === "review").length;
     return {
-      total: keys.length,
+      total: uniqueItems.length,
       reviewed: known + review,
       known,
       review,
-      newItems: keys.length - known - review
+      newItems: uniqueItems.length - known - review
     };
-  }, [availableLessons, progress]);
+  }, [availableLessons, courseId, progress]);
 
   if (availableLessons.length === 0) return null;
 
@@ -78,18 +75,18 @@ export default function StudentProgress({ lessons, availableLessonNumbers, stude
       <div className="student-lesson-progress" aria-label="Lesson vocabulary progress">
         {availableLessons.map((lesson) => {
           const lessonNumber = lessons.indexOf(lesson) + 1;
-          const keys = [
-            ...new Set(lesson.vocabulary.map((item) => `vocabulary:${getProgressKey(item)}`)),
-            ...new Set(lesson.sentences.map((item) => `sentences:${getProgressKey(item)}`))
+          const items = [
+            ...lesson.vocabulary.map((item) => ({ type: "vocabulary", key: getProgressKey(item, courseId) })),
+            ...lesson.sentences.map((item) => ({ type: "sentences", key: getProgressKey(item, courseId) }))
           ];
-          const reviewed = keys.filter((key) => {
-            const [type, itemKey] = key.split(":");
-            return Boolean(progress[type]?.[itemKey]);
+          const uniqueItems = [...new Map(items.map((item) => [`${item.type}:${item.key}`, item])).values()];
+          const reviewed = uniqueItems.filter(({ type, key }) => {
+            return Boolean(progress[type]?.[key]);
           }).length;
-          const percent = keys.length ? Math.round((reviewed / keys.length) * 100) : 0;
+          const percent = uniqueItems.length ? Math.round((reviewed / uniqueItems.length) * 100) : 0;
           return (
             <div className="student-lesson-progress-item" key={lesson.id}>
-              <div><strong>Lesson {lessonNumber}</strong><span>{reviewed} / {keys.length} reviewed</span></div>
+              <div><strong>Lesson {lessonNumber}</strong><span>{reviewed} / {uniqueItems.length} reviewed</span></div>
               <span className="student-lesson-progress-track"><span style={{ width: `${percent}%` }} /></span>
             </div>
           );
