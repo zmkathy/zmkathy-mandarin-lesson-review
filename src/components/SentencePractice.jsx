@@ -73,15 +73,15 @@ export default function SentencePractice({ lessons, student, course }) {
   const [view, setView] = useState("practice");
   const [lessonFilter, setLessonFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("continue");
-  const [quizMode, setQuizMode] = useState("review");
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [stages, setStages] = useState({});
   const [shuffleVersion, setShuffleVersion] = useState(0);
   const [practiceIndex, setPracticeIndex] = useState(0);
   const [practiceRevealed, setPracticeRevealed] = useState(false);
-  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizQueue, setQuizQueue] = useState([]);
   const [quizAnswer, setQuizAnswer] = useState(null);
+  const [quizStats, setQuizStats] = useState({ correct: 0, retries: 0 });
   const [progress, setProgress] = useState(() => loadProgress(storageKey));
   const sentences = useMemo(() => collectSentences(lessons, course.id), [course.id, lessons]);
 
@@ -119,15 +119,12 @@ export default function SentencePractice({ lessons, student, course }) {
     return shuffleItems(filtered);
   }, [lessonFilter, progress, query, sentences, shuffleVersion, statusFilter]);
 
-  const quizSentences = useMemo(
-    () => (quizMode === "review"
-      ? visibleSentences.filter((item) => progress[item.progressKey] !== "known")
-      : visibleSentences),
-    [progress, quizMode, visibleSentences]
-  );
+  const quizSentences = useMemo(() => {
+    const itemsById = new Map(visibleSentences.map((item) => [item.id, item]));
+    return quizQueue.map((id) => itemsById.get(id)).filter(Boolean);
+  }, [quizQueue, visibleSentences]);
 
-  const activeQuizIndex = Math.min(quizIndex, Math.max(quizSentences.length - 1, 0));
-  const activeQuizItem = quizSentences[activeQuizIndex];
+  const activeQuizItem = quizSentences[0];
   const activePracticeIndex = Math.min(practiceIndex, Math.max(visibleSentences.length - 1, 0));
   const activePracticeItem = visibleSentences[activePracticeIndex];
   const quizChoices = useMemo(
@@ -136,14 +133,15 @@ export default function SentencePractice({ lessons, student, course }) {
   );
 
   useEffect(() => {
-    setQuizIndex(0);
     setPracticeIndex(0);
     setPracticeRevealed(false);
-  }, [lessonFilter, query, quizMode, shuffleVersion, statusFilter]);
+  }, [lessonFilter, query, shuffleVersion, statusFilter]);
 
   useEffect(() => {
+    setQuizQueue(visibleSentences.map((item) => item.id));
     setQuizAnswer(null);
-  }, [activeQuizItem?.id]);
+    setQuizStats({ correct: 0, retries: 0 });
+  }, [visibleSentences]);
 
   function advanceCard(id) {
     setStages((current) => {
@@ -152,9 +150,27 @@ export default function SentencePractice({ lessons, student, course }) {
     });
   }
 
-  function moveQuiz(direction) {
-    if (quizSentences.length < 2) return;
-    setQuizIndex((current) => (current + direction + quizSentences.length) % quizSentences.length);
+  function answerQuiz(choice) {
+    if (quizAnswer || !activeQuizItem) return;
+    setQuizAnswer({ id: choice.id, correct: choice.id === activeQuizItem.id });
+  }
+
+  function advanceQuiz() {
+    if (!quizAnswer || !activeQuizItem) return;
+    setQuizQueue((current) => quizAnswer.correct
+      ? current.slice(1)
+      : [...current.slice(1), current[0]]);
+    setQuizStats((current) => ({
+      correct: current.correct + (quizAnswer.correct ? 1 : 0),
+      retries: current.retries + (quizAnswer.correct ? 0 : 1)
+    }));
+    setQuizAnswer(null);
+  }
+
+  function restartQuiz() {
+    setQuizQueue(visibleSentences.map((item) => item.id));
+    setQuizAnswer(null);
+    setQuizStats({ correct: 0, retries: 0 });
   }
 
   function movePractice(direction) {
@@ -182,7 +198,7 @@ export default function SentencePractice({ lessons, student, course }) {
           <p className="section-label">Beginner course</p>
           <h2 id="sentence-practice-title">Sentence Practice</h2>
         </div>
-        <span className="result-count">{view === "quiz" ? quizSentences.length : visibleSentences.length} sentences</span>
+        <span className="result-count">{view === "quiz" ? `${quizSentences.length} left` : `${visibleSentences.length} sentences`}</span>
       </div>
 
       <div className="practice-view-switch" role="group" aria-label="Sentence practice view">
@@ -192,7 +208,7 @@ export default function SentencePractice({ lessons, student, course }) {
         <button className={view === "browse" ? "is-active" : ""} type="button" onClick={() => setView("browse")}>
           Browse sentences
         </button>
-        <button className={view === "quiz" ? "is-active" : ""} type="button" onClick={() => setView("quiz")}>
+        <button className={view === "quiz" ? "is-active" : ""} type="button" onClick={() => { setStatusFilter("all"); setView("quiz"); }}>
           <Headphones size={17} /> Listening quiz
         </button>
       </div>
@@ -209,7 +225,7 @@ export default function SentencePractice({ lessons, student, course }) {
         </label>
 
         <label className="filter-field">
-          <span>Practice set</span>
+          <span>{view === "quiz" ? "Quiz set" : "Practice set"}</span>
           <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
             <option value="continue">Continue learning</option>
             <option value="review">Review again</option>
@@ -227,16 +243,6 @@ export default function SentencePractice({ lessons, student, course }) {
           </span>
         </label>
 
-        {view === "quiz" ? (
-          <label className="filter-field">
-            <span>Quiz set</span>
-            <select value={quizMode} onChange={(event) => setQuizMode(event.target.value)}>
-              <option value="review">Needs review</option>
-              <option value="all">All sentences</option>
-            </select>
-          </label>
-        ) : null}
-
         <button className="toolbar-button" type="button" onClick={() => setShuffleVersion((value) => value + 1)}>
           <Shuffle size={18} /> Shuffle
         </button>
@@ -253,9 +259,10 @@ export default function SentencePractice({ lessons, student, course }) {
       </div>
 
       {view === "quiz" && quizSentences.length === 0 ? (
-        <p className="empty-state">{quizMode === "review"
-          ? "Everything in this set is marked Know it. Choose All cards to practise again."
-          : "No sentences match these filters."}</p>
+        <section className="empty-state">
+          <strong>{visibleSentences.length === 0 ? "No cards match these filters." : "Quiz complete."}</strong>
+          {visibleSentences.length > 0 ? <><br />Every card in this set was answered correctly.<br /><button type="button" onClick={restartQuiz}>Start this quiz again</button></> : null}
+        </section>
       ) : view === "practice" && activePracticeItem ? (
         <article className={`focus-sentence-card ${practiceRevealed ? "is-revealed" : ""} ${progress[activePracticeItem.progressKey] ? `is-${progress[activePracticeItem.progressKey]}` : ""}`}>
           <div className="focus-card-top">
@@ -296,7 +303,7 @@ export default function SentencePractice({ lessons, student, course }) {
         <article className="listening-quiz" aria-live="polite">
           <div className="listening-quiz-top">
             <small>{activeQuizItem.lessonNumbers.map((number) => `Lesson ${number}`).join(" · ")}</small>
-            <span>{activeQuizIndex + 1} / {quizSentences.length}</span>
+            <span>{quizSentences.length} left · {quizStats.correct} correct</span>
           </div>
           <div className="listening-quiz-prompt">
             <SpeakButton
@@ -323,7 +330,7 @@ export default function SentencePractice({ lessons, student, course }) {
                   type="button"
                   key={choice.id}
                   disabled={Boolean(quizAnswer)}
-                  onClick={() => setQuizAnswer({ id: choice.id, correct: isCorrect })}
+                  onClick={() => answerQuiz(choice)}
                 >
                   {quizAnswer && isCorrect ? <Check size={18} /> : quizAnswer && isSelected ? <X size={18} /> : null}
                   <span>{choice.english}</span>
@@ -333,13 +340,12 @@ export default function SentencePractice({ lessons, student, course }) {
           </div>
           {quizAnswer ? (
             <div className={`listening-feedback ${quizAnswer.correct ? "is-correct" : "is-incorrect"}`}>
-              {quizAnswer.correct ? "Correct. Nice listening." : `The answer was: ${activeQuizItem.english}`}
+              {quizAnswer.correct ? "Correct. This card is complete." : `The answer was: ${activeQuizItem.english}. It will return later.`}
               <span>{activeQuizItem.hanzi} · {activeQuizItem.pinyin} · {activeQuizItem.english}</span>
             </div>
           ) : null}
           <div className="listening-quiz-actions">
-            <button type="button" onClick={() => moveQuiz(-1)} disabled={quizSentences.length < 2}>Previous</button>
-            <button type="button" onClick={() => moveQuiz(1)} disabled={quizSentences.length < 2}>Next sentence</button>
+            <button type="button" onClick={advanceQuiz} disabled={!quizAnswer}>{quizAnswer?.correct ? "Next card" : "Continue"}</button>
           </div>
         </article>
       ) : view === "browse" && visibleSentences.length > 0 ? (
