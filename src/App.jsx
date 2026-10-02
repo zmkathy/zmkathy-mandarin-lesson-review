@@ -152,6 +152,16 @@ export default function App() {
     setActiveView("home");
   }
 
+  function viewStudentProgress() {
+    setSelectedLessonId(null);
+    setSelectedCourseId(null);
+    setActiveView("home");
+    window.history.replaceState({}, "", window.location.pathname);
+    window.requestAnimationFrame(() => {
+      document.getElementById("my-progress")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
   function handleTeacherChange(isLoggedIn) {
     setTeacherLoggedIn(isLoggedIn);
     if (isLoggedIn && student) {
@@ -163,7 +173,7 @@ export default function App() {
   if (selectedLesson) {
     return (
       <div className="site-shell">
-        <SiteHeader activeView="course" onNavigate={navigate} student={student} studentPortalEnabled={studentPortalEnabled} onStudentLogin={() => setShowStudentLogin(true)} onStudentLogout={handleStudentSignOut} />
+        <SiteHeader activeView="course" onNavigate={navigate} student={student} studentPortalEnabled={studentPortalEnabled} onStudentLogin={() => setShowStudentLogin(true)} onStudentLogout={handleStudentSignOut} onViewProgress={viewStudentProgress} />
         <LessonPage
           lesson={selectedLesson}
           lessonNumber={selectedLessonNumber}
@@ -181,7 +191,7 @@ export default function App() {
 
   return (
     <div className="site-shell">
-      <SiteHeader activeView={activeView} onNavigate={navigate} student={student} studentPortalEnabled={studentPortalEnabled} onStudentLogin={() => setShowStudentLogin(true)} onStudentLogout={handleStudentSignOut} />
+      <SiteHeader activeView={activeView} onNavigate={navigate} student={student} studentPortalEnabled={studentPortalEnabled} onStudentLogin={() => setShowStudentLogin(true)} onStudentLogout={handleStudentSignOut} onViewProgress={viewStudentProgress} />
       {activeView === "home" ? (
         <HomePage
           lessons={lessons}

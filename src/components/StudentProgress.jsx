@@ -52,7 +52,7 @@ export default function StudentProgress({ lessons, availableLessonNumbers, stude
   const progressPercent = overview.total ? Math.round((overview.reviewed / overview.total) * 100) : 0;
 
   return (
-    <section className="student-progress" aria-labelledby="student-progress-title">
+    <section className="student-progress" id="my-progress" aria-labelledby="student-progress-title" tabIndex="-1">
       <div className="student-progress-heading">
         <div>
           <p className="section-label">Your progress</p>

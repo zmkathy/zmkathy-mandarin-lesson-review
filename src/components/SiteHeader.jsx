@@ -1,6 +1,6 @@
-import { AudioLines, BookOpen, GraduationCap, House, Images, LogOut, UserRound } from "lucide-react";
+import { AudioLines, BookOpen, BookOpenCheck, GraduationCap, House, Images, LogOut, UserRound } from "lucide-react";
 
-export default function SiteHeader({ activeView, onNavigate, student, studentPortalEnabled, onStudentLogin, onStudentLogout }) {
+export default function SiteHeader({ activeView, onNavigate, student, studentPortalEnabled, onStudentLogin, onStudentLogout, onViewProgress }) {
   return (
     <header className="topbar">
       <button className="brand" type="button" onClick={() => onNavigate("home")}>
@@ -34,6 +34,10 @@ export default function SiteHeader({ activeView, onNavigate, student, studentPor
       {student ? (
         <div className="student-menu">
           <span><UserRound size={17} /> {student.displayName}</span>
+          <button className="student-progress-button" type="button" onClick={onViewProgress} title="View my progress">
+            <BookOpenCheck size={17} />
+            <span>Progress</span>
+          </button>
           <button type="button" onClick={onStudentLogout} aria-label="Sign out" title="Sign out"><LogOut size={17} /></button>
         </div>
       ) : studentPortalEnabled && activeView !== "teacher" ? (
