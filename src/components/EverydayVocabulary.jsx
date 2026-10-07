@@ -17,7 +17,8 @@ const categories = [
   ["tableware", "Tableware"],
   ["items", "Daily Items"],
   ["home", "Home"],
-  ["places", "Places"]
+  ["places", "Places"],
+  ["positions", "Positions"]
 ];
 
 const vocabulary = [
@@ -82,7 +83,18 @@ const vocabulary = [
   { id: "jia", category: "places", pinyin: "jiā", hanzi: "家", english: "home" },
   { id: "xuexiao", category: "places", pinyin: "xuéxiào", hanzi: "学校", english: "school" },
   { id: "chaoshi", category: "places", pinyin: "chāoshì", hanzi: "超市", english: "supermarket" },
-  { id: "canting", category: "places", pinyin: "cāntīng", hanzi: "餐厅", english: "restaurant" }
+  { id: "canting", category: "places", pinyin: "cāntīng", hanzi: "餐厅", english: "restaurant" },
+  { id: "limian", category: "positions", pinyin: "lǐmiàn", hanzi: "里面", english: "inside", imageExtension: "png", hasAudio: false },
+  { id: "qianmian", category: "positions", pinyin: "qiánmiàn", hanzi: "前面", english: "in front of", imageExtension: "png", hasAudio: false },
+  { id: "xiamian", category: "positions", pinyin: "xiàmiàn", hanzi: "下面", english: "below", imageExtension: "png", hasAudio: false },
+  { id: "houmian", category: "positions", pinyin: "hòumiàn", hanzi: "后面", english: "behind", imageExtension: "png", hasAudio: false },
+  { id: "waimian", category: "positions", pinyin: "wàimiàn", hanzi: "外面", english: "outside", imageExtension: "png", hasAudio: false },
+  { id: "youbian", category: "positions", pinyin: "yòubiān", hanzi: "右边", english: "on the right", imageExtension: "png", hasAudio: false },
+  { id: "shangmian", category: "positions", pinyin: "shàngmiàn", hanzi: "上面", english: "above", imageExtension: "png", hasAudio: false },
+  { id: "zuobian", category: "positions", pinyin: "zuǒbiān", hanzi: "左边", english: "on the left", imageExtension: "png", hasAudio: false },
+  { id: "zhongjian", category: "positions", pinyin: "zhōngjiān", hanzi: "中间", english: "in the middle", imageExtension: "png", hasAudio: false },
+  { id: "pangbian", category: "positions", pinyin: "pángbiān", hanzi: "旁边", english: "next to", imageExtension: "png", hasAudio: false },
+  { id: "duimian", category: "positions", pinyin: "duìmiàn", hanzi: "对面", english: "across from", imageExtension: "png", hasAudio: false }
 ];
 
 function loadProgress(storageKey) {
@@ -182,11 +194,15 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
     });
   }, [category, progress, query, statusFilter]);
 
-  const activeChallengeIndex = Math.min(challengeIndex, Math.max(visibleVocabulary.length - 1, 0));
-  const activeChallengeItem = visibleVocabulary[activeChallengeIndex];
+  const challengeVocabulary = useMemo(
+    () => visibleVocabulary.filter((item) => item.hasAudio !== false),
+    [visibleVocabulary]
+  );
+  const activeChallengeIndex = Math.min(challengeIndex, Math.max(challengeVocabulary.length - 1, 0));
+  const activeChallengeItem = challengeVocabulary[activeChallengeIndex];
   const challengeChoices = useMemo(
-    () => getChallengeChoices(vocabulary, activeChallengeItem, challengeVersion),
-    [activeChallengeItem, challengeVersion]
+    () => getChallengeChoices(challengeVocabulary, activeChallengeItem, challengeVersion),
+    [activeChallengeItem, challengeVersion, challengeVocabulary]
   );
 
   useEffect(() => {
@@ -247,8 +263,8 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
   }
 
   function nextChallenge() {
-    if (visibleVocabulary.length < 2) return;
-    setChallengeIndex((current) => (current + 1) % visibleVocabulary.length);
+    if (challengeVocabulary.length < 2) return;
+    setChallengeIndex((current) => (current + 1) % challengeVocabulary.length);
     setChallengeVersion((current) => current + 1);
   }
 
@@ -357,9 +373,11 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
             </div>
           ) : null}
           <div className="everyday-challenge-actions">
-            <button type="button" onClick={nextChallenge} disabled={visibleVocabulary.length < 2}>Next word <ChevronRight size={18} /></button>
+            <button type="button" onClick={nextChallenge} disabled={challengeVocabulary.length < 2}>Next word <ChevronRight size={18} /></button>
           </div>
         </article>
+      ) : view === "challenge" ? (
+        <p className="empty-state">Audio for this group will be added soon.</p>
       ) : view === "flashcards" ? (
         <>
           <div className="progress-note" aria-live="polite">
