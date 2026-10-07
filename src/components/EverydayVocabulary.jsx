@@ -84,17 +84,17 @@ const vocabulary = [
   { id: "xuexiao", category: "places", pinyin: "xuéxiào", hanzi: "学校", english: "school" },
   { id: "chaoshi", category: "places", pinyin: "chāoshì", hanzi: "超市", english: "supermarket" },
   { id: "canting", category: "places", pinyin: "cāntīng", hanzi: "餐厅", english: "restaurant" },
-  { id: "limian", category: "positions", pinyin: "lǐmiàn", hanzi: "里面", english: "inside", diagram: "inside", hasAudio: false },
-  { id: "qianmian", category: "positions", pinyin: "qiánmiàn", hanzi: "前面", english: "in front of", diagram: "front", hasAudio: false },
-  { id: "xiamian", category: "positions", pinyin: "xiàmiàn", hanzi: "下面", english: "below", diagram: "below", hasAudio: false },
-  { id: "houmian", category: "positions", pinyin: "hòumiàn", hanzi: "后面", english: "behind", diagram: "behind", hasAudio: false },
-  { id: "waimian", category: "positions", pinyin: "wàimiàn", hanzi: "外面", english: "outside", diagram: "outside", hasAudio: false },
-  { id: "youbian", category: "positions", pinyin: "yòubiān", hanzi: "右边", english: "on the right", diagram: "right", hasAudio: false },
-  { id: "shangmian", category: "positions", pinyin: "shàngmiàn", hanzi: "上面", english: "above", diagram: "above", hasAudio: false },
-  { id: "zuobian", category: "positions", pinyin: "zuǒbiān", hanzi: "左边", english: "on the left", diagram: "left", hasAudio: false },
-  { id: "zhongjian", category: "positions", pinyin: "zhōngjiān", hanzi: "中间", english: "in the middle", diagram: "middle", hasAudio: false },
-  { id: "pangbian", category: "positions", pinyin: "pángbiān", hanzi: "旁边", english: "next to", diagram: "next", hasAudio: false },
-  { id: "duimian", category: "positions", pinyin: "duìmiàn", hanzi: "对面", english: "across from", diagram: "across", hasAudio: false }
+  { id: "limian", category: "positions", pinyin: "lǐmiàn", hanzi: "里面", english: "inside", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "qianmian", category: "positions", pinyin: "qiánmiàn", hanzi: "前面", english: "in front of", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "xiamian", category: "positions", pinyin: "xiàmiàn", hanzi: "下面", english: "below", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "houmian", category: "positions", pinyin: "hòumiàn", hanzi: "后面", english: "behind", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "waimian", category: "positions", pinyin: "wàimiàn", hanzi: "外面", english: "outside", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "youbian", category: "positions", pinyin: "yòubiān", hanzi: "右边", english: "on the right", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "shangmian", category: "positions", pinyin: "shàngmiàn", hanzi: "上面", english: "above", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "zuobian", category: "positions", pinyin: "zuǒbiān", hanzi: "左边", english: "on the left", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "zhongjian", category: "positions", pinyin: "zhōngjiān", hanzi: "中间", english: "in the middle", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "pangbian", category: "positions", pinyin: "pángbiān", hanzi: "旁边", english: "next to", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "duimian", category: "positions", pinyin: "duìmiàn", hanzi: "对面", english: "across from", imageFit: "contain", imageExtension: "png", hasAudio: false }
 ];
 
 function loadProgress(storageKey) {
@@ -106,18 +106,6 @@ function loadProgress(storageKey) {
 }
 
 function CardImage({ item }) {
-  if (item.diagram) {
-    return (
-      <span className={`position-diagram is-${item.diagram}`} aria-hidden="true">
-        <span className="position-box position-box-one" />
-        <span className="position-box position-box-two" />
-        <span className="position-marker" />
-        <span className="position-marker position-marker-two" />
-        <span className="position-divider" />
-      </span>
-    );
-  }
-
   if (item.sprite) {
     const [column, row] = item.sprite;
     return (
