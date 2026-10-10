@@ -43,7 +43,7 @@ const vocabulary = [
   { id: "xiangjiao", category: "food", pinyin: "xiāngjiāo", hanzi: "香蕉", english: "banana" },
   { id: "xigua", category: "food", pinyin: "xīguā", hanzi: "西瓜", english: "watermelon" },
   { id: "chengzi", category: "food", pinyin: "chéngzi", hanzi: "橙子", english: "orange" },
-  { id: "cai", category: "food", pinyin: "cài", hanzi: "菜", english: "vegetables", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "shucai", category: "food", pinyin: "shūcài", hanzi: "蔬菜", english: "vegetables", imageFit: "contain", imageExtension: "png", hasAudio: false },
   { id: "rou", category: "food", pinyin: "ròu", hanzi: "肉", english: "meat", imageFit: "contain", imageExtension: "png", hasAudio: false },
   { id: "jirou", category: "food", pinyin: "jīròu", hanzi: "鸡肉", english: "chicken", imageFit: "contain", imageExtension: "png", hasAudio: false },
   { id: "yu", category: "food", pinyin: "yú", hanzi: "鱼", english: "fish", imageFit: "contain", imageExtension: "png", hasAudio: false },
