@@ -53,7 +53,7 @@ const vocabulary = [
   { id: "kele", category: "food", pinyin: "kělè", hanzi: "可乐", english: "cola", imageFit: "contain", imageExtension: "png", hasAudio: false },
   { id: "pijiu", category: "food", pinyin: "píjiǔ", hanzi: "啤酒", english: "beer", imageFit: "contain", imageExtension: "png", hasAudio: false },
   { id: "hongjiu", category: "food", pinyin: "hóngjiǔ", hanzi: "红酒", english: "red wine", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "bingqilin", category: "food", pinyin: "bīngqílín", hanzi: "冰激凌", english: "ice cream", imageFit: "contain", imageExtension: "png", hasAudio: false },
+  { id: "bingqilin", category: "food", pinyin: "bīngqílín", hanzi: "冰淇淋", english: "ice cream", imageFit: "contain", imageExtension: "png", hasAudio: false },
   { id: "dangao", category: "food", pinyin: "dàngāo", hanzi: "蛋糕", english: "cake", imageFit: "contain", imageExtension: "png", hasAudio: false },
   { id: "e", category: "feelings", pinyin: "è", hanzi: "饿", english: "hungry", sprite: [1, 1] },
   { id: "ke", category: "feelings", pinyin: "kě", hanzi: "渴", english: "thirsty", sprite: [2, 1] },
