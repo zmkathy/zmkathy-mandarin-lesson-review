@@ -5,7 +5,7 @@ import { getCardProgress, saveCardProgress } from "../services/studentPortal.js"
 const STORAGE_KEY = "mis-mandarin-everyday-vocabulary-progress-v1";
 const IMAGE_ROOT = `${import.meta.env.BASE_URL}images/everyday-vocabulary`;
 const AUDIO_ROOT = `${import.meta.env.BASE_URL}audio/everyday-vocabulary`;
-const AUDIO_VERSION = "20260917-4";
+const AUDIO_VERSION = "20261009-1";
 
 const categories = [
   ["all", "All"],
@@ -84,17 +84,17 @@ const vocabulary = [
   { id: "xuexiao", category: "places", pinyin: "xuéxiào", hanzi: "学校", english: "school" },
   { id: "chaoshi", category: "places", pinyin: "chāoshì", hanzi: "超市", english: "supermarket" },
   { id: "canting", category: "places", pinyin: "cāntīng", hanzi: "餐厅", english: "restaurant" },
-  { id: "limian", category: "positions", pinyin: "lǐmiàn", hanzi: "里面", english: "inside", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "qianmian", category: "positions", pinyin: "qiánmiàn", hanzi: "前面", english: "in front of", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "xiamian", category: "positions", pinyin: "xiàmiàn", hanzi: "下面", english: "below", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "houmian", category: "positions", pinyin: "hòumiàn", hanzi: "后面", english: "behind", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "waimian", category: "positions", pinyin: "wàimiàn", hanzi: "外面", english: "outside", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "youbian", category: "positions", pinyin: "yòubiān", hanzi: "右边", english: "on the right", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "shangmian", category: "positions", pinyin: "shàngmiàn", hanzi: "上面", english: "above", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "zuobian", category: "positions", pinyin: "zuǒbiān", hanzi: "左边", english: "on the left", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "zhongjian", category: "positions", pinyin: "zhōngjiān", hanzi: "中间", english: "in the middle", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "pangbian", category: "positions", pinyin: "pángbiān", hanzi: "旁边", english: "next to", imageFit: "contain", imageExtension: "png", hasAudio: false },
-  { id: "duimian", category: "positions", pinyin: "duìmiàn", hanzi: "对面", english: "across from", imageFit: "contain", imageExtension: "png", hasAudio: false }
+  { id: "limian", category: "positions", pinyin: "lǐmiàn", hanzi: "里面", english: "inside", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 0, audioEnd: 2.18 },
+  { id: "qianmian", category: "positions", pinyin: "qiánmiàn", hanzi: "前面", english: "in front of", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 2.18, audioEnd: 4.4 },
+  { id: "xiamian", category: "positions", pinyin: "xiàmiàn", hanzi: "下面", english: "below", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 4.4, audioEnd: 6.62 },
+  { id: "houmian", category: "positions", pinyin: "hòumiàn", hanzi: "后面", english: "behind", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 6.62, audioEnd: 8.84 },
+  { id: "waimian", category: "positions", pinyin: "wàimiàn", hanzi: "外面", english: "outside", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 8.84, audioEnd: 11.06 },
+  { id: "youbian", category: "positions", pinyin: "yòubiān", hanzi: "右边", english: "on the right", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 11.06, audioEnd: 13.28 },
+  { id: "shangmian", category: "positions", pinyin: "shàngmiàn", hanzi: "上面", english: "above", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 13.28, audioEnd: 15.5 },
+  { id: "zuobian", category: "positions", pinyin: "zuǒbiān", hanzi: "左边", english: "on the left", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 15.5, audioEnd: 17.72 },
+  { id: "zhongjian", category: "positions", pinyin: "zhōngjiān", hanzi: "中间", english: "in the middle", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 17.72, audioEnd: 19.94 },
+  { id: "pangbian", category: "positions", pinyin: "pángbiān", hanzi: "旁边", english: "next to", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 19.94, audioEnd: 22.16 },
+  { id: "duimian", category: "positions", pinyin: "duìmiàn", hanzi: "对面", english: "across from", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 22.16, audioEnd: 24.49 }
 ];
 
 function loadProgress(storageKey) {
@@ -244,12 +244,36 @@ export default function EverydayVocabulary({ student, showHeading = true }) {
 
   function playAudio(item) {
     audioRef.current?.pause();
-    const audio = new Audio(`${AUDIO_ROOT}/${item.id}.${item.audioExtension || "mp3"}?v=${AUDIO_VERSION}`);
+    const audioName = item.audioFile || item.id;
+    const audio = new Audio(`${AUDIO_ROOT}/${audioName}.${item.audioExtension || "mp3"}?v=${AUDIO_VERSION}`);
     audioRef.current = audio;
     setPlayingId(item.id);
-    audio.addEventListener("ended", () => setPlayingId(null), { once: true });
-    audio.addEventListener("error", () => setPlayingId(null), { once: true });
-    audio.play().catch(() => setPlayingId(null));
+
+    const finish = () => {
+      audio.pause();
+      audio.removeEventListener("timeupdate", stopAtClipEnd);
+      if (audioRef.current === audio) {
+        setPlayingId(null);
+      }
+    };
+    const stopAtClipEnd = () => {
+      if (item.audioEnd && audio.currentTime >= item.audioEnd) {
+        finish();
+      }
+    };
+    const start = () => {
+      if (typeof item.audioStart === "number") {
+        audio.currentTime = item.audioStart;
+      }
+      audio.play().catch(finish);
+    };
+
+    audio.addEventListener("ended", finish, { once: true });
+    audio.addEventListener("error", finish, { once: true });
+    if (item.audioEnd) {
+      audio.addEventListener("timeupdate", stopAtClipEnd);
+    }
+    audio.addEventListener("loadedmetadata", start, { once: true });
   }
 
   function answerChallenge(item) {
