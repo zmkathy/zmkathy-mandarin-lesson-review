@@ -84,17 +84,17 @@ const vocabulary = [
   { id: "xuexiao", category: "places", pinyin: "xuéxiào", hanzi: "学校", english: "school" },
   { id: "chaoshi", category: "places", pinyin: "chāoshì", hanzi: "超市", english: "supermarket" },
   { id: "canting", category: "places", pinyin: "cāntīng", hanzi: "餐厅", english: "restaurant" },
-  { id: "limian", category: "positions", pinyin: "lǐmiàn", hanzi: "里面", english: "inside", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 0, audioEnd: 2.18 },
-  { id: "qianmian", category: "positions", pinyin: "qiánmiàn", hanzi: "前面", english: "in front of", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 2.18, audioEnd: 4.4 },
-  { id: "xiamian", category: "positions", pinyin: "xiàmiàn", hanzi: "下面", english: "below", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 4.4, audioEnd: 6.62 },
-  { id: "houmian", category: "positions", pinyin: "hòumiàn", hanzi: "后面", english: "behind", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 6.62, audioEnd: 8.84 },
-  { id: "waimian", category: "positions", pinyin: "wàimiàn", hanzi: "外面", english: "outside", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 8.84, audioEnd: 11.06 },
-  { id: "youbian", category: "positions", pinyin: "yòubiān", hanzi: "右边", english: "on the right", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 11.06, audioEnd: 13.28 },
-  { id: "shangmian", category: "positions", pinyin: "shàngmiàn", hanzi: "上面", english: "above", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 13.28, audioEnd: 15.5 },
-  { id: "zuobian", category: "positions", pinyin: "zuǒbiān", hanzi: "左边", english: "on the left", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 15.5, audioEnd: 17.72 },
-  { id: "zhongjian", category: "positions", pinyin: "zhōngjiān", hanzi: "中间", english: "in the middle", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 17.72, audioEnd: 19.94 },
-  { id: "pangbian", category: "positions", pinyin: "pángbiān", hanzi: "旁边", english: "next to", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 19.94, audioEnd: 22.16 },
-  { id: "duimian", category: "positions", pinyin: "duìmiàn", hanzi: "对面", english: "across from", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 22.16, audioEnd: 24.49 }
+  { id: "limian", category: "positions", pinyin: "lǐmiàn", hanzi: "里面", english: "inside", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 2.18, audioEnd: 4.21 },
+  { id: "qianmian", category: "positions", pinyin: "qiánmiàn", hanzi: "前面", english: "in front of", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 4.21, audioEnd: 6.24 },
+  { id: "xiamian", category: "positions", pinyin: "xiàmiàn", hanzi: "下面", english: "below", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 6.24, audioEnd: 8.26 },
+  { id: "houmian", category: "positions", pinyin: "hòumiàn", hanzi: "后面", english: "behind", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 8.26, audioEnd: 10.29 },
+  { id: "waimian", category: "positions", pinyin: "wàimiàn", hanzi: "外面", english: "outside", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 10.29, audioEnd: 12.32 },
+  { id: "youbian", category: "positions", pinyin: "yòubiān", hanzi: "右边", english: "on the right", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 12.32, audioEnd: 14.35 },
+  { id: "shangmian", category: "positions", pinyin: "shàngmiàn", hanzi: "上面", english: "above", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 14.35, audioEnd: 16.38 },
+  { id: "zuobian", category: "positions", pinyin: "zuǒbiān", hanzi: "左边", english: "on the left", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 16.38, audioEnd: 18.4 },
+  { id: "zhongjian", category: "positions", pinyin: "zhōngjiān", hanzi: "中间", english: "in the middle", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 18.4, audioEnd: 20.43 },
+  { id: "pangbian", category: "positions", pinyin: "pángbiān", hanzi: "旁边", english: "next to", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 20.43, audioEnd: 22.46 },
+  { id: "duimian", category: "positions", pinyin: "duìmiàn", hanzi: "对面", english: "across from", imageFit: "contain", imageExtension: "png", audioFile: "positions", audioExtension: "m4a", audioStart: 22.46, audioEnd: 24.49 }
 ];
 
 function loadProgress(storageKey) {
